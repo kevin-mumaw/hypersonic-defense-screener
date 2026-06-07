@@ -86,11 +86,13 @@ defense buildout.
 
 ## 5. Edge
 
-The author has professional experience in the defense 
-industry, providing working knowledge of acquisition 
-processes, program structures, contract vehicles, and 
-the industrial base that is not available to most 
-retail investors.
+The author works in the defense industry as a practitioner, 
+providing general familiarity with the defense ecosystem, 
+acquisition culture, and program terminology that informs 
+thesis construction. This does not constitute specialized 
+or non-public knowledge. All research is conducted using 
+publicly available information, SEC filings, earnings 
+reports, and open-source defense industry publications.
 
 ---
 
