@@ -117,7 +117,9 @@ built from weighted signal categories:
 ## 6. Output
 
 ### Primary Output
-A ranked table of all universe tickers updated daily:### Secondary Output
+A ranked table of all universe tickers updated daily:
+
+### Secondary Output
 - Signal change alerts — when a ticker crosses a 
   score threshold in either direction
 - Universe health summary — overall posture of 
