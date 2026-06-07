@@ -1,11 +1,13 @@
 # report.py
 # Generates human-readable narrative summary of screener output
+# Output: markdown format, saved to logs/briefing_YYYY-MM-DD.md
+# Also prints to terminal for quick reference
 # Designed to read like a morning briefing, not a data table
-# Output format suitable for Autopilot Pilot documentation
 
 from datetime import date
 from score import score_universe
 from signals import calculate_universe_signals
+import os
 
 
 def get_universe_posture(scores):
@@ -33,12 +35,11 @@ def get_universe_posture(scores):
 def generate_signal_groups(signals):
     """
     Group tickers by signal pattern for narrative generation.
-    Returns dict of pattern -> list of tickers.
     """
     groups = {
         "overbought_bullish" : [],
-        "bullish_neutral"    : [],
         "bullish_volume"     : [],
+        "bullish_neutral"    : [],
         "mixed"              : [],
         "bearish"            : [],
         "oversold"           : [],
@@ -65,104 +66,181 @@ def generate_signal_groups(signals):
     return groups
 
 
-def generate_narrative(scores, signals):
+def generate_markdown(scores, signals):
     """
-    Generate plain English narrative summary.
-    Grouped by signal pattern, one bullet per group.
+    Generate markdown formatted narrative report.
     """
     posture = get_universe_posture(scores)
     groups  = generate_signal_groups(signals)
     today   = date.today().strftime("%B %d, %Y")
 
     lines = []
-    lines.append("=" * 55)
-    lines.append(f"  Hypersonic Defense Screener — Daily Briefing")
-    lines.append(f"  {today}")
-    lines.append("=" * 55)
-    lines.append(f"\nUNIVERSE POSTURE: {posture}\n")
 
-    lines.append("Immediate Observations:\n")
+    # Header
+    lines.append("# Hypersonic Defense Screener")
+    lines.append(f"## Daily Briefing — {today}")
+    lines.append("")
+    lines.append("---")
+    lines.append("")
+
+    # Universe posture
+    lines.append(f"## Universe Posture: {posture}")
+    lines.append("")
+
+    # Narrative
+    lines.append("## Immediate Observations")
+    lines.append("")
 
     if groups["overbought_bullish"]:
         tickers = ", ".join(groups["overbought_bullish"])
         lines.append(
-            f"  * {tickers} — Overbought (RSI 70+), Bullish trend. "
+            f"- **{tickers}** — Overbought (RSI 70+), Bullish trend. "
             f"Strong momentum but extended — not ideal entry points right now."
         )
 
     if groups["bullish_volume"]:
         tickers = ", ".join(groups["bullish_volume"])
         lines.append(
-            f"  * {tickers} — Bullish trend with volume confirmation. "
+            f"- **{tickers}** — Bullish trend with volume confirmation. "
             f"Strongest technical setup in the universe today."
         )
 
     if groups["bullish_neutral"]:
         tickers = ", ".join(groups["bullish_neutral"])
         lines.append(
-            f"  * {tickers} — Bullish trend, neutral RSI. "
+            f"- **{tickers}** — Bullish trend, neutral RSI. "
             f"Cleaner setups — momentum building without being extended."
         )
 
     if groups["mixed"]:
         tickers = ", ".join(groups["mixed"])
         lines.append(
-            f"  * {tickers} — Mixed signals, neither clearly "
+            f"- **{tickers}** — Mixed signals, neither clearly "
             f"bullish nor bearish. No action bias."
         )
 
     if groups["bearish"]:
         tickers = ", ".join(groups["bearish"])
         lines.append(
-            f"  * {tickers} — Bearish trend, trading below key "
+            f"- **{tickers}** — Bearish trend, trading below key "
             f"moving averages. Warrants caution — review thesis fit."
         )
 
     if groups["oversold"]:
         tickers = ", ".join(groups["oversold"])
         lines.append(
-            f"  * {tickers} — Oversold (RSI 30 or below). "
+            f"- **{tickers}** — Oversold (RSI 30 or below). "
             f"Potential reversal candidate — monitor closely."
         )
 
-    lines.append("\n--- Ranked Scores ---\n")
-    lines.append(
-        f"  {'Rank':<5} {'Ticker':<6} {'Score':>6} "
-        f"{'Signal':<10} Action"
-    )
-    lines.append("  " + "-" * 50)
+    lines.append("")
+    lines.append("---")
+    lines.append("")
+
+    # Signals table
+    lines.append("## Technical Signals")
+    lines.append("")
+    lines.append("| Ticker | Close | MA20 | MA50 | RSI | RSI Signal | Trend | Vol Confirmed |")
+    lines.append("|--------|------:|-----:|-----:|----:|------------|-------|---------------|")
+
+    for ticker, s in signals.items():
+        lines.append(
+            f"| {ticker} "
+            f"| ${s['close']:,.2f} "
+            f"| ${s['ma20']:,.2f} "
+            f"| ${s['ma50']:,.2f} "
+            f"| {s['rsi']:.1f} "
+            f"| {s['rsi_signal']} "
+            f"| {s['trend']} "
+            f"| {'YES' if s['vol_confirmed'] else 'NO'} |"
+        )
+
+    lines.append("")
+    lines.append("---")
+    lines.append("")
+
+    # Scores table
+    lines.append("## Composite Scores")
+    lines.append("")
+    lines.append("| Rank | Ticker | Technical | Fundamental | Thesis | Score | Signal | Action |")
+    lines.append("|------|--------|----------:|------------:|-------:|------:|--------|--------|")
 
     for i, s in enumerate(scores, 1):
         lines.append(
-            f"  {i:<5} "
-            f"{s['ticker']:<6} "
-            f"{s['composite']:>6.1f} "
-            f"{s['signal']:<10} "
-            f"{s['action']}"
+            f"| {i} "
+            f"| {s['ticker']} "
+            f"| {s['technical']:.1f} "
+            f"| {s['fundamental']:.1f} "
+            f"| {s['thesis']:.1f} "
+            f"| {s['composite']:.1f} "
+            f"| {s['signal']} "
+            f"| {s['action']} |"
         )
 
-    lines.append("\n" + "=" * 55)
+    lines.append("")
+    lines.append("---")
+    lines.append("")
+
+    # Disclaimer
+    lines.append("## Notes")
+    lines.append("")
     lines.append(
-        "  Note: Fundamental and thesis scores are Phase 1\n"
-        "  placeholders. Rankings driven by technical signals.\n"
-        "  Scores will improve as fundamentals are integrated."
+        "> **Phase 1 Disclaimer:** Fundamental and thesis scores are "
+        "placeholders. Rankings are driven primarily by technical signals. "
+        "Scores will improve as fundamentals and thesis signals are "
+        "integrated in Phase 2."
     )
-    lines.append("=" * 55)
+    lines.append("")
+    lines.append(
+        "> This report is for personal research purposes only. "
+        "Nothing here constitutes financial advice."
+    )
+    lines.append("")
+    lines.append("---")
+    lines.append("")
+    lines.append(
+        f"*Generated by Hypersonic Defense Screener — {today}*"
+    )
 
     return "\n".join(lines)
 
 
+def save_report(markdown):
+    """
+    Save markdown report to logs folder with dated filename.
+    """
+    today    = date.today().strftime("%Y-%m-%d")
+    filename = f"briefing_{today}.md"
+
+    # Navigate to repo root and save to logs folder
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    repo_root  = os.path.dirname(script_dir)
+    logs_dir   = os.path.join(repo_root, "logs")
+    filepath   = os.path.join(logs_dir, filename)
+
+    with open(filepath, "w") as f:
+        f.write(markdown)
+
+    print(f"Report saved: logs/{filename}")
+    return filepath
+
+
 def run_report():
     """
-    Run full screener and print narrative report.
+    Run full screener and generate markdown report.
     """
-    scores  = score_universe()
-    signals = calculate_universe_signals(period="6mo")
-    report  = generate_narrative(scores, signals)
+    scores   = score_universe()
+    signals  = calculate_universe_signals(period="6mo")
+    markdown = generate_markdown(scores, signals)
 
+    # Save to logs
+    save_report(markdown)
+
+    # Print to terminal
     print("\n\n")
-    print(report)
-    return report
+    print(markdown)
+
+    return markdown
 
 
 if __name__ == "__main__":
