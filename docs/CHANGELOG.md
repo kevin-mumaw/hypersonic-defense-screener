@@ -8,6 +8,15 @@ to thesis, universe, screener logic, or methodology.
 
 ---
 
+## [0.5] — June 2026
+
+### Screener — Report Output
+- Updated report.py to generate professional markdown output
+- Added dated briefing files saved automatically to logs folder
+- Fixed Windows encoding issue with emoji characters
+- Format: headers, tables, narrative observations, disclaimer
+- Preview in VS Code with Ctrl+Shift+V
+-
 ## [0.4] — June 2026
 
 ### Screener — Initial Build Complete
