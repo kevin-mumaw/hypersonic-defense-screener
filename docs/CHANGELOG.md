@@ -8,6 +8,19 @@ to thesis, universe, screener logic, or methodology.
 
 ---
 
+## [0.4] — June 2026
+
+### Screener — Initial Build Complete
+- Added universe.py — single source of truth for ticker universe
+- Added data.py — yfinance price data pull for full universe
+- Added signals.py — technical signal calculation (MA20, MA50, 
+  MA200, RSI, volume confirmation, trend)
+- Added score.py — composite scoring with technical, fundamental, 
+  and thesis components
+- Added report.py — narrative daily briefing with universe posture 
+  and grouped signal observations
+- Phase 1 screener operational — 11/11 tickers pulling clean data
+
 ## [0.3] — June 2026
 
 ### Screener (SCREENER_SPEC.md)
