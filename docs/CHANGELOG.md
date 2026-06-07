@@ -8,6 +8,19 @@ to thesis, universe, screener logic, or methodology.
 
 ---
 
+## [0.3] — June 2026
+
+### Screener (SCREENER_SPEC.md)
+- Created initial screener specification v0.1
+- Defined design principles, signal framework, 
+  scoring methodology, output format, position 
+  sizing guidelines, technology stack, and 
+  phased development plan
+- Weights set at 40% technical, 40% fundamental, 
+  20% thesis — subject to adjustment as system develops
+- Noted honest limitations including yfinance data 
+  quality, survivorship bias, and small universe size
+
 ## [0.2] — June 2026
 
 ### Universe (UNIVERSE.md)
