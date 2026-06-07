@@ -184,11 +184,13 @@ def generate_markdown(scores, signals):
     # Disclaimer
     lines.append("## Notes")
     lines.append("")
-    lines.append(
-        "> **Phase 1 Disclaimer:** Fundamental and thesis scores are "
-        "placeholders. Rankings are driven primarily by technical signals. "
-        "Scores will improve as fundamentals and thesis signals are "
-        "integrated in Phase 2."
+   lines.append(
+        "> **Phase 2 Update:** Fundamental scores now reflect real data "
+        "including revenue growth, gross margin, operating margin, "
+        "debt/equity, and earnings growth via yfinance. "
+        "Thesis scores remain manual placeholders — Phase 3 will "
+        "incorporate contract wins, program milestones, and "
+        "defense revenue mix."
     )
     lines.append("")
     lines.append(
