@@ -2,12 +2,13 @@
 # Calculates composite scores for all tickers in the universe
 # Scoring weights per SCREENER_SPEC.md:
 #   Technical:   40%
-#   Fundamental: 40% (Phase 1 placeholder — price-based proxy)
+#   Fundamental: 40% (Phase 2 — real data from fundamentals.py)
 #   Thesis:      20% (Phase 1 placeholder — manual input)
 # Scores range 0-100
 # Thresholds: 75-100 Strong, 50-74 Neutral, 25-49 Weak, 0-24 Critical
 
 from signals import calculate_universe_signals
+from fundamentals import fetch_universe_fundamentals, score_fundamentals
 
 
 def score_technical(signals):
@@ -46,21 +47,17 @@ def score_technical(signals):
     return min(score, 100)
 
 
-def score_fundamental(signals):
+def score_fundamental(ticker, fund_data):
     """
     Score the fundamental component 0-100.
-    Phase 1: Price-based proxy using MA200 relationship.
-    Phase 2: Will incorporate actual earnings, backlog, margins.
+    Phase 2: Uses real fundamental data from fundamentals.py
+    Falls back to neutral 50 if data unavailable.
     """
-    score = 50  # Neutral baseline until real fundamentals integrated
+    if fund_data is None:
+        return 50  # Neutral fallback
 
-    # MA200 relationship as long-term health proxy
-    if signals["above_ma200"] is True:
-        score += 20
-    elif signals["above_ma200"] is False:
-        score -= 20
-
-    return max(0, min(score, 100))
+    result = score_fundamentals(fund_data)
+    return result["fundamental_score"]
 
 
 def score_thesis(ticker):
@@ -69,7 +66,7 @@ def score_thesis(ticker):
     Phase 1: Manual placeholder — all tickers start neutral.
     Phase 2: Will incorporate contract wins, program milestones,
              defense revenue mix, removal trigger flags.
-    
+
     To override for a specific ticker, add it to THESIS_OVERRIDES.
     """
     THESIS_OVERRIDES = {
@@ -80,15 +77,15 @@ def score_thesis(ticker):
     return THESIS_OVERRIDES.get(ticker, 60)  # Default neutral-positive
 
 
-def calculate_composite_score(ticker, signals):
+def calculate_composite_score(ticker, signals, fund_data=None):
     """
     Calculate weighted composite score for a single ticker.
-    
+
     Returns:
         dict with component scores and composite
     """
-    tech_score  = score_technical(signals)
-    fund_score  = score_fundamental(signals)
+    tech_score   = score_technical(signals)
+    fund_score   = score_fundamental(ticker, fund_data)
     thesis_score = score_thesis(ticker)
 
     composite = (
@@ -112,13 +109,13 @@ def calculate_composite_score(ticker, signals):
         action = "Review for removal"
 
     return {
-        "ticker"       : ticker,
-        "technical"    : round(tech_score, 1),
-        "fundamental"  : round(fund_score, 1),
-        "thesis"       : round(thesis_score, 1),
-        "composite"    : round(composite, 1),
-        "signal"       : signal,
-        "action"       : action,
+        "ticker"      : ticker,
+        "technical"   : round(tech_score, 1),
+        "fundamental" : round(fund_score, 1),
+        "thesis"      : round(thesis_score, 1),
+        "composite"   : round(composite, 1),
+        "signal"      : signal,
+        "action"      : action,
     }
 
 
@@ -126,11 +123,13 @@ def score_universe():
     """
     Score all tickers in the universe and return ranked results.
     """
-    all_signals = calculate_universe_signals(period="6mo")
+    all_signals      = calculate_universe_signals(period="6mo")
+    all_fundamentals = fetch_universe_fundamentals()
 
     scores = []
     for ticker, signals in all_signals.items():
-        score = calculate_composite_score(ticker, signals)
+        fund_data = all_fundamentals.get(ticker, None)
+        score     = calculate_composite_score(ticker, signals, fund_data)
         scores.append(score)
 
     # Rank by composite score descending
