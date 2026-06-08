@@ -311,10 +311,10 @@ def save_backtest_report(markdown):
 
 
 if __name__ == "__main__":
-    results  = backtest_universe(period="2y",
+    results  = backtest_universe(period="5y",
                                  buy_threshold=60,
                                  sell_threshold=45)
-    markdown = generate_backtest_report(results, "2y", 60, 45)
+    markdown = generate_backtest_report(results, "5y", 60, 45)
     save_backtest_report(markdown)
 
     print("\n")
