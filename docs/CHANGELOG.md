@@ -7,6 +7,49 @@ living document updated with every meaningful change
 to thesis, universe, screener logic, or methodology.
 
 ---
+## [0.8] — June 2026
+
+### Backtest — 5y Period Analysis
+- Reran backtest with 5y period for more robust results
+- Key findings confirmed across both 2y and 5y periods:
+  - KTOS and KRMN: strongest technical signal performance
+  - HEI: consistently poor technical signals (31.2% win rate)
+  - TDY and MTRN: technical signals nearly breakeven
+- VELO pre-split price artifacts noted in 2021-2023 data
+  — trades from that period unreliable
+- Conclusion: technical signals most reliable on pure
+  hypersonics names, less reliable on larger stable names
+- HEI scores STRONG fundamentally but technical entry
+  timing historically poor — confirmed across both periods
+
+## [0.7] — June 2026
+
+### Backtest — Initial Run Complete
+- Added backtest.py — technical signal backtest over 2y period
+- Buy threshold: 60, Sell threshold: 45
+- Key findings:
+  - KTOS: 63.6% win rate, 13.8% avg return — strongest signal
+  - KRMN: 62.5% win rate, 10.07% avg return — solid signal
+  - HEI: 24.1% win rate, -0.91% avg return — signals unreliable
+  - LOAR: 33.3% win rate, -1.23% avg return — signals unreliable
+- HEI scores STRONG fundamentally but technical signals 
+  historically poor — warrants caution on entry timing
+- Documented limitations: technical only, survivorship bias,
+  no transaction costs, past performance caveat
+  
+## [0.6] — June 2026
+
+### Screener — Phase 2 Complete
+- Integrated real fundamental scoring replacing placeholder 50.0
+- Added thesis score overrides for all 11 universe tickers
+- Fixed Windows encoding issue in report.py
+- Updated report disclaimer to reflect Phase 2 status
+- Three-component scoring now fully operational:
+  - Technical: real signal data
+  - Fundamental: real yfinance data
+  - Thesis: manually set per investment thesis alignment
+- Current STRONG signals: HEI (79.0), HWM (76.8), LOAR (75.0)
+- Current WEAK/NEUTRAL of concern: KRMN (53.8), VELO (56.8)
 
 ## [0.5] — June 2026
 
