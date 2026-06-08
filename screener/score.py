@@ -70,8 +70,17 @@ def score_thesis(ticker):
     To override for a specific ticker, add it to THESIS_OVERRIDES.
     """
     THESIS_OVERRIDES = {
-        # Example: "KRMN": 80,  # Strong hypersonics pipeline
-        # Example: "VELO": 40,  # Higher risk, pre-profitability
+        "KRMN": 85,  # Purpose-built hypersonics, $500M+ pipeline
+        "KTOS": 80,  # Hypersonic test platforms, directly on-thesis
+        "AVAV": 75,  # Switchblade, autonomous systems — solid thesis fit
+        "TDY" : 75,  # Defense electronics, harsh environment subsystems
+        "HWM" : 70,  # Advanced materials, refractory alloys
+        "ATI" : 70,  # Titanium alloys, hypersonic airframes
+        "LOAR": 65,  # Components business, less hypersonics-specific
+        "HEI" : 65,  # Defense electronics, more MRO than hypersonics
+        "MTRN": 65,  # Materials relevant, thin margins reduce conviction
+        "SXI" : 45,  # Partial thesis fit — too diversified
+        "VELO": 40,  # High risk, pre-profitability, extreme volatility
     }
 
     return THESIS_OVERRIDES.get(ticker, 60)  # Default neutral-positive
