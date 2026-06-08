@@ -16,7 +16,6 @@ def get_universe_posture(scores):
     distribution of composite scores.
     """
     strong  = sum(1 for s in scores if s["composite"] >= 75)
-    neutral = sum(1 for s in scores if 50 <= s["composite"] < 75)
     weak    = sum(1 for s in scores if s["composite"] < 50)
     total   = len(scores)
 
@@ -181,16 +180,16 @@ def generate_markdown(scores, signals):
     lines.append("---")
     lines.append("")
 
-    # Disclaimer
+    # Notes
     lines.append("## Notes")
     lines.append("")
-   lines.append(
+    lines.append(
         "> **Phase 2 Update:** Fundamental scores now reflect real data "
         "including revenue growth, gross margin, operating margin, "
         "debt/equity, and earnings growth via yfinance. "
-        "Thesis scores remain manual placeholders — Phase 3 will "
-        "incorporate contract wins, program milestones, and "
-        "defense revenue mix."
+        "Thesis scores are manually set per investment thesis alignment. "
+        "Phase 3 will incorporate contract wins, program milestones, "
+        "and defense revenue mix."
     )
     lines.append("")
     lines.append(
@@ -214,13 +213,12 @@ def save_report(markdown):
     today    = date.today().strftime("%Y-%m-%d")
     filename = f"briefing_{today}.md"
 
-    # Navigate to repo root and save to logs folder
     script_dir = os.path.dirname(os.path.abspath(__file__))
     repo_root  = os.path.dirname(script_dir)
     logs_dir   = os.path.join(repo_root, "logs")
     filepath   = os.path.join(logs_dir, filename)
 
-    with open(filepath, "w") as f:
+    with open(filepath, "w", encoding="utf-8") as f:
         f.write(markdown)
 
     print(f"Report saved: logs/{filename}")
@@ -235,10 +233,8 @@ def run_report():
     signals  = calculate_universe_signals(period="6mo")
     markdown = generate_markdown(scores, signals)
 
-    # Save to logs
     save_report(markdown)
 
-    # Print to terminal
     print("\n\n")
     print(markdown)
 
