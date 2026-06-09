@@ -81,6 +81,8 @@ def score_thesis(ticker):
         "MTRN": 65,  # Materials relevant, thin margins reduce conviction
         "SXI" : 45,  # Partial thesis fit — too diversified
         "VELO": 40,  # High risk, pre-profitability, extreme volatility
+        "PLTR": 85,  # Unique DoD AI command layer — no public proxy. Premium valuation caps score
+        "AXON": 75,  # IoMT/drone software moat. Defense secondary to law enforcement today
     }
 
     return THESIS_OVERRIDES.get(ticker, 60)  # Default neutral-positive
