@@ -13,12 +13,12 @@ from datetime import datetime, date
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, current_dir)
 
-from screener.universe import UNIVERSE
-from screener.data import fetch_universe_data
-from screener.signals import calculate_universe_signals
-from screener.fundamentals import fetch_universe_fundamentals
-from screener.score import score_universe
-from screener.report import get_universe_posture, generate_signal_groups
+from universe import UNIVERSE
+from data import fetch_universe_data
+from signals import calculate_universe_signals
+from fundamentals import fetch_universe_fundamentals
+from score import score_universe
+from report import get_universe_posture, generate_signal_groups
 
 # --- Page Config ---
 st.set_page_config(
