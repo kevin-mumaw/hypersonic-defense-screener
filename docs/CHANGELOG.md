@@ -5,9 +5,7 @@ and rationale throughout the development of the
 Hypersonic Defense Screener. It is maintained as a 
 living document updated with every meaningful change 
 to thesis, universe, screener logic, or methodology.
-
 ---
-
 ## [0.9] — June 2026
 
 ### Universe — Major Expansion (v0.3)
