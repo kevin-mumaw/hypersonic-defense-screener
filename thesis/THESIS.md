@@ -1,8 +1,8 @@
 # Hypersonic Defense Screener — Investment Thesis
 
-**Version:** 0.1  
+**Version:** 0.2  
 **Date:** June 2026  
-**Status:** Draft  
+**Status:** Active  
 
 ---
 
@@ -26,6 +26,9 @@ specifically on next-generation weapons systems including:
 - Autonomous and unmanned systems
 - Advanced propulsion (scramjets, rotating detonation engines)
 - Space-based ISR and weapons support systems
+- AI-driven command, control, and battlefield decision-making
+- IoMT battlefield connectivity (5G/6G tactical networks)
+- Quantum sensing and GPS-denied navigation
 
 ---
 
@@ -39,24 +42,37 @@ of this spending cycle. They are also well-known,
 well-covered, and largely fairly valued by the market.
 
 The opportunity lies one layer deeper: the specialized 
-suppliers, component manufacturers, and materials producers 
-that prime contractors depend on to build these systems. 
-These companies are:
+suppliers, component manufacturers, materials producers, 
+and software platform providers that prime contractors 
+depend on to build these systems. These companies are:
 
 - Less visible to generalist investors
 - More leveraged to program growth
 - Less exposed to single-program cancellation risk
 - Often sole-source suppliers with significant pricing power
 
-This is the picks-and-shovels layer of the hypersonic 
+This is the picks-and-shovels layer of the next-generation 
 defense buildout.
+
+### Special Case Exception
+
+In rare instances where no picks-and-shovels proxy exists 
+for a critical technology domain, a prime-adjacent or 
+software-dominant company may be included as a special 
+case. Inclusion requires documented justification and 
+a valuation risk flag. Current special case: **PLTR**.
 
 ### Why Now
 
-- DoD hypersonics budget has grown significantly year over year
-- Multiple programs in active development across all service branches
-- Allied nations (UK, Australia, Japan) accelerating own programs
-- Industrial base investment incentives creating tailwinds for suppliers
+- DoD next-gen defense budget growing significantly year over year
+- Multiple hypersonic programs in active development 
+  across all service branches
+- Allied nations (UK, Australia, Japan) accelerating 
+  own programs creating additional demand
+- AI and autonomous systems shifting from prototype 
+  to Program of Record
+- Industrial base investment incentives creating 
+  tailwinds for suppliers
 - Market has not fully priced the supply chain opportunity
 
 ---
@@ -65,26 +81,48 @@ defense buildout.
 
 | Domain | Rationale |
 |--------|-----------|
-| Hypersonic propulsion | Scramjets, boosters, RDE — high-barrier manufacturing |
-| Thermal protection systems | Extreme heat management at hypersonic speeds |
-| Advanced materials | Carbon composites, ceramics, refractory metals |
-| Guidance & navigation | Precision INS, GPS-denied navigation systems |
-| Directed energy components | High-power laser optics, beam control, power systems |
-| Autonomous systems hardware | Sensors, actuators, edge computing for UAS |
-| Ground/test infrastructure | Range systems, simulation, testing equipment |
+| AI & Autonomy | DoD command software, autonomous platforms, loitering munitions — the decision layer of modern warfare |
+| Hypersonic, Space & Propulsion | Scramjets, boosters, thermal protection, payload structures — extreme-environment manufacturing |
+| IoMT & Digital Battlefield | Tactical sensors, drone orchestration, harsh-environment electronics — the connectivity layer |
+| Industrial Supply Chain | Advanced materials, additive manufacturing, precision components — the foundation everything else is built on |
 
 ---
 
-## 4. Out of Scope
+## 4. Tier Framework
 
-- Prime contractors (LMT, RTX, NOC, GD, BA) — too well covered
-- Pure software/cyber plays — different margin and contract profile
-- International defense companies — regulatory and transparency risk
-- Consumer or commercial aerospace — different demand drivers
+### Disruptors (Target: 75% of portfolio)
+High-growth, software-first or pure-play next-gen defense.
+R&D > 10% of revenue OR revenue growth > 15% YoY.
+Target weight: 15% per position (max 5 positions).
+
+**Current Disruptors:** PLTR, AVAV, KTOS, KRMN, AXON
+
+### Standard (Target: ~15% of portfolio)
+Established defense supply chain with meaningful 
+next-gen exposure.
+Target weight: 10% per position.
+
+**Current Standard:** HWM, ATI, TDY, HEI, LOAR
+
+### Anchors (Target: ~10% of portfolio)
+Diversified or prime-adjacent companies.
+Target weight: 5% per position.
+
+**Current Anchors:** SXI, MTRN, VELO
 
 ---
 
-## 5. Edge
+## 5. Out of Scope
+
+- Prime contractors (LMT, RTX, NOC, GD, BA) unless 
+  special case exception applies
+- Pure software/cyber plays without defense hardware exposure
+- International defense companies
+- Consumer or commercial aerospace without defense exposure
+
+---
+
+## 6. Edge
 
 The author works in the defense industry as a practitioner, 
 providing general familiarity with the defense ecosystem, 
@@ -96,7 +134,7 @@ reports, and open-source defense industry publications.
 
 ---
 
-## 6. Key Risks
+## 7. Key Risks
 
 | Risk | Mitigation |
 |------|-----------|
@@ -105,19 +143,32 @@ reports, and open-source defense industry publications.
 | Geopolitical de-escalation | Unlikely near-term; thesis has 5-10 year horizon |
 | Concentration risk | Position sizing rules enforced by screener |
 | Classified program opacity | Focus on unclassified program supply chain |
+| Valuation risk (PLTR) | Size conservatively; monitor multiple compression |
+| "Valley of Death" | Cash runway filter — 2 year minimum for unprofitable companies |
+| Foreign adversary infiltration | Immediate removal trigger upon federal investigation |
 
 ---
 
-## 7. Thesis Horizon
+## 8. Thesis Horizon
 
 **5 to 10 years minimum.** This is not a momentum trade. 
-The industrial buildout required to field hypersonic weapons 
-at scale takes years. Patient capital is rewarded.
+The industrial buildout required to field next-generation 
+weapons systems at scale takes years. Patient capital 
+is rewarded.
 
 ---
 
-## 8. Version History
+## 9. IPO Watch
+
+Private companies expected to enter the public universe:
+- **Anduril Industries** (~$61B) — AI/Autonomy
+- **Shield AI** (~$12.7B) — AI/Autonomy, Hivemind
+
+---
+
+## 10. Version History
 
 | Version | Date | Notes |
 |---------|------|-------|
-| 0.1 | June 2026 | Initial draft |
+| 0.1 | June 2026 | Initial thesis draft |
+| 0.2 | June 2026 | Expanded to five technology domains. Added tier framework. Added special case exception rule. Added IoMT, Quantum, AI domains. Added Valley of Death risk. Added IPO watch. |
