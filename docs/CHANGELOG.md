@@ -7,6 +7,38 @@ living document updated with every meaningful change
 to thesis, universe, screener logic, or methodology.
 
 ---
+
+## [0.9] — June 2026
+
+### Universe — Major Expansion (v0.3)
+- Added PLTR (Palantir Technologies) — AI/Autonomy, special 
+  case exception, thesis score 85
+- Added AXON (Axon Enterprise) — IoMT/Digital Battlefield, 
+  dual-domain, thesis score 75
+- Restructured into four technology domains:
+  - AI & Autonomy (PLTR, AVAV, KTOS)
+  - Hypersonic, Space & Propulsion (KRMN, HWM, ATI)
+  - IoMT, Sensors & Digital Battlefield (AXON, TDY, HEI, LOAR)
+  - Industrial Supply Chain & Materials (SXI, MTRN, VELO)
+- Added tier definitions: Disruptor, Standard, Anchor
+- Added IPO watchlist: Anduril, Shield AI
+- Added cash runway removal trigger (2 year minimum)
+- Added rebalancing shock trigger (>13.5% / <6.5%)
+- Added valuation risk flags for PLTR and KRMN
+- Watchlist: FLY, AADX, BAH
+
+### Thesis — v0.2
+- Expanded technology domains to include IoMT, Quantum, 
+  AI/Autonomy
+- Added tier framework (Disruptor 75% / Standard 15% / Anchor 10%)
+- Added special case exception rule for PLTR
+- Added Valley of Death risk and IPO watch section
+
+### Screener
+- universe.py updated to 13 tickers with sector classification
+- score.py updated with PLTR (85) and AXON (75) thesis overrides
+- 13/13 tickers pulling clean data
+
 ## [0.8] — June 2026
 
 ### Backtest — 5y Period Analysis
