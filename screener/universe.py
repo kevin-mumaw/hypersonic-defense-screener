@@ -4,29 +4,37 @@
 # Update this file whenever UNIVERSE.md is updated
 
 UNIVERSE = {
-    "ATI":  {"name": "ATI Inc",                  "domain": "Advanced materials, titanium alloys"},
-    "AVAV": {"name": "AeroVironment",             "domain": "Autonomous systems, loitering munitions"},
-    "HEI":  {"name": "Heico Corporation",         "domain": "Aerospace/defense components"},
-    "HWM":  {"name": "Howmet Aerospace",          "domain": "Advanced materials, precision castings"},
-    "KRMN": {"name": "Karman Holdings",           "domain": "Propulsion, payload protection, composites"},
-    "KTOS": {"name": "Kratos Defense",            "domain": "Hypersonic test platforms, autonomous systems"},
-    "LOAR": {"name": "Loar Holdings",             "domain": "Precision aerospace/defense components"},
-    "MTRN": {"name": "Materion",                  "domain": "Specialty alloys, advanced materials"},
-    "SXI":  {"name": "Standex International",     "domain": "Electronics, sensors, aerospace/defense"},
-    "TDY":  {"name": "Teledyne Technologies",     "domain": "Defense electronics, optical components"},
-    "VELO": {"name": "Velo3D",                    "domain": "Additive manufacturing"},
+    # AI & Autonomy
+    "PLTR": {"name": "Palantir Technologies",    "domain": "AI & Autonomy",                          "sector": "AI & Autonomy"},
+    "AVAV": {"name": "AeroVironment",             "domain": "Tactical loitering munitions & small UAS","sector": "AI & Autonomy"},
+    "KTOS": {"name": "Kratos Defense",            "domain": "Autonomous jet platforms & target testbeds","sector": "AI & Autonomy / Hypersonic"},
+
+    # Hypersonic, Space & Propulsion Infrastructure
+    "KRMN": {"name": "Karman Holdings",           "domain": "Payload protection & interstage structures","sector": "Hypersonic, Space & Propulsion"},
+    "HWM":  {"name": "Howmet Aerospace",          "domain": "Refractory alloys & thermal protection", "sector": "Hypersonic, Space & Propulsion"},
+    "ATI":  {"name": "ATI Inc",                   "domain": "Titanium alloys & high-speed airframes",  "sector": "Hypersonic, Space & Propulsion"},
+
+    # IoMT, Sensors & Digital Battlefield
+    "AXON": {"name": "Axon Enterprise",           "domain": "Tactical sensors, software nodes, drone orchestration","sector": "IoMT & Digital Battlefield"},
+    "TDY":  {"name": "Teledyne Technologies",     "domain": "Defense electronics & harsh-environment imaging","sector": "IoMT & Digital Battlefield"},
+    "HEI":  {"name": "Heico Corporation",         "domain": "Proprietary subcomponents & defense electronics","sector": "IoMT & Digital Battlefield"},
+    "LOAR": {"name": "Loar Holdings",             "domain": "High-margin precision aerospace subcomponents","sector": "IoMT & Digital Battlefield"},
+
+    # Industrial Supply Chain & Materials
+    "SXI":  {"name": "Standex International",     "domain": "Diversified precision machining & aerospace components","sector": "Industrial Supply Chain"},
+    "MTRN": {"name": "Materion",                  "domain": "Specialty beryllium alloys & optical/guidance subcomponents","sector": "Industrial Supply Chain"},
+    "VELO": {"name": "Velo3D",                    "domain": "Advanced additive manufacturing",        "sector": "Industrial Supply Chain"},
 }
 
 # Watchlist - under research, not yet scored
 WATCHLIST = {
-    "BWX":  {"name": "BWX Technologies",          "domain": "Nuclear propulsion, naval platforms"},
-    "MRCY": {"name": "Mercury Systems",           "domain": "Defense electronics, hypersonic guidance"},
-    "AIRO": {"name": "AIRO Group Holdings",       "domain": "Emerging defense aerospace"},
+    "FLY":  {"name": "Firefly Aerospace",         "domain": "Responsive space launch & tactical transit"},
+    "AADX": {"name": "Applied Aerospace & Defense","domain": "Solid rocket motors & missile propulsion"},
+    "BAH":  {"name": "Booz Allen Hamilton",       "domain": "Defense services & AI deployment integration"},
 }
 
 if __name__ == "__main__":
     print(f"Universe: {len(UNIVERSE)} tickers")
     print(f"Watchlist: {len(WATCHLIST)} tickers")
     for ticker, meta in UNIVERSE.items():
-        print(f"  {ticker:<6} — {meta['name']}")
-        
+        print(f"  {ticker:<6} — {meta['name']:<35} [{meta['sector']}]")
