@@ -6,6 +6,26 @@ Hypersonic Defense Screener. It is maintained as a
 living document updated with every meaningful change 
 to thesis, universe, screener logic, or methodology.
 ---
+## [1.0] — June 2026
+
+### Backtest — 13-Ticker Universe
+- Reran backtest against full expanded 13-ticker universe
+- New additions validated:
+  - PLTR: 47.9% win rate, 193% total return, 144% best trade
+  - AXON: 42.5% win rate, 157% total return, 63% best trade
+- Consistent findings confirmed across all backtest runs:
+  - KTOS: strongest signal performer (195% total)
+  - HEI: consistently poor technical signals (-20% total)
+  - KRMN: best win rate (62.5%) despite current bearish trend
+- Universe now at v1.0 milestone — thesis documented, 
+  universe defined, screener operational, backtest complete
+
+### Version milestone
+- Project reaches v1.0 — all Phase 1 and Phase 2 
+  objectives complete
+- Phase 3 begins: dashboard fix, Robinhood execution 
+  integration, rebalancing shock trigger
+
 ## [0.9] — June 2026
 
 ### Universe — Major Expansion (v0.3)
