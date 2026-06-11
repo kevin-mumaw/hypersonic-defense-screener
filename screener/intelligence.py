@@ -1,22 +1,24 @@
 # intelligence.py
 # Monitors public data sources for thesis-relevant events
-# Sources: Defense.gov contracts, Congress.gov NDAA, SEC EDGAR
+# Sources: Defense.gov RSS, Congress.gov API, SEC EDGAR
 # Output: Alert flags for manual review — nothing changes automatically
 # Human review required before any thesis score override
 
 import requests
-from bs4 import BeautifulSoup
+import xml.etree.ElementTree as ET
 from datetime import date, datetime
 import os
 import sys
 import time
+import json
+from dotenv import load_dotenv
+load_dotenv()
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from universe import UNIVERSE
 
 # --- Configuration ---
 
-# Universe company names for contract matching
 COMPANY_NAMES = {
     "PLTR": ["Palantir", "Palantir Technologies"],
     "AVAV": ["AeroVironment", "Aerovironment"],
@@ -33,7 +35,6 @@ COMPANY_NAMES = {
     "VELO": ["Velo3D"],
 }
 
-# NDAA keywords to monitor
 NDAA_KEYWORDS = [
     "hypersonic",
     "unmanned",
@@ -46,119 +47,157 @@ NDAA_KEYWORDS = [
     "proliferated warfighter space layer",
 ]
 
-# IPO watchlist
-IPO_WATCHLIST = [
-    "Anduril Industries",
-    "Shield AI",
-]
+# Exact company names for SEC EDGAR — must match filing company name
+IPO_WATCHLIST = {
+    "Anduril Industries": ["Anduril Industries", "Anduril"],
+    "Shield AI":          ["ShieldAI", "Shield AI Inc"],
+}
 
-# Minimum contract value to flag (dollars)
 MIN_CONTRACT_VALUE = 50_000_000
+CURRENT_YEAR = date.today().year
 
 
-# --- Pentagon Contract Scraper ---
+# --- Pentagon Contract RSS Feed ---
 
 def scrape_pentagon_contracts():
     """
-    Scrape Defense.gov contract announcements.
-    Flags contracts mentioning universe companies over $50M.
-    
-    Returns:
-        list of alert dicts
+    Pull Defense.gov contract announcements via RSS feed.
+    Flags any mention of universe companies.
     """
     alerts = []
-    url = "https://www.defense.gov/News/Contracts/"
+    
+    # Defense.gov RSS feeds
+    rss_urls = [
+        "https://www.defense.gov/DesktopModules/ArticleCS/RSS.ashx?ContentType=1&Site=945&max=20",
+        "https://www.defense.gov/News/Contracts/rss/",
+    ]
+    
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; research/1.0)"
+    }
 
-    try:
-        headers = {"User-Agent": "Mozilla/5.0"}
-        response = requests.get(url, headers=headers, timeout=10)
-        response.raise_for_status()
-
-        soup = BeautifulSoup(response.text, "html.parser")
-
-        # Find contract announcement items
-        items = soup.find_all("div", class_="news-article-list")
-        if not items:
-            items = soup.find_all("li", class_="feature")
-        if not items:
-            # Fallback — grab all paragraph text
-            items = soup.find_all("p")
-
-        for item in items[:50]:  # Limit to 50 most recent
-            text = item.get_text(separator=" ", strip=True)
-
-            # Check for universe company mentions
-            for ticker, names in COMPANY_NAMES.items():
-                for name in names:
-                    if name.lower() in text.lower():
-                        alerts.append({
-                            "source"  : "Pentagon Contracts",
-                            "ticker"  : ticker,
-                            "company" : names[0],
-                            "text"    : text[:300],
-                            "url"     : url,
-                            "action"  : f"Review thesis score override for {ticker}",
-                        })
-                        break
-
-    except Exception as e:
+    fetched = False
+    for url in rss_urls:
+        try:
+            response = requests.get(url, headers=headers, timeout=10)
+            response.raise_for_status()
+            
+            root = ET.fromstring(response.content)
+            items = root.findall(".//item")
+            
+            if not items:
+                continue
+                
+            fetched = True
+            
+            for item in items[:30]:
+                title       = item.findtext("title", "")
+                description = item.findtext("description", "")
+                link        = item.findtext("link", "")
+                pub_date    = item.findtext("pubDate", "")
+                
+                full_text = f"{title} {description}".lower()
+                
+                for ticker, names in COMPANY_NAMES.items():
+                    for name in names:
+                        if name.lower() in full_text:
+                            alerts.append({
+                                "source"  : "Pentagon Contracts (RSS)",
+                                "ticker"  : ticker,
+                                "company" : names[0],
+                                "title"   : title,
+                                "text"    : description[:300],
+                                "url"     : link,
+                                "date"    : pub_date,
+                                "action"  : f"Review thesis score override for {ticker} (currently {get_current_thesis_score(ticker)})",
+                            })
+                            break
+            break
+            
+        except Exception as e:
+            continue
+    
+    if not fetched:
         alerts.append({
-            "source"  : "Pentagon Contracts",
+            "source"  : "Pentagon Contracts (RSS)",
             "ticker"  : "ERROR",
             "company" : "N/A",
-            "text"    : f"Scrape failed: {str(e)}",
-            "url"     : url,
-            "action"  : "Check defense.gov manually",
+            "text"    : "RSS feed unavailable — check defense.gov manually",
+            "url"     : "https://www.defense.gov/News/Contracts/",
+            "date"    : "",
+            "action"  : "Manual check required",
         })
-
+    
     return alerts
 
 
-# --- NDAA Keyword Monitor ---
+# --- Congress.gov NDAA Monitor ---
 
 def scrape_ndaa_keywords():
     """
-    Monitor Congress.gov for NDAA-related defense keywords.
-    
-    Returns:
-        list of alert dicts
+    Monitor Congress.gov for NDAA legislation containing
+    thesis-relevant keywords via public search API.
     """
     alerts = []
-    url = "https://www.congress.gov/search?q=%7B%22source%22%3A%22legislation%22%2C%22search%22%3A%22national+defense+authorization%22%7D&pageSize=5"
+    
+    # Congress.gov public search — no API key required for basic search
+    base_url = "https://api.congress.gov/v3/bill"
+    api_key = os.getenv("CONGRESS_API_KEY", "")
 
+    # Search for recent NDAA bills
+    params = {
+        "query"  : "national defense authorization",
+        "sort"   : "updateDate+desc",
+        "limit"  : 5,
+        "format" : "json",
+        "api_key": api_key,
+    }
+    
+    headers = {
+        "User-Agent": "hypersonic-defense-screener/1.0"
+    }
+    
     try:
-        headers = {"User-Agent": "Mozilla/5.0"}
-        response = requests.get(url, headers=headers, timeout=10)
+        response = requests.get(base_url, params=params, 
+                               headers=headers, timeout=10)
         response.raise_for_status()
-
-        soup = BeautifulSoup(response.text, "html.parser")
-        items = soup.find_all("li", class_="expanded")
-
-        for item in items[:10]:
-            text = item.get_text(separator=" ", strip=True)
-
+        data = response.json()
+        
+        bills = data.get("bills", [])
+        
+        for bill in bills:
+            title   = bill.get("title", "")
+            number  = bill.get("number", "")
+            congress= bill.get("congress", "")
+            url     = bill.get("url", "")
+            
+            full_text = title.lower()
+            
             for keyword in NDAA_KEYWORDS:
-                if keyword.lower() in text.lower():
+                if keyword.lower() in full_text:
                     alerts.append({
                         "source"  : "Congress.gov NDAA",
                         "ticker"  : "UNIVERSE",
                         "keyword" : keyword,
-                        "text"    : text[:300],
+                        "title"   : title,
+                        "text"    : f"Bill {number}, Congress {congress}: {title}",
                         "url"     : url,
                         "action"  : f"Review NDAA language re: '{keyword}' — may affect thesis weighting",
                     })
                     break
-
+                    
     except Exception as e:
+        # Fallback — try simple web search for recent NDAA news
         alerts.append({
             "source"  : "Congress.gov NDAA",
-            "ticker"  : "ERROR",
+            "ticker"  : "INFO",
             "keyword" : "N/A",
-            "text"    : f"Scrape failed: {str(e)}",
-            "url"     : url,
-            "action"  : "Check congress.gov manually",
+            "title"   : "API unavailable",
+            "text"    : f"Congress.gov API error: {str(e)} — monitor manually",
+            "url"     : "https://www.congress.gov",
+            "action"  : "Check congress.gov for recent NDAA updates manually",
         })
-
+    
     return alerts
 
 
@@ -166,58 +205,106 @@ def scrape_ndaa_keywords():
 
 def scrape_sec_ipo_watchlist():
     """
-    Monitor SEC EDGAR for S-1 filings from IPO watchlist companies.
-    
-    Returns:
-        list of alert dicts
+    Monitor SEC EDGAR for S-1 filings from IPO watchlist.
+    Uses exact company name matching to avoid false positives.
+    Filters to current year only.
     """
     alerts = []
+    current_year_str = str(CURRENT_YEAR)
 
-    for company in IPO_WATCHLIST:
-        query = company.replace(" ", "+")
-        url = f"https://efts.sec.gov/LATEST/search-index?q=%22{query}%22&dateRange=custom&startdt=2026-01-01&forms=S-1"
-
-        try:
-            headers = {"User-Agent": "hypersonic-defense-screener@research.com"}
-            response = requests.get(url, headers=headers, timeout=10)
-            response.raise_for_status()
-
-            data = response.json()
-            hits = data.get("hits", {}).get("hits", [])
-
-            if hits:
-                for hit in hits[:3]:
-                    source = hit.get("_source", {})
-                    alerts.append({
-                        "source"  : "SEC EDGAR S-1 Watch",
-                        "ticker"  : "IPO ALERT",
-                        "company" : company,
-                        "text"    : f"S-1 filing detected: {source.get('file_date', 'Unknown date')} — {source.get('display_names', company)}",
-                        "url"     : f"https://www.sec.gov/cgi-bin/browse-edgar?company={query}&action=getcompany&type=S-1",
-                        "action"  : f"IMMEDIATE: Review {company} S-1 — prepare to add to universe on IPO",
-                    })
-
-        except Exception as e:
+    for company, exact_names in IPO_WATCHLIST.items():
+        found = False
+        
+        for exact_name in exact_names:
+            # Use EDGAR full-text search API
+            url = "https://efts.sec.gov/LATEST/search-index"
+            params = {
+                "q"    : f'"{exact_name}"',
+                "forms": "S-1,S-1/A",
+                "hits.hits.total.value": 5,
+            }
+            headers = {
+                "User-Agent": "hypersonic-defense-screener research@example.com"
+            }
+            try:
+                response = requests.get(url, params=params,
+                                       headers=headers, timeout=10)
+                response.raise_for_status()
+                data = response.json()
+                
+                hits = data.get("hits", {}).get("hits", [])
+                
+                # Filter for exact company name matches only
+                for hit in hits[:5]:
+                    source      = hit.get("_source", {})
+                    entity_name = source.get("entity_name", "")
+                    file_date   = source.get("file_date", "")
+                    
+                    # Strict match — entity name must contain 
+                    # exact company name
+                    if (exact_name.lower() in entity_name.lower()
+                            and file_date.startswith(current_year_str)):
+                        alerts.append({
+                            "source"  : "SEC EDGAR S-1 Watch",
+                            "ticker"  : "🚨 IPO ALERT",
+                            "company" : company,
+                            "text"    : f"S-1 filed {file_date} by {entity_name}",
+                            "url"     : f"https://www.sec.gov/cgi-bin/browse-edgar?company={exact_name.replace(' ', '+')}&action=getcompany&type=S-1",
+                            "action"  : f"IMMEDIATE: {company} S-1 detected — prepare to add to universe on IPO date",
+                        })
+                        found = True
+                        break
+                        
+                if found:
+                    break
+                    
+            except Exception as e:
+                alerts.append({
+                    "source"  : "SEC EDGAR S-1 Watch",
+                    "ticker"  : "ERROR",
+                    "company" : company,
+                    "text"    : f"EDGAR error: {str(e)}",
+                    "url"     : "https://efts.sec.gov",
+                    "action"  : f"Check SEC EDGAR manually for {company}",
+                })
+                break
+            
+            time.sleep(0.5)
+        
+        # If no filing found — confirm still private
+        if not found and not any(
+            a["ticker"] == "ERROR" and a["company"] == company 
+            for a in alerts
+        ):
             alerts.append({
                 "source"  : "SEC EDGAR S-1 Watch",
-                "ticker"  : "ERROR",
+                "ticker"  : "✅ Still Private",
                 "company" : company,
-                "text"    : f"Scrape failed: {str(e)}",
+                "text"    : f"No {current_year_str} S-1 filing detected for {company}",
                 "url"     : "https://efts.sec.gov",
-                "action"  : f"Check SEC EDGAR manually for {company}",
+                "action"  : "No action required — continue monitoring",
             })
 
-        time.sleep(0.5)  # Be polite to SEC servers
-
     return alerts
+
+
+# --- Helper ---
+
+def get_current_thesis_score(ticker):
+    """Get current thesis score override for a ticker."""
+    THESIS_OVERRIDES = {
+        "KRMN": 85, "KTOS": 80, "AVAV": 75, "TDY": 75,
+        "HWM": 70,  "ATI": 70,  "LOAR": 65, "HEI": 65,
+        "MTRN": 65, "SXI": 45,  "VELO": 40, "PLTR": 85,
+        "AXON": 75,
+    }
+    return THESIS_OVERRIDES.get(ticker, "N/A")
 
 
 # --- Report Generator ---
 
 def generate_intelligence_report(all_alerts):
-    """
-    Generate markdown intelligence report from all alerts.
-    """
+    """Generate markdown intelligence report."""
     today = date.today().strftime("%B %d, %Y")
     lines = []
 
@@ -228,61 +315,61 @@ def generate_intelligence_report(all_alerts):
     lines.append("")
     lines.append("> **Manual review required for all alerts.**")
     lines.append("> Nothing changes automatically.")
-    lines.append("> Thesis score overrides in `score.py` must be")
-    lines.append("> updated manually after reviewing each alert.")
+    lines.append("> Update thesis score overrides in `score.py` manually.")
     lines.append("")
     lines.append("---")
     lines.append("")
 
-    # Pentagon contracts
-    contract_alerts = [a for a in all_alerts
-                      if a["source"] == "Pentagon Contracts"
-                      and a["ticker"] != "ERROR"]
-    contract_errors = [a for a in all_alerts
-                      if a["source"] == "Pentagon Contracts"
-                      and a["ticker"] == "ERROR"]
-
+    # Pentagon
     lines.append("## Pentagon Contract Alerts")
     lines.append("")
+    contract_alerts = [a for a in all_alerts
+                      if a["source"] == "Pentagon Contracts (RSS)"
+                      and a["ticker"] != "ERROR"]
+    contract_errors = [a for a in all_alerts
+                      if a["source"] == "Pentagon Contracts (RSS)"
+                      and a["ticker"] == "ERROR"]
 
     if contract_alerts:
-        for alert in contract_alerts:
-            lines.append(f"### 🚨 {alert['ticker']} — {alert['company']}")
-            lines.append(f"**Source:** {alert['url']}")
-            lines.append(f"**Excerpt:** {alert['text']}")
-            lines.append(f"**Action Required:** {alert['action']}")
+        for a in contract_alerts:
+            lines.append(f"### 🚨 {a['ticker']} — {a['company']}")
+            lines.append(f"**Date:** {a.get('date', 'Unknown')}")
+            lines.append(f"**Title:** {a['title']}")
+            lines.append(f"**Detail:** {a['text']}")
+            lines.append(f"**Source:** {a['url']}")
+            lines.append(f"**Action:** {a['action']}")
             lines.append("")
     elif contract_errors:
-        lines.append(f"> ⚠️ Scrape error: {contract_errors[0]['text']}")
-        lines.append(f"> Check manually: {contract_errors[0]['url']}")
+        lines.append(f"> ⚠️ {contract_errors[0]['text']}")
+        lines.append(f"> Manual check: {contract_errors[0]['url']}")
         lines.append("")
     else:
-        lines.append("> No universe companies mentioned in recent contracts.")
+        lines.append("> No universe companies in recent contracts.")
         lines.append("")
 
     lines.append("---")
     lines.append("")
 
-    # NDAA keywords
-    ndaa_alerts = [a for a in all_alerts
-                  if a["source"] == "Congress.gov NDAA"
-                  and a["ticker"] != "ERROR"]
-    ndaa_errors = [a for a in all_alerts
-                  if a["source"] == "Congress.gov NDAA"
-                  and a["ticker"] == "ERROR"]
-
+    # NDAA
     lines.append("## NDAA Keyword Alerts")
     lines.append("")
+    ndaa_alerts = [a for a in all_alerts
+                  if a["source"] == "Congress.gov NDAA"
+                  and a["ticker"] not in ("ERROR", "INFO")]
+    ndaa_info   = [a for a in all_alerts
+                  if a["source"] == "Congress.gov NDAA"
+                  and a["ticker"] == "INFO"]
 
     if ndaa_alerts:
-        for alert in ndaa_alerts:
-            lines.append(f"### 📋 Keyword: '{alert['keyword']}'")
-            lines.append(f"**Source:** {alert['url']}")
-            lines.append(f"**Excerpt:** {alert['text']}")
-            lines.append(f"**Action Required:** {alert['action']}")
+        for a in ndaa_alerts:
+            lines.append(f"### 📋 Keyword: '{a['keyword']}'")
+            lines.append(f"**Bill:** {a['text']}")
+            lines.append(f"**Source:** {a['url']}")
+            lines.append(f"**Action:** {a['action']}")
             lines.append("")
-    elif ndaa_errors:
-        lines.append(f"> ⚠️ Scrape error: {ndaa_errors[0]['text']}")
+    elif ndaa_info:
+        lines.append(f"> ℹ️ {ndaa_info[0]['text']}")
+        lines.append(f"> Manual check: {ndaa_info[0]['url']}")
         lines.append("")
     else:
         lines.append("> No new NDAA keyword matches found.")
@@ -292,30 +379,37 @@ def generate_intelligence_report(all_alerts):
     lines.append("")
 
     # SEC EDGAR
-    sec_alerts = [a for a in all_alerts
-                 if a["source"] == "SEC EDGAR S-1 Watch"
-                 and a["ticker"] != "ERROR"]
-    sec_errors = [a for a in all_alerts
-                 if a["source"] == "SEC EDGAR S-1 Watch"
-                 and a["ticker"] == "ERROR"]
-
     lines.append("## SEC EDGAR IPO Watch")
     lines.append("")
+    sec_alerts  = [a for a in all_alerts
+                  if a["source"] == "SEC EDGAR S-1 Watch"
+                  and "ALERT" in a["ticker"]]
+    sec_status  = [a for a in all_alerts
+                  if a["source"] == "SEC EDGAR S-1 Watch"
+                  and "Private" in a["ticker"]]
+    sec_errors  = [a for a in all_alerts
+                  if a["source"] == "SEC EDGAR S-1 Watch"
+                  and a["ticker"] == "ERROR"]
 
     if sec_alerts:
-        for alert in sec_alerts:
-            lines.append(f"### 🔔 IPO ALERT — {alert['company']}")
-            lines.append(f"**Filing:** {alert['text']}")
-            lines.append(f"**Source:** {alert['url']}")
-            lines.append(f"**Action Required:** {alert['action']}")
+        for a in sec_alerts:
+            lines.append(f"### 🔔 {a['ticker']} — {a['company']}")
+            lines.append(f"**Filing:** {a['text']}")
+            lines.append(f"**Source:** {a['url']}")
+            lines.append(f"**Action:** {a['action']}")
             lines.append("")
-    elif sec_errors:
-        lines.append(f"> ⚠️ Scrape error: {sec_errors[0]['text']}")
-        lines.append("")
-    else:
-        lines.append("> No S-1 filings detected for Anduril or Shield AI.")
-        lines.append("")
-
+    
+    for a in sec_status:
+        lines.append(f"- {a['ticker']} **{a['company']}** — {a['text']}")
+    
+    if sec_errors:
+        for a in sec_errors:
+            lines.append(f"> ⚠️ {a['text']} ({a['company']})")
+    
+    if not sec_alerts and not sec_status and not sec_errors:
+        lines.append("> SEC EDGAR check produced no results.")
+    
+    lines.append("")
     lines.append("---")
     lines.append("")
     lines.append(f"*Generated by Hypersonic Defense Screener — {today}*")
@@ -341,15 +435,13 @@ def save_intelligence_report(markdown):
 
 
 def run_intelligence():
-    """
-    Run all intelligence scrapers and generate report.
-    """
+    """Run all intelligence scrapers and generate report."""
     print("Running intelligence scrapers...")
     print("(Manual review required for all alerts)\n")
 
     all_alerts = []
 
-    print("Checking Pentagon contracts...")
+    print("Checking Pentagon contracts (RSS)...")
     all_alerts.extend(scrape_pentagon_contracts())
     time.sleep(1)
 
@@ -360,7 +452,9 @@ def run_intelligence():
     print("Checking SEC EDGAR IPO watchlist...")
     all_alerts.extend(scrape_sec_ipo_watchlist())
 
-    print(f"\nTotal alerts: {len([a for a in all_alerts if a['ticker'] != 'ERROR'])}")
+    action_alerts = [a for a in all_alerts 
+                    if a["ticker"] not in ("ERROR", "INFO", "✅ Still Private")]
+    print(f"\nAction alerts: {len(action_alerts)}")
 
     markdown = generate_intelligence_report(all_alerts)
     save_intelligence_report(markdown)
