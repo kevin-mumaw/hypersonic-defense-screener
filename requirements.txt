@@ -4,4 +4,4 @@ numpy
 matplotlib
 streamlit
 plotly
-python-dotenvs
+python-dotenv
