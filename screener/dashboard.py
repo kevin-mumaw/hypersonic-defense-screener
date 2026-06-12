@@ -4,7 +4,6 @@
 # Accessible from desktop and iPhone
 
 import streamlit as st
-import pandas as pd
 import sys
 import os
 from datetime import datetime, date
@@ -265,7 +264,7 @@ def main():
     st.dataframe(signal_df.set_index("Ticker"), use_container_width=True)
 
     st.divider()
-    
+
 # --- Portfolio Tracker ---
     st.divider()
     st.subheader("🏈 Active Portfolio (Agentic ••••5038)")
