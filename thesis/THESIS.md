@@ -1,4 +1,5 @@
-# Hypersonic Defense Screener — Investment Thesis
+# Second Layer Capital — Investment Thesis
+## Hypersonic & Next-Generation Defense
 
 **Version:** 0.2  
 **Date:** June 2026  
