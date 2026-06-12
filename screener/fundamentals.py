@@ -1,18 +1,19 @@
 # fundamentals.py
 # Fetches and scores fundamental data for all universe tickers
-# Phase 2 Part A: Automated via yfinance
-# Phase 2 Part B: Manual inputs for backlog and defense revenue mix
-# Data limitations documented honestly per SCREENER_SPEC.md
+# Phase 2 Part A: Automated via yfinance (local) or cache (cloud)
+# Uses cache file on cloud platforms to avoid rate limiting
 
 import yfinance as yf
 import pandas as pd
+import os
+import json
 from universe import UNIVERSE
 
 
 def fetch_fundamentals(ticker):
     """
     Fetch fundamental data for a single ticker via yfinance.
-    
+
     Returns:
         dict of fundamental metrics or None if fetch fails
     """
@@ -20,36 +21,16 @@ def fetch_fundamentals(ticker):
         stock = yf.Ticker(ticker)
         info  = stock.info
 
-        # Revenue growth YoY
-        revenue_growth = info.get("revenueGrowth", None)
-
-        # Margins
-        gross_margin     = info.get("grossMargins", None)
-        operating_margin = info.get("operatingMargins", None)
-        profit_margin    = info.get("profitMargins", None)
-
-        # Balance sheet health
-        debt_to_equity = info.get("debtToEquity", None)
-
-        # Revenue (trailing twelve months)
-        total_revenue = info.get("totalRevenue", None)
-
-        # Earnings growth
-        earnings_growth = info.get("earningsGrowth", None)
-
-        # Return on equity
-        roe = info.get("returnOnEquity", None)
-
         return {
             "ticker"          : ticker,
-            "revenue_growth"  : revenue_growth,
-            "gross_margin"    : gross_margin,
-            "operating_margin": operating_margin,
-            "profit_margin"   : profit_margin,
-            "debt_to_equity"  : debt_to_equity,
-            "total_revenue"   : total_revenue,
-            "earnings_growth" : earnings_growth,
-            "roe"             : roe,
+            "revenue_growth"  : info.get("revenueGrowth", None),
+            "gross_margin"    : info.get("grossMargins", None),
+            "operating_margin": info.get("operatingMargins", None),
+            "profit_margin"   : info.get("profitMargins", None),
+            "debt_to_equity"  : info.get("debtToEquity", None),
+            "total_revenue"   : info.get("totalRevenue", None),
+            "earnings_growth" : info.get("earningsGrowth", None),
+            "roe"             : info.get("returnOnEquity", None),
         }
 
     except Exception as e:
@@ -60,10 +41,27 @@ def fetch_fundamentals(ticker):
 def fetch_universe_fundamentals():
     """
     Fetch fundamental data for all tickers in the universe.
-    
+    Uses cache file on cloud platforms to avoid yfinance rate limiting.
+    Falls back to live yfinance fetch if cache not available.
+
     Returns:
         dict of {ticker: fundamentals_dict}
     """
+    # Try cache first — works on cloud platforms
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    repo_root  = os.path.dirname(script_dir)
+    cache_path = os.path.join(repo_root, "data", "fundamentals_cache.json")
+
+    if os.path.exists(cache_path):
+        with open(cache_path, "r") as f:
+            cache = json.load(f)
+        results = {k: v["data"] for k, v in cache.items()
+                  if k != "_meta"}
+        cached_date = cache.get("_meta", {}).get("cached_date", "unknown")
+        print(f"Fundamentals loaded from cache (cached: {cached_date})")
+        return results
+
+    # Fall back to live fetch
     print(f"Fetching fundamentals for {len(UNIVERSE)} tickers...\n")
 
     results = {}
@@ -87,16 +85,6 @@ def fetch_universe_fundamentals():
 def score_fundamentals(fund):
     """
     Score fundamental data 0-100.
-    
-    Scoring logic:
-    - Revenue growth  : 30 points
-    - Gross margin    : 20 points
-    - Operating margin: 20 points
-    - Debt to equity  : 15 points
-    - Earnings growth : 15 points
-    
-    None values score neutral (50% of available points)
-    to avoid penalizing data gaps unfairly.
     """
     score = 0
     notes = []
@@ -104,7 +92,7 @@ def score_fundamentals(fund):
     # Revenue growth (30 points)
     rg = fund.get("revenue_growth")
     if rg is None:
-        score += 15  # Neutral — no data
+        score += 15
         notes.append("Revenue growth: no data")
     elif rg >= 0.20:
         score += 30
@@ -155,7 +143,7 @@ def score_fundamentals(fund):
         score += 0
         notes.append(f"Operating margin: negative ({om:.1%})")
 
-    # Debt to equity (15 points) — lower is better
+    # Debt to equity (15 points)
     de = fund.get("debt_to_equity")
     if de is None:
         score += 7
@@ -198,9 +186,7 @@ def score_fundamentals(fund):
 
 
 def display_fundamentals(results):
-    """
-    Display fundamental data and scores in a readable table.
-    """
+    """Display fundamental data and scores."""
     print("\n--- Fundamental Data ---\n")
     print(
         f"{'Ticker':<6} {'Rev Gr':>8} {'Gr Mgn':>8} "
@@ -212,18 +198,17 @@ def display_fundamentals(results):
     for ticker, fund in results.items():
         fs = score_fundamentals(fund)
 
-        rg  = f"{fund['revenue_growth']:.1%}"  if fund['revenue_growth']  is not None else "N/A"
-        gm  = f"{fund['gross_margin']:.1%}"    if fund['gross_margin']    is not None else "N/A"
+        rg  = f"{fund['revenue_growth']:.1%}"   if fund['revenue_growth']   is not None else "N/A"
+        gm  = f"{fund['gross_margin']:.1%}"     if fund['gross_margin']     is not None else "N/A"
         om  = f"{fund['operating_margin']:.1%}" if fund['operating_margin'] is not None else "N/A"
-        de  = f"{fund['debt_to_equity']:.1f}"  if fund['debt_to_equity']  is not None else "N/A"
-        eg  = f"{fund['earnings_growth']:.1%}" if fund['earnings_growth'] is not None else "N/A"
+        de  = f"{fund['debt_to_equity']:.1f}"   if fund['debt_to_equity']   is not None else "N/A"
+        eg  = f"{fund['earnings_growth']:.1%}"  if fund['earnings_growth']  is not None else "N/A"
 
         print(
             f"{ticker:<6} {rg:>8} {gm:>8} "
             f"{om:>8} {de:>8} {eg:>8} "
             f"{fs['fundamental_score']:>8.1f}"
         )
-
         scored[ticker] = fs
 
     return scored
@@ -231,11 +216,4 @@ def display_fundamentals(results):
 
 if __name__ == "__main__":
     results = fetch_universe_fundamentals()
-    scored  = display_fundamentals(results)
-
-    print("\n--- Fundamental Score Notes ---\n")
-    for ticker, fs in scored.items():
-        print(f"{ticker}:")
-        for note in fs["notes"]:
-            print(f"  - {note}")
-        print()
+    display_fundamentals(results)
