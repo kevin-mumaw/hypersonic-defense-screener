@@ -4,6 +4,7 @@
 # Accessible from desktop and iPhone
 
 import streamlit as st
+import pandas as pd
 import sys
 import os
 from datetime import datetime, date
