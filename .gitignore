@@ -13,6 +13,7 @@ venv/
 *.csv
 *.xlsx
 *.json
+!data/fundamentals_cache.json
 
 # API keys / credentials
 secrets.py
