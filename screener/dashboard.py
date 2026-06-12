@@ -1,4 +1,4 @@
-iPhone# dashboard.py
+# dashboard.py
 # Hypersonic Defense Screener — Streamlit Dashboard
 # Deployed via Streamlit Cloud
 # Accessible from desktop and iPhone
