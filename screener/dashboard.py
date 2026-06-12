@@ -273,6 +273,10 @@ def main():
     # For now show bench players from screener
     # Full position data requires Robinhood MCP connection
     gaps = identify_gaps([], scores)
+    if not gaps:
+        gaps = [s for s in scores if s["signal"] == "STRONG"]
+        for g in gaps:
+            g["action"] = "Consider adding — STRONG signal, not currently held"
 
     if gaps:
         st.markdown("**Bench Players Ready to Come On** — STRONG signal, not currently held:")
