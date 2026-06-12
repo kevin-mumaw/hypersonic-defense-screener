@@ -282,7 +282,6 @@ def main():
                 "Score" : g["score"],
                 "Action": g["action"],
             })
-        import pandas as pd
         gap_df = pd.DataFrame(gap_data).set_index("Ticker")
         st.dataframe(gap_df, use_container_width=True)
     else:
