@@ -23,7 +23,7 @@ from portfolio import build_portfolio_view, identify_gaps
 
 # --- Page Config ---
 st.set_page_config(
-    page_title="Hypersonic Defense Screener",
+page_title="Second Layer Capital",
     page_icon="🛡️",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -117,8 +117,8 @@ def get_posture_html(posture):
 # --- Main App ---
 def main():
     # Header
-    st.title("🛡️ Hypersonic Defense Screener")
-    st.caption(f"Picks-and-shovels play on next-generation defense technology")
+    st.title("🛡️ Second Layer Capital")
+    st.caption("Hypersonic & Next-Generation Defense | Picks-and-Shovels Strategy")
 
     # Refresh controls
     col1, col2, col3 = st.columns([2, 1, 1])
