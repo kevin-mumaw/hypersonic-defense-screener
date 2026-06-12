@@ -1,4 +1,4 @@
-# Hypersonic Defense Screener
+# Second Layer Capital — Hypersonic Defense Screener
 
 A rules-based stock screening and portfolio management system 
 targeting the picks-and-shovels supply chain of next-generation 
@@ -16,7 +16,8 @@ integrators — will see durable, multi-decade government contract
 flow regardless of which specific platforms win.
 
 This screener targets that picks-and-shovels layer, not the prime 
-contractors.
+contractors. 
+*A Second Layer Capital research project.*
 
 ## Status
 🔴 Pre-Alpha — Thesis definition and universe construction phase
