@@ -229,9 +229,7 @@ def main():
     score_df.index = range(1, len(score_df) + 1)
     score_df.index.name = "Rank"
 
-    st.dataframe(
-        score_df,
-        use_container_width=True,
+    st.dataframe(signal_df.set_index("Ticker"), use_container_width=True),
         column_config={
             "Score": st.column_config.ProgressColumn(
                 "Score",
