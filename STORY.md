@@ -1,4 +1,5 @@
-# The Story Behind the Hypersonic Defense Screener
+# Second Layer Capital
+## The Story Behind the Hypersonic Defense Screener
 
 *A work in progress — updated as the project evolves.*
 
