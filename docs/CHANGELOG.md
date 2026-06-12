@@ -6,6 +6,24 @@ Hypersonic Defense Screener. It is maintained as a
 living document updated with every meaningful change 
 to thesis, universe, screener logic, or methodology.
 ---
+## [1.3] — June 2026
+
+### Fundamentals Cache — Fully Automated
+- Added cache_fundamentals.py — saves fundamentals to JSON
+- Updated fundamentals.py — reads from cache on cloud
+- Added GitHub Action — auto-refreshes cache every Sunday at 2am UTC
+- Dashboard fundamentals now work on Streamlit Cloud
+- No manual intervention required for quarterly updates
+
+### Portfolio Tracker
+- Added portfolio.py — roster management system
+- Identifies bench players with STRONG signals not currently held
+- Added portfolio section to Streamlit dashboard
+- Agentic account (••••5038) tracking foundation in place
+
+### Story
+- Added docs/STORY.md — project origin narrative
+
 ## [1.2] — June 2026
 
 ### Dashboard — Fixed for Streamlit Cloud
