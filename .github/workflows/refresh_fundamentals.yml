@@ -1,0 +1,36 @@
+name: Refresh Fundamentals Cache
+
+on:
+  schedule:
+    - cron: '0 2 * * 0'  # Every Sunday at 2am UTC
+  workflow_dispatch:       # Also allows manual trigger from GitHub
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: | 
+          pip install yfinance pandas
+
+      - name: Run cache refresh
+        run: |
+          cd screener
+          python cache_fundamentals.py
+
+      - name: Commit updated cache
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f data/fundamentals_cache.json
+          git diff --cached --quiet || git commit -m "Auto-refresh fundamentals cache $(date +%Y-%m-%d)"
+          git push
