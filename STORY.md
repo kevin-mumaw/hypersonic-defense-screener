@@ -12,7 +12,8 @@ officer and later Civil Affairs. After college in Indiana and a short
 career as an Assembly language programmer at an insurance company in 
 Michigan, I joined the Army in 1999. After retirement as a Major, 
 I earned a masters in cybersecurity, worked a year for the FBI, 
-and then joined protecting critical technical defense programs.
+and then joined the Department of Defense protecting critical technical 
+defense programs.
 
 The investment thesis didn't start with a research report. It started 
 with a hobby. In college in Indiana, I used to calculate when and where 
