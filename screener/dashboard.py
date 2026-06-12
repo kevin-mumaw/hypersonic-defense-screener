@@ -19,6 +19,7 @@ from signals import calculate_universe_signals
 from fundamentals import fetch_universe_fundamentals
 from score import score_universe
 from report import get_universe_posture, generate_signal_groups
+from portfolio import build_portfolio_view, identify_gaps
 
 # --- Page Config ---
 st.set_page_config(
@@ -264,6 +265,31 @@ def main():
     st.dataframe(signal_df.set_index("Ticker"), use_container_width=True)
 
     st.divider()
+    
+# --- Portfolio Tracker ---
+    st.divider()
+    st.subheader("🏈 Active Portfolio (Agentic ••••5038)")
+
+    # For now show bench players from screener
+    # Full position data requires Robinhood MCP connection
+    gaps = identify_gaps([], scores)
+
+    if gaps:
+        st.markdown("**Bench Players Ready to Come On** — STRONG signal, not currently held:")
+        gap_data = []
+        for g in gaps:
+            gap_data.append({
+                "Ticker": g["ticker"],
+                "Score" : g["score"],
+                "Action": g["action"],
+            })
+        import pandas as pd
+        gap_df = pd.DataFrame(gap_data).set_index("Ticker")
+        st.dataframe(gap_df, use_container_width=True)
+    else:
+        st.info("All STRONG signal names are currently held.")
+
+    st.caption("Full position tracking available when Robinhood positions are connected.")
 
     # --- Footer ---
     st.caption(
