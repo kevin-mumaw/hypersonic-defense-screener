@@ -16,7 +16,11 @@ from universe import UNIVERSE
 
 load_dotenv()
 
-TRADIER_TOKEN = os.getenv("TRADIER_TOKEN", "")
+try:
+    import streamlit as st
+    TRADIER_TOKEN = st.secrets.get("TRADIER_TOKEN", os.getenv("TRADIER_TOKEN", ""))
+except Exception:
+    TRADIER_TOKEN = os.getenv("TRADIER_TOKEN", "")
 TRADIER_BASE  = "https://api.tradier.com/v1"
 
 
