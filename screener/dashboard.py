@@ -1,4 +1,4 @@
-# dashboard.py
+iPhone# dashboard.py
 # Hypersonic Defense Screener — Streamlit Dashboard
 # Deployed via Streamlit Cloud
 # Accessible from desktop and iPhone
@@ -261,7 +261,7 @@ def main():
         })
 
     signal_df = pd.DataFrame(signal_data)
-    st.dataframe(signal_df, use_container_width=True)
+    st.dataframe(signal_df.set_index("Ticker"), use_container_width=True)
 
     st.divider()
 
