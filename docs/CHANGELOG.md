@@ -29,7 +29,25 @@ to thesis, universe, screener logic, or methodology.
 - Fixed Shield AI query false positives
 - Anduril and Shield AI confirmed still private as of June 2026
 
-  ## [1.0] — June 2026
+## [1.1] — June 2026
+
+### Intelligence Module — v0.1 Complete
+- Added intelligence.py — automated public data monitoring
+- Pentagon contracts: Defense.gov RSS feed monitoring for 
+  universe company mentions
+- Congress.gov NDAA: API-based keyword monitoring for 
+  thesis-relevant defense legislation keywords
+- SEC EDGAR: IPO watchlist monitoring for Anduril and 
+  Shield AI S-1 filings
+- All alerts require manual review — nothing changes 
+  automatically
+- Congress.gov API key required (stored in .env, 
+  never committed to GitHub)
+- Current status: Anduril and Shield AI confirmed 
+  still private as of June 2026
+- Added python-dotenv to requirements.txt
+
+## [1.0] — June 2026
 
 ### Backtest — 13-Ticker Universe
 - Reran backtest against full expanded 13-ticker universe
