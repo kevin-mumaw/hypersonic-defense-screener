@@ -6,6 +6,47 @@ Hypersonic Defense Screener. It is maintained as a
 living document updated with every meaningful change 
 to thesis, universe, screener logic, or methodology.
 ---
+## [1.2] — June 2026
+
+### Dashboard — Fixed for Streamlit Cloud
+- Switched price data source from yfinance to Tradier API
+- Tradier token read from Streamlit secrets for cloud deployment
+- Fixed python-dotenv typo in requirements.txt
+- Dashboard now fully operational on iPhone via Streamlit Cloud
+
+### Discovery Module — v0.1
+- Added discovery.py — automated candidate scanner
+- ETF holdings scanner (ITA, XAR, DFEN)
+- SEC EDGAR keyword scanner
+- First run surfaced 9 candidates:
+  - Added TDG, CW, HXL to watchlist in UNIVERSE.md
+  - Eliminated GE (too large), ACHR (wrong sector)
+  - RKLB, LUNR already known quantities
+
+### Intelligence Module — v0.2
+- Fixed Congress.gov API integration with API key
+- Fixed SEC EDGAR headers error
+- Fixed Shield AI query false positives
+- Anduril and Shield AI confirmed still private as of June 2026
+
+## [1.1] — June 2026
+
+### Intelligence Module — v0.1 Complete
+- Added intelligence.py — automated public data monitoring
+- Pentagon contracts: Defense.gov RSS feed monitoring for 
+  universe company mentions
+- Congress.gov NDAA: API-based keyword monitoring for 
+  thesis-relevant defense legislation keywords
+- SEC EDGAR: IPO watchlist monitoring for Anduril and 
+  Shield AI S-1 filings
+- All alerts require manual review — nothing changes 
+  automatically
+- Congress.gov API key required (stored in .env, 
+  never committed to GitHub)
+- Current status: Anduril and Shield AI confirmed 
+  still private as of June 2026
+- Added python-dotenv to requirements.txt
+
 ## [1.0] — June 2026
 
 ### Backtest — 13-Ticker Universe
