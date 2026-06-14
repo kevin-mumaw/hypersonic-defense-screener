@@ -276,10 +276,10 @@ def main():
     if not gaps:
         gaps = [s for s in scores if s["signal"] == "STRONG"]
         for g in gaps:
-            g["action"] = "Consider adding — STRONG signal, not currently held"
+            g["action"] = "Queued for Monday open"
 
     if gaps:
-        st.markdown("**Bench Players Ready to Come On** — STRONG signal, not currently held:")
+        st.markdown("**Orders Queued for Monday Open** — STRONG signal names:")
         gap_data = []
         for g in gaps:
             gap_data.append({
@@ -290,7 +290,7 @@ def main():
         gap_df = pd.DataFrame(gap_data).set_index("Ticker")
         st.dataframe(gap_df, use_container_width=True)
     else:
-        st.info("All STRONG signal names are currently held.")
+        st.info("All STRONG signal names are queued or held.")
 
     st.caption("Full position tracking available when Robinhood positions are connected.")
 
