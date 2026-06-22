@@ -34,3 +34,4 @@ jobs:
           git add -f data/fundamentals_cache.json
           git diff --cached --quiet || git commit -m "Auto-refresh fundamentals cache $(date +%Y-%m-%d)"
           git push
+          

@@ -20,6 +20,7 @@ from fundamentals import fetch_universe_fundamentals
 from score import score_universe
 from report import get_universe_posture, generate_signal_groups
 from portfolio import build_portfolio_view, identify_gaps
+from positions import POSITIONS, CASH, LAST_UPDATED
 
 # --- Page Config ---
 st.set_page_config(
@@ -268,31 +269,53 @@ def main():
 
 # --- Portfolio Tracker ---
     st.divider()
-    st.subheader("🏈 Active Portfolio (Agentic ••••5038)")
+    st.subheader("🏈 Active Portfolio — Second Layer Capital (Agentic ••••5038)")
 
-    # For now show bench players from screener
-    # Full position data requires Robinhood MCP connection
-    gaps = identify_gaps([], scores)
-    if not gaps:
-        gaps = [s for s in scores if s["signal"] == "STRONG"]
-        for g in gaps:
-            g["action"] = "Queued for Monday open"
+    # Current positions from positions.py
+    positions_list = [
+        {"ticker": k, "shares": v["shares"], "avg_cost": v["avg_cost"]}
+        for k, v in POSITIONS.items()
+    ]
 
+    # Show current holdings
+    if positions_list:
+        st.markdown("**On the Field:**")
+        held_tickers = {p["ticker"] for p in positions_list}
+        score_lookup  = {s["ticker"]: s for s in scores}
+
+        held_data = []
+        for p in positions_list:
+            ticker    = p["ticker"]
+            s         = score_lookup.get(ticker, {})
+            held_data.append({
+                "Ticker" : ticker,
+                "Shares" : p["shares"],
+                "Avg Cost": f"${p['avg_cost']:.2f}",
+                "Score"  : s.get("composite", "N/A"),
+                "Signal" : s.get("signal", "N/A"),
+                "Action" : s.get("action", "N/A"),
+            })
+
+        held_df = pd.DataFrame(held_data).set_index("Ticker")
+        st.dataframe(held_df, use_container_width=True)
+    else:
+        st.info("No positions currently held.")
+
+    # Bench players — STRONG signals not held
+    gaps = identify_gaps(positions_list, scores)
     if gaps:
-        st.markdown("**Orders Queued for Monday Open** — STRONG signal names:")
+        st.markdown("**Bench Players Ready to Come On:**")
         gap_data = []
         for g in gaps:
             gap_data.append({
                 "Ticker": g["ticker"],
                 "Score" : g["score"],
-                "Action": g["action"],
+                "Action": "Consider adding — STRONG signal, not held",
             })
         gap_df = pd.DataFrame(gap_data).set_index("Ticker")
         st.dataframe(gap_df, use_container_width=True)
-    else:
-        st.info("All STRONG signal names are queued or held.")
 
-    st.caption("Full position tracking available when Robinhood positions are connected.")
+    st.caption(f"Positions last updated: {LAST_UPDATED} | Cash: ${CASH:.2f}")
 
     # --- Footer ---
     st.caption(
