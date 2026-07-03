@@ -6,6 +6,17 @@ Hypersonic Defense Screener. It is maintained as a
 living document updated with every meaningful change 
 to thesis, universe, screener logic, or methodology.
 ---
+## [1.4] — July 2026
+
+### Universe — SXI Removed
+- Removed Standex International (SXI) from active universe
+- Rationale: Insufficient defense thesis concentration — too 
+  diversified across non-defense markets to justify inclusion
+- Thesis score was 45 — lowest in universe by wide margin
+- Discovery scanner will surface SXI again if defense revenue 
+  mix changes significantly
+- Universe now 12 tickers
+
 ## [1.3] — June 2026
 
 ### Fundamentals Cache — Fully Automated
