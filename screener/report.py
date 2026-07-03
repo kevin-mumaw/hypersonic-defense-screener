@@ -179,7 +179,21 @@ def generate_markdown(scores, signals):
     lines.append("")
     lines.append("---")
     lines.append("")
+    # Gap flags
+    gap_flags = [
+        (s["ticker"], signals[s["ticker"]].get("gap_flag"))
+        for s in scores
+        if signals.get(s["ticker"], {}).get("gap_flag")
+    ]
 
+    if gap_flags:
+        lines.append("## ⚠️ Gap Alerts")
+        lines.append("")
+        for ticker, flag in gap_flags:
+            lines.append(f"- **{ticker}** — {flag}")
+        lines.append("")
+        lines.append("---")
+        lines.append("")
     # Notes
     lines.append("## Notes")
     lines.append("")
