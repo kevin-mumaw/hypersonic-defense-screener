@@ -21,7 +21,6 @@ UNIVERSE = {
     "LOAR": {"name": "Loar Holdings",             "domain": "High-margin precision aerospace subcomponents","sector": "IoMT & Digital Battlefield"},
 
     # Industrial Supply Chain & Materials
-    "SXI":  {"name": "Standex International",     "domain": "Diversified precision machining & aerospace components","sector": "Industrial Supply Chain"},
     "MTRN": {"name": "Materion",                  "domain": "Specialty beryllium alloys & optical/guidance subcomponents","sector": "Industrial Supply Chain"},
     "VELO": {"name": "Velo3D",                    "domain": "Advanced additive manufacturing",        "sector": "Industrial Supply Chain"},
 }
