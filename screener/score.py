@@ -105,15 +105,20 @@ def calculate_composite_score(ticker, signals, fund_data=None):
         thesis_score * 0.20
     )
 
-    # Signal interpretation
+    # Check for gap flag
+    gap_flag = signals.get("gap_flag", None)
+
     if composite >= 75:
         signal = "STRONG"
-        action = "Consider adding"
+        if gap_flag:
+            action = f"Consider adding — {gap_flag}"
+        else:
+            action = "Consider adding"
     elif composite >= 50:
         signal = "NEUTRAL"
         action = "Hold / monitor"
     elif composite >= 25:
-        signal = "WEAK"
+        signal = "WEAK"        
         action = "Consider trimming"
     else:
         signal = "CRITICAL"

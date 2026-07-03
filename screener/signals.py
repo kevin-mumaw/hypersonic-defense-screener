@@ -86,6 +86,20 @@ def calculate_signals(ticker, df):
     else:
         trend = "MIXED"
 
+    # Gap-up/Gap-down detection (day over day % change)
+    if len(close) >= 2:
+        prev_close  = close.iloc[-2]
+        day_change  = (latest_close - prev_close) / prev_close * 100
+    else:
+        day_change  = 0.0
+
+    # Flag extended moves
+    if day_change >= 5.0:
+        gap_flag = f"GAP UP +{day_change:.1f}% — wait for pullback"
+    elif day_change <= -5.0:
+        gap_flag = f"GAP DOWN {day_change:.1f}% — monitor support"
+    else:
+        gap_flag = None
     return {
         "ticker"       : ticker,
         "close"        : round(latest_close, 2),
@@ -100,6 +114,8 @@ def calculate_signals(ticker, df):
         "ma20_vs_ma50" : ma20_vs_ma50,
         "vol_confirmed": vol_confirmed,
         "trend"        : trend,
+        "day_change"   : round(day_change, 1),
+        "gap_flag"     : gap_flag,
     }
 
 
