@@ -6,6 +6,21 @@ Hypersonic Defense Screener. It is maintained as a
 living document updated with every meaningful change 
 to thesis, universe, screener logic, or methodology.
 ---
+## [1.5] — July 2026
+
+### Gap Alert System
+- Added day-over-day % change calculation to signals.py
+- Added gap flag logic — flags moves >= 5% in either direction
+- Score.py now modifies action text for STRONG signals with gap flags
+  e.g. "Consider adding — GAP DOWN -6.4% — monitor support"
+- Report.py now surfaces gap alerts as a dedicated section
+- First live alerts: MTRN -6.4% gap down, AVAV +10.7% gap up (July 3)
+
+### Universe Cleanup
+- Removed SXI (Standex International) — insufficient defense thesis fit
+- Universe now 12 tickers
+- Added VELO removal triggers to UNIVERSE.md
+
 ## [1.4] — July 2026
 
 ### Universe — SXI Removed
