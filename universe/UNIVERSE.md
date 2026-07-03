@@ -1,7 +1,7 @@
 # Hypersonic Defense Screener — Ticker Universe
 
-**Version:** 0.3  
-**Date:** June 2026  
+**Version:** 1.4  
+**Date:** July 2026  
 **Status:** Active  
 
 ---
@@ -95,7 +95,6 @@ to meet ALL of the following criteria:
 
 | Ticker | Company | Exchange | Description | Tier |
 |--------|---------|----------|-------------|------|
-| SXI | Standex International | NYSE | Diversified precision machining & aerospace components. Partial thesis fit due to diversification. | Anchor |
 | MTRN | Materion | NYSE | Specialty beryllium alloys & optical/guidance subcomponents. Cross-market supplier — semi, auto, defense. | Anchor |
 | VELO | Velo3D | NASDAQ | Advanced additive manufacturing for complex defense geometries. Pre-profitability, high risk, extreme volatility. | Anchor |
 
