@@ -1,7 +1,7 @@
 # Hypersonic Defense Screener — Ticker Universe
 
-**Version:** 0.3  
-**Date:** June 2026  
+**Version:** 1.4  
+**Date:** July 2026  
 **Status:** Active  
 
 ---
