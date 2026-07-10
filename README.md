@@ -1,5 +1,5 @@
 # Second Layer Capital — Hypersonic Defense Screener
-
+![Second Layer Capital](generated-image__1_.png)
 A rules-based stock screening and portfolio management system 
 targeting the picks-and-shovels supply chain of next-generation 
 defense technology — hypersonic weapons, directed energy, 
