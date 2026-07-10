@@ -263,7 +263,10 @@ def main():
         })
 
     signal_df = pd.DataFrame(signal_data)
-    st.dataframe(signal_df.set_index("Ticker"), use_container_width=True)
+   if not signal_df.empty:
+        st.dataframe(signal_df.set_index("Ticker"), use_container_width=True)
+    else:
+        st.warning("No signal data available — refresh to try again.")
 
     st.divider()
 
