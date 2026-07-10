@@ -261,8 +261,11 @@ def main():
             "Trend"      : s["trend"],
             "Vol OK"     : "✅" if s["vol_confirmed"] else "❌",
         })
-
-    signal_df = pd.DataFrame(signal_data)
+signal_df = pd.DataFrame(signal_data)
+    if not signal_df.empty:
+        st.dataframe(signal_df.set_index("Ticker"), use_container_width=True)
+    else:
+        st.warning("No signal data available — refresh to try again.")
     st.dataframe(signal_df.set_index("Ticker"), use_container_width=True)
 
     st.divider()
