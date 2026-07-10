@@ -96,7 +96,7 @@ to meet ALL of the following criteria:
 | Ticker | Company | Exchange | Description | Tier |
 |--------|---------|----------|-------------|------|
 | MTRN | Materion | NYSE | Specialty beryllium alloys & optical/guidance subcomponents. Cross-market supplier — semi, auto, defense. | Anchor |
-| VELO | Velo3D | NASDAQ | Advanced additive manufacturing for complex defense geometries. Pre-profitability, high risk, extreme volatility. | Anchor |
+| VELO | Velo3D | NASDAQ | Advanced additive manufacturing for complex defense geometries. Pre-profitability, high risk, extreme volatility. **Removal triggers:** composite score below 35 for two consecutive weeks, cash runway below 18 months, or delisting. | Anchor |
 
 ---
 
