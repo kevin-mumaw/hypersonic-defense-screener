@@ -1,6 +1,6 @@
 # dashboard.py
-# Hypersonic Defense Screener — Streamlit Dashboard
-# Deployed via Streamlit Cloud
+# Second Layer Capital — Hypersonic Defense Screener
+# Streamlit Dashboard — Deployed via Streamlit Cloud
 # Accessible from desktop and iPhone
 
 import streamlit as st
@@ -22,9 +22,15 @@ from report import get_universe_posture, generate_signal_groups
 from portfolio import build_portfolio_view, identify_gaps
 from positions import POSITIONS, CASH, LAST_UPDATED
 
+try:
+    import streamlit as st
+    TRADIER_TOKEN = st.secrets.get("TRADIER_TOKEN", os.getenv("TRADIER_TOKEN", ""))
+except Exception:
+    TRADIER_TOKEN = os.getenv("TRADIER_TOKEN", "")
+
 # --- Page Config ---
 st.set_page_config(
-page_title="Second Layer Capital",
+    page_title="Second Layer Capital",
     page_icon="🛡️",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -73,31 +79,16 @@ st.markdown("""
         font-weight: bold;
         margin-bottom: 20px;
     }
-    .signal-strong {
-        color: #69db7c;
-        font-weight: bold;
-    }
-    .signal-neutral {
-        color: #74c0fc;
-    }
-    .signal-weak {
-        color: #ffd43b;
-        font-weight: bold;
-    }
-    .signal-critical {
-        color: #f783ac;
-        font-weight: bold;
-    }
 </style>
 """, unsafe_allow_html=True)
 
 
 # --- Data Loading ---
-@st.cache_data(ttl=3600)  # Cache for 1 hour
+@st.cache_data(ttl=3600)
 def load_all_data():
     """Load all screener data with caching."""
-    signals  = calculate_universe_signals(period="6mo")
-    scores   = score_universe()
+    signals = calculate_universe_signals(period="6mo")
+    scores  = score_universe()
     return signals, scores
 
 
@@ -111,7 +102,6 @@ def get_posture_html(posture):
         css_class = "posture-cautious"
     else:
         css_class = "posture-mixed"
-
     return f'<div class="{css_class}">UNIVERSE POSTURE: {posture}</div>'
 
 
@@ -164,44 +154,47 @@ def main():
             f"**{tickers}** — Overbought (RSI 70+), Bullish trend. "
             f"Strong momentum but extended — not ideal entry points right now."
         )
-
     if groups["bullish_volume"]:
         tickers = ", ".join(groups["bullish_volume"])
         observations.append(
             f"**{tickers}** — Bullish trend with volume confirmation. "
             f"Strongest technical setup in the universe today."
         )
-
     if groups["bullish_neutral"]:
         tickers = ", ".join(groups["bullish_neutral"])
         observations.append(
             f"**{tickers}** — Bullish trend, neutral RSI. "
             f"Cleaner setups — momentum building without being extended."
         )
-
     if groups["mixed"]:
         tickers = ", ".join(groups["mixed"])
         observations.append(
-            f"**{tickers}** — Mixed signals, neither clearly "
-            f"bullish nor bearish. No action bias."
+            f"**{tickers}** — Mixed signals, neither clearly bullish nor bearish. No action bias."
         )
-
     if groups["bearish"]:
         tickers = ", ".join(groups["bearish"])
         observations.append(
-            f"**{tickers}** — Bearish trend, trading below key "
-            f"moving averages. Warrants caution."
+            f"**{tickers}** — Bearish trend, trading below key moving averages. Warrants caution."
         )
-
     if groups["oversold"]:
         tickers = ", ".join(groups["oversold"])
         observations.append(
-            f"**{tickers}** — Oversold (RSI 30 or below). "
-            f"Potential reversal candidate — monitor closely."
+            f"**{tickers}** — Oversold (RSI 30 or below). Potential reversal candidate — monitor closely."
         )
 
     for obs in observations:
         st.markdown(f"- {obs}")
+
+    # Gap alerts
+    gap_alerts = [
+        (s["ticker"], signals[s["ticker"]].get("gap_flag"))
+        for s in scores
+        if signals.get(s["ticker"], {}).get("gap_flag")
+    ]
+    if gap_alerts:
+        st.markdown("**⚠️ Gap Alerts:**")
+        for ticker, flag in gap_alerts:
+            st.markdown(f"- **{ticker}** — {flag}")
 
     st.divider()
 
@@ -218,13 +211,13 @@ def main():
         }.get(s["signal"], "⚪")
 
         score_data.append({
-            "Ticker"      : s["ticker"],
-            "Technical"   : s["technical"],
-            "Fundamental" : s["fundamental"],
-            "Thesis"      : s["thesis"],
-            "Score"       : s["composite"],
-            "Signal"      : f"{signal_color} {s['signal']}",
-            "Action"      : s["action"],
+            "Ticker"     : s["ticker"],
+            "Technical"  : s["technical"],
+            "Fundamental": s["fundamental"],
+            "Thesis"     : s["thesis"],
+            "Score"      : s["composite"],
+            "Signal"     : f"{signal_color} {s['signal']}",
+            "Action"     : s["action"],
         })
 
     score_df = pd.DataFrame(score_data)
@@ -252,59 +245,56 @@ def main():
     signal_data = []
     for ticker, s in signals.items():
         signal_data.append({
-            "Ticker"     : ticker,
-            "Close"      : f"${s['close']:,.2f}",
-            "MA20"       : f"${s['ma20']:,.2f}",
-            "MA50"       : f"${s['ma50']:,.2f}",
-            "RSI"        : s["rsi"],
-            "RSI Signal" : s["rsi_signal"],
-            "Trend"      : s["trend"],
-            "Vol OK"     : "✅" if s["vol_confirmed"] else "❌",
+            "Ticker"    : ticker,
+            "Close"     : f"${s['close']:,.2f}",
+            "MA20"      : f"${s['ma20']:,.2f}",
+            "MA50"      : f"${s['ma50']:,.2f}",
+            "RSI"       : s["rsi"],
+            "RSI Signal": s["rsi_signal"],
+            "Trend"     : s["trend"],
+            "Vol OK"    : "YES" if s["vol_confirmed"] else "NO",
         })
 
     signal_df = pd.DataFrame(signal_data)
-   if not signal_df.empty:
+    if not signal_df.empty:
         st.dataframe(signal_df.set_index("Ticker"), use_container_width=True)
     else:
-        st.warning("No signal data available — refresh to try again.")
+        st.warning("No signal data available — click Refresh Now.")
 
     st.divider()
 
-# --- Portfolio Tracker ---
-    st.divider()
+    # --- Portfolio Tracker ---
     st.subheader("🏈 Active Portfolio — Second Layer Capital (Agentic ••••5038)")
 
-    # Current positions from positions.py
     positions_list = [
         {"ticker": k, "shares": v["shares"], "avg_cost": v["avg_cost"]}
         for k, v in POSITIONS.items()
     ]
 
-    # Show current holdings
     if positions_list:
         st.markdown("**On the Field:**")
-        held_tickers = {p["ticker"] for p in positions_list}
-        score_lookup  = {s["ticker"]: s for s in scores}
+        score_lookup = {s["ticker"]: s for s in scores}
 
         held_data = []
         for p in positions_list:
-            ticker    = p["ticker"]
-            s         = score_lookup.get(ticker, {})
+            ticker = p["ticker"]
+            s      = score_lookup.get(ticker, {})
             held_data.append({
-                "Ticker" : ticker,
-                "Shares" : p["shares"],
+                "Ticker"  : ticker,
+                "Shares"  : p["shares"],
                 "Avg Cost": f"${p['avg_cost']:.2f}",
-                "Score"  : s.get("composite", "N/A"),
-                "Signal" : s.get("signal", "N/A"),
-                "Action" : s.get("action", "N/A"),
+                "Score"   : s.get("composite", "N/A"),
+                "Signal"  : s.get("signal", "N/A"),
+                "Action"  : s.get("action", "N/A"),
             })
 
-        held_df = pd.DataFrame(held_data).set_index("Ticker")
-        st.dataframe(held_df, use_container_width=True)
+        held_df = pd.DataFrame(held_data)
+        if not held_df.empty:
+            st.dataframe(held_df.set_index("Ticker"), use_container_width=True)
     else:
         st.info("No positions currently held.")
 
-    # Bench players — STRONG signals not held
+    # Bench players
     gaps = identify_gaps(positions_list, scores)
     if gaps:
         st.markdown("**Bench Players Ready to Come On:**")
@@ -315,14 +305,17 @@ def main():
                 "Score" : g["score"],
                 "Action": "Consider adding — STRONG signal, not held",
             })
-        gap_df = pd.DataFrame(gap_data).set_index("Ticker")
-        st.dataframe(gap_df, use_container_width=True)
+        gap_df = pd.DataFrame(gap_data)
+        if not gap_df.empty:
+            st.dataframe(gap_df.set_index("Ticker"), use_container_width=True)
 
     st.caption(f"Positions last updated: {LAST_UPDATED} | Cash: ${CASH:.2f}")
 
+    st.divider()
+
     # --- Footer ---
     st.caption(
-        f"Hypersonic Defense Screener — {date.today().strftime('%B %d, %Y')} | "
+        f"Second Layer Capital — {date.today().strftime('%B %d, %Y')} | "
         f"Phase 2 | Technical + Fundamental + Thesis scoring | "
         f"For personal research only — not financial advice."
     )
