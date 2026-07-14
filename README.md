@@ -1,5 +1,5 @@
 # Second Layer Capital — Hypersonic Defense Screener
-
+![Second Layer Capital](generated-image__1_.png)
 A rules-based stock screening and portfolio management system 
 targeting the picks-and-shovels supply chain of next-generation 
 defense technology — hypersonic weapons, directed energy, 
@@ -58,8 +58,17 @@ Current positions: HWM, HEI, LOAR, AXON
 
 ## Dashboard
 
-Live dashboard deployed on Streamlit Cloud:
-[Second Layer Capital Dashboard](https://hypersonic-defense-screener-4tte57rayzdapp2udotwfg8.streamlit.app)
+The Streamlit Cloud deployment has been discontinued due to 
+persistent platform instability — rate limiting, credential 
+failures, and segfaults on the free tier made it unreliable 
+for production use.
+
+The dashboard runs correctly in local development:
+```bash
+streamlit run screener/dashboard.py
+```
+
+A more robust deployment solution is under evaluation.
 
 ---
 
