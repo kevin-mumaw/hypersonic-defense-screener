@@ -22,8 +22,7 @@ UNIVERSE = {
 
     # Industrial Supply Chain & Materials
     "MTRN": {"name": "Materion",                  "domain": "Specialty beryllium alloys & optical/guidance subcomponents","sector": "Industrial Supply Chain"},
-    "VELO": {"name": "Velo3D",                    "domain": "Advanced additive manufacturing",        "sector": "Industrial Supply Chain"},
-}
+    "CW":   {"name": "Curtiss-Wright Corporation", "domain": "Defense electronics, naval systems, motion control",        "sector": "IoMT & Digital Battlefield"},}
 
 # Watchlist - under research, not yet scored
 WATCHLIST = {

@@ -23,21 +23,21 @@
   "AVAV": {
     "data": {
       "ticker": "AVAV",
-      "revenue_growth": 1.434,
-      "gross_margin": 0.25004998,
-      "operating_margin": -0.051149998,
-      "profit_margin": -0.13933,
-      "debt_to_equity": 19.335,
-      "total_revenue": 1610279040,
+      "revenue_growth": 1.333,
+      "gross_margin": 0.25325,
+      "operating_margin": 0.02812,
+      "profit_margin": -0.13411,
+      "debt_to_equity": 18.971,
+      "total_revenue": 1976845056,
       "earnings_growth": null,
-      "roe": -0.08741
+      "roe": -0.10029
     },
-    "score": 66,
+    "score": 73,
     "notes": [
-      "Revenue growth: strong (143.4%)",
-      "Gross margin: moderate (25.0%)",
-      "Operating margin: negative (-5.1%)",
-      "Debt/equity: low (19.3)",
+      "Revenue growth: strong (133.3%)",
+      "Gross margin: moderate (25.3%)",
+      "Operating margin: thin (2.8%)",
+      "Debt/equity: low (19.0)",
       "Earnings growth: no data"
     ]
   },
@@ -209,27 +209,6 @@
       "Earnings growth: negative (-25.6%)"
     ]
   },
-  "SXI": {
-    "data": {
-      "ticker": "SXI",
-      "revenue_growth": 0.081,
-      "gross_margin": 0.41326,
-      "operating_margin": 0.17583,
-      "profit_margin": 0.11179,
-      "debt_to_equity": 65.368,
-      "total_revenue": 885395008,
-      "earnings_growth": 2.074,
-      "roe": 0.15938
-    },
-    "score": 77,
-    "notes": [
-      "Revenue growth: low (8.1%)",
-      "Gross margin: strong (41.3%)",
-      "Operating margin: strong (17.6%)",
-      "Debt/equity: moderate (65.4)",
-      "Earnings growth: strong (207.4%)"
-    ]
-  },
   "MTRN": {
     "data": {
       "ticker": "MTRN",
@@ -251,29 +230,29 @@
       "Earnings growth: moderate (8.2%)"
     ]
   },
-  "VELO": {
+  "CW": {
     "data": {
-      "ticker": "VELO",
-      "revenue_growth": 0.482,
-      "gross_margin": -0.11334,
-      "operating_margin": -0.50282,
-      "profit_margin": -1.0570099,
-      "debt_to_equity": 34.622,
-      "total_revenue": 50469000,
-      "earnings_growth": null,
-      "roe": -1.26379
+      "ticker": "CW",
+      "revenue_growth": 0.134,
+      "gross_margin": 0.37171,
+      "operating_margin": 0.17557,
+      "profit_margin": 0.14171,
+      "debt_to_equity": 43.634,
+      "total_revenue": 3606414080,
+      "earnings_growth": 0.291,
+      "roe": 0.19691
     },
-    "score": 52,
+    "score": 92,
     "notes": [
-      "Revenue growth: strong (48.2%)",
-      "Gross margin: very thin (-11.3%)",
-      "Operating margin: negative (-50.3%)",
-      "Debt/equity: low (34.6)",
-      "Earnings growth: no data"
+      "Revenue growth: moderate (13.4%)",
+      "Gross margin: strong (37.2%)",
+      "Operating margin: strong (17.6%)",
+      "Debt/equity: low (43.6)",
+      "Earnings growth: strong (29.1%)"
     ]
   },
   "_meta": {
-    "cached_date": "2026-07-10",
-    "ticker_count": 13
+    "cached_date": "2026-07-13",
+    "ticker_count": 12
   }
 }
