@@ -2,7 +2,6 @@
 # Manual positions file for Agentic account (••••5038)
 # Updated after each trade execution via Claude + Robinhood MCP
 # Dashboard reads this file to show real holdings
-# This is NOT live-synced — update manually after trades
 
 POSITIONS = {
     "HWM": {
@@ -10,7 +9,7 @@ POSITIONS = {
         "avg_cost" : 270.98,
     },
     "HEI": {
-        "shares"   : 0.325059,
+        "shares"   : 0.325174,
         "avg_cost" : 338.40,
     },
     "LOAR": {
@@ -25,7 +24,7 @@ POSITIONS = {
 
 CASH = 100.00
 
-LAST_UPDATED = "2026-06-17"
+LAST_UPDATED = "2026-07-13"
 
 
 if __name__ == "__main__":
