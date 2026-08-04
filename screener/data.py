@@ -1,94 +1,114 @@
 # data.py
 # Pulls historical price data for all tickers in the universe
-# Primary source: Tradier API (works on cloud platforms)
+# Primary source: Schwab API (reliable, no rate limiting)
 # Fallback source: yfinance (local use only)
-# Fundamentals still use yfinance — local only
 
-import requests
 import pandas as pd
 import yfinance as yf
 import time
 import random
 import os
-from datetime import datetime, timedelta
+import schwab
 from dotenv import load_dotenv
 from universe import UNIVERSE
 
 load_dotenv()
 
-try:
-    import streamlit as st
-    TRADIER_TOKEN = st.secrets.get("TRADIER_TOKEN", os.getenv("TRADIER_TOKEN", ""))
-except Exception:
-    TRADIER_TOKEN = os.getenv("TRADIER_TOKEN", "")
-TRADIER_BASE  = "https://api.tradier.com/v1"
+SCHWAB_APP_KEY    = os.getenv("SCHWAB_APP_KEY", "")
+SCHWAB_APP_SECRET = os.getenv("SCHWAB_APP_SECRET", "")
+TOKEN_PATH        = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    "..", "token.json"
+)
 
 
-def fetch_price_data_tradier(ticker, period="6mo", interval="1d"):
+def get_schwab_client():
     """
-    Fetch historical OHLCV data from Tradier API.
-    Works on cloud platforms — no rate limiting issues.
+    Get authenticated Schwab client using existing token file.
+    Returns None if credentials or token not available.
+    """
+    if not SCHWAB_APP_KEY or not SCHWAB_APP_SECRET:
+        return None
+    if not os.path.exists(TOKEN_PATH):
+        return None
+    try:
+        client = schwab.auth.client_from_token_file(
+            TOKEN_PATH,
+            SCHWAB_APP_KEY,
+            SCHWAB_APP_SECRET
+        )
+        return client
+    except Exception as e:
+        print(f"  WARNING: Schwab auth failed: {e}")
+        return None
+
+
+def fetch_price_data_schwab(client, ticker, period="6mo"):
+    """
+    Fetch historical OHLCV data from Schwab API.
 
     Args:
-        ticker  : stock symbol
-        period  : lookback period (1mo, 3mo, 6mo, 1y, 2y)
-        interval: data frequency (daily, weekly)
+        client : authenticated Schwab client
+        ticker : stock symbol
+        period : lookback period (1mo, 3mo, 6mo, 1y, 2y)
 
     Returns:
         pandas DataFrame with OHLCV data, or None if fetch fails
     """
-    if not TRADIER_TOKEN:
-        return None
+    from schwab.client import Client
 
-    # Convert period to start date
-    period_days = {
-        "1mo": 30, "3mo": 90, "6mo": 180,
-        "1y": 365, "2y": 730, "5y": 1825
+    # Map period to Schwab period type and frequency
+    period_map = {
+        "1mo" : (1,  Client.PriceHistory.Period.ONE_MONTH,
+                      Client.PriceHistory.Frequency.DAILY,
+                      Client.PriceHistory.FrequencyType.DAILY),
+        "3mo" : (3,  Client.PriceHistory.Period.THREE_MONTHS,
+                      Client.PriceHistory.Frequency.DAILY,
+                      Client.PriceHistory.FrequencyType.DAILY),
+        "6mo" : (6,  Client.PriceHistory.Period.SIX_MONTHS,
+                      Client.PriceHistory.Frequency.DAILY,
+                      Client.PriceHistory.FrequencyType.DAILY),
+        "1y"  : (1,  Client.PriceHistory.Period.ONE_YEAR,
+                      Client.PriceHistory.Frequency.DAILY,
+                      Client.PriceHistory.FrequencyType.DAILY),
+        "2y"  : (2,  Client.PriceHistory.Period.TWO_YEARS,
+                      Client.PriceHistory.Frequency.DAILY,
+                      Client.PriceHistory.FrequencyType.DAILY),
+        "5y"  : (5,  Client.PriceHistory.Period.FIVE_YEARS,
+                      Client.PriceHistory.Frequency.WEEKLY,
+                      Client.PriceHistory.FrequencyType.WEEKLY),
     }
-    days     = period_days.get(period, 180)
-    end_dt   = datetime.today()
-    start_dt = end_dt - timedelta(days=days)
 
-    start_str = start_dt.strftime("%Y-%m-%d")
-    end_str   = end_dt.strftime("%Y-%m-%d")
+    if period not in period_map:
+        period = "6mo"
 
-    # Tradier interval mapping
-    tradier_interval = "daily" if interval == "1d" else "weekly"
-
-    url = f"{TRADIER_BASE}/markets/history"
-    headers = {
-        "Authorization": f"Bearer {TRADIER_TOKEN}",
-        "Accept"       : "application/json",
-    }
-    params = {
-        "symbol"  : ticker,
-        "interval": tradier_interval,
-        "start"   : start_str,
-        "end"     : end_str,
-    }
+    p_count, p_type, freq, freq_type = period_map[period]
 
     try:
-        response = requests.get(url, headers=headers,
-                               params=params, timeout=10)
-        response.raise_for_status()
-        data = response.json()
+        resp = client.get_price_history(
+            ticker,
+            period_type=Client.PriceHistory.PeriodType.MONTH
+                if period in ("1mo","3mo","6mo")
+                else Client.PriceHistory.PeriodType.YEAR,
+            period=p_type,
+            frequency_type=freq_type,
+            frequency=freq,
+            need_extended_hours_data=False,
+        )
 
-        history = data.get("history", {})
-        if not history or history == "null":
+        if resp.status_code != 200:
             return None
 
-        days_data = history.get("day", [])
-        if not days_data:
+        data = resp.json()
+        candles = data.get("candles", [])
+
+        if not candles:
             return None
 
-        # Convert to DataFrame matching yfinance format
-        if isinstance(days_data, dict):
-            days_data = [days_data]
-
-        df = pd.DataFrame(days_data)
-        df["date"]   = pd.to_datetime(df["date"])
-        df           = df.set_index("date")
-        df           = df.rename(columns={
+        df = pd.DataFrame(candles)
+        df["datetime"] = pd.to_datetime(df["datetime"], unit="ms")
+        df = df.set_index("datetime")
+        df = df.rename(columns={
             "open"  : "Open",
             "high"  : "High",
             "low"   : "Low",
@@ -134,19 +154,12 @@ def fetch_price_data_yfinance(ticker, period="6mo", interval="1d"):
 def fetch_price_data(ticker, period="6mo", interval="1d"):
     """
     Fetch historical OHLCV data for a single ticker.
-    Tries Tradier first, falls back to yfinance.
-
-    Args:
-        ticker  : stock symbol
-        period  : lookback period
-        interval: data frequency
-
-    Returns:
-        pandas DataFrame with OHLCV data, or None if fetch fails
+    Tries Schwab first, falls back to yfinance.
     """
-    # Try Tradier first
-    if TRADIER_TOKEN:
-        data = fetch_price_data_tradier(ticker, period, interval)
+    client = get_schwab_client()
+
+    if client:
+        data = fetch_price_data_schwab(client, ticker, period)
         if data is not None and not data.empty:
             return data
 
@@ -162,11 +175,10 @@ def fetch_price_data(ticker, period="6mo", interval="1d"):
 def fetch_universe_data(period="6mo", interval="1d"):
     """
     Fetch price data for all tickers in the universe.
-
-    Returns:
-        dict of {ticker: DataFrame}
     """
-    source = "Tradier" if TRADIER_TOKEN else "yfinance"
+    client = get_schwab_client()
+    source = "Schwab" if client else "yfinance"
+
     print(f"Fetching price data for {len(UNIVERSE)} tickers...")
     print(f"Period: {period} | Interval: {interval} | Source: {source}\n")
 
@@ -174,7 +186,7 @@ def fetch_universe_data(period="6mo", interval="1d"):
     failed  = []
 
     for ticker in UNIVERSE.keys():
-        if not TRADIER_TOKEN:
+        if not client:
             time.sleep(random.uniform(0.5, 1.5))
 
         data = fetch_price_data(ticker, period=period,
