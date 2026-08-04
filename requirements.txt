@@ -7,3 +7,4 @@ plotly
 python-dotenv
 beautifulsoup4
 requests
+schwab-py
