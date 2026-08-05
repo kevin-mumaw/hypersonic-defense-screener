@@ -1,0 +1,41 @@
+name: Daily Briefing
+
+on:
+  schedule:
+    - cron: '0 13 * * 1-5'  # 9am ET Monday-Friday
+  workflow_dispatch:          # Manual trigger available
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install yfinance pandas numpy schwab-py python-dotenv requests beautifulsoup4
+
+      - name: Run daily briefing
+        env:
+          SCHWAB_APP_KEY: ${{ secrets.SCHWAB_APP_KEY }}
+          SCHWAB_APP_SECRET: ${{ secrets.SCHWAB_APP_SECRET }}
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
+          SCHWAB_REFRESH_TOKEN: ${{ secrets.SCHWAB_REFRESH_TOKEN }}
+        run: |
+          cd screener
+          python report.py
+
+      - name: Commit briefing
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add logs/briefing_*.md
+          git diff --cached --quiet || git commit -m "Daily briefing $(date +%Y-%m-%d)"
+          git push
