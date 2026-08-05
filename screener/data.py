@@ -24,11 +24,49 @@ TOKEN_PATH        = os.path.join(
 
 def get_schwab_client():
     """
-    Get authenticated Schwab client using existing token file.
-    Returns None if credentials or token not available.
+    Get authenticated Schwab client.
+    On cloud: uses refresh token from Streamlit secrets.
+    Locally: uses token.json file.
+    Returns None if credentials not available.
     """
     if not SCHWAB_APP_KEY or not SCHWAB_APP_SECRET:
         return None
+
+    # Try Streamlit secrets first (cloud deployment)
+    try:
+        import streamlit as st
+        refresh_token = st.secrets.get("SCHWAB_REFRESH_TOKEN", "")
+        if refresh_token:
+            import json
+            import tempfile
+            token_data = {
+                "creation_timestamp": 0,
+                "token": {
+                    "expires_in": 1800,
+                    "token_type": "Bearer",
+                    "scope": "api",
+                    "refresh_token": refresh_token,
+                    "access_token": "",
+                    "expires_at": 0
+                }
+            }
+            with tempfile.NamedTemporaryFile(
+                mode='w', suffix='.json', delete=False
+            ) as f:
+                json.dump(token_data, f)
+                temp_path = f.name
+
+            client = schwab.auth.client_from_token_file(
+                temp_path,
+                SCHWAB_APP_KEY,
+                SCHWAB_APP_SECRET
+            )
+            os.unlink(temp_path)
+            return client
+    except Exception:
+        pass
+
+    # Fall back to local token file
     if not os.path.exists(TOKEN_PATH):
         return None
     try:
@@ -41,8 +79,6 @@ def get_schwab_client():
     except Exception as e:
         print(f"  WARNING: Schwab auth failed: {e}")
         return None
-
-
 def fetch_price_data_schwab(client, ticker, period="6mo"):
     """
     Fetch historical OHLCV data from Schwab API.
