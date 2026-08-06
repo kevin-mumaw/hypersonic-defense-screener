@@ -6,6 +6,48 @@ Hypersonic Defense Screener. It is maintained as a
 living document updated with every meaningful change 
 to thesis, universe, screener logic, or methodology.
 ---
+## [1.8] — August 2026
+
+### Daily Briefing Automation
+- Added GitHub Action — daily_briefing.yml
+- Runs weekdays at 9am ET automatically
+- Generates briefing markdown and commits to logs/
+- Readable on iPhone via GitHub mobile
+- Uses Schwab API credentials from repository secrets
+- Manual trigger available via Actions tab
+
+## [1.7] — August 2026
+
+### Data Source — Schwab API
+- Replaced Tradier with Schwab Developer API for price data
+- Schwab provides reliable data with no rate limiting
+- OAuth2 authentication via token.json locally
+- Refresh token stored in Streamlit secrets for cloud deployment
+- 12/12 tickers fetching clean via Schwab
+
+### Dashboard — Restored
+- Streamlit Cloud dashboard fully operational
+- All sections working: posture, observations, scores, signals, portfolio
+- Universe Posture: BULLISH as of August 4 2026
+
+### Notable Events
+- PLTR +29.5% on blowout Q2 earnings — revenue +93% YoY
+- U.S. commercial revenue +149% YoY
+- Full-year 2026 guidance raised to $8.15B
+- Gap alert system correctly flagged PLTR — wait for pullback
+
+## [1.6] — July 2026
+
+### Universe Changes
+- Removed VELO (Velo3D) — composite score fell below 35 removal 
+  trigger for consecutive weeks. Pre-profitability, extreme 
+  volatility, weak thesis fit confirmed.
+- Added CW (Curtiss-Wright Corporation) — defense electronics, 
+  naval nuclear systems, motion control. Q1 2026 EPS +23% YoY, 
+  revenue +13%. Strong picks-and-shovels fit.
+- Universe remains at 12 tickers
+- CW thesis score: 80 | Fundamental score: 92 | Debut rank: #7
+
 ## [1.5] — July 2026
 
 ### Gap Alert System

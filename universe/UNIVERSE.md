@@ -90,13 +90,14 @@ to meet ALL of the following criteria:
 | TDY | Teledyne Technologies | NYSE | Advanced defense electronics & harsh-environment imaging. Strong fundamentals, technically mixed. | Standard |
 | HEI | Heico Corporation | NYSE | Proprietary subcomponents & defense electronic technologies. Best fundamental profile in universe. Technical signals historically unreliable — size conservatively. | Standard |
 | LOAR | Loar Holdings | NYSE | High-margin precision aerospace subcomponents. Classic picks-and-shovels supply chain layer. | Standard |
+| CW   | Curtiss-Wright Corporation | NYSE   | Defense electronics, naval systems, motion control | Direct thesis fit — defense electronics and aerospace systems |
+
 
 ### Industrial Supply Chain & Materials
 
 | Ticker | Company | Exchange | Description | Tier |
 |--------|---------|----------|-------------|------|
 | MTRN | Materion | NYSE | Specialty beryllium alloys & optical/guidance subcomponents. Cross-market supplier — semi, auto, defense. | Anchor |
-| VELO | Velo3D | NASDAQ | Advanced additive manufacturing for complex defense geometries. Pre-profitability, high risk, extreme volatility. **Removal triggers:** composite score below 35 for two consecutive weeks, cash runway below 18 months, or delisting. | Anchor |
 
 ---
 
