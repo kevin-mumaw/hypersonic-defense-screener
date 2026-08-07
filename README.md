@@ -28,12 +28,12 @@ contractors.
 
 ## Universe
 
-13 actively screened tickers across four technology domains:
+12 actively screened tickers across four technology domains:
 
 - **AI & Autonomy** — PLTR, AVAV, KTOS
 - **Hypersonic, Space & Propulsion** — KRMN, HWM, ATI
-- **IoMT & Digital Battlefield** — AXON, TDY, HEI, LOAR
-- **Industrial Supply Chain** — SXI, MTRN, VELO
+- **IoMT & Digital Battlefield** — AXON, TDY, HEI, LOAR, CW
+- **Industrial Supply Chain** — MTRN
 
 ---
 

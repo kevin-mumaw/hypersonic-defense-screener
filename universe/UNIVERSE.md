@@ -103,14 +103,14 @@ to meet ALL of the following criteria:
 
 ## Watchlist — Under Research
 
-| Ticker | Company | Exchange | Domain | Status |
-|--------|---------|----------|--------|--------|
-| FLY | Firefly Aerospace | NASDAQ | Responsive space launch & tactical transit | IPO Aug 2025 — insufficient price history |
-| AADX | Applied Aerospace & Defense | NYSE | Solid rocket motors & missile propulsion subsystems | IPO June 2026 — too new |
-| BAH | Booz Allen Hamilton | NYSE | Defense services & AI deployment integration | Watchlist — consulting firm, weak picks-and-shovels fit |
-| TDG  | TransDigm Group            | NYSE   | Highly engineered proprietary aerospace components | Strong picks-and-shovels fit — research defense revenue mix |
-| CW   | Curtiss-Wright Corporation | NYSE   | Defense electronics, naval systems, motion control | Direct thesis fit — defense electronics and aerospace systems |
-| HXL  | Hexcel Corporation         | NYSE   | Advanced carbon fiber composites for aerospace/defense | Composites in virtually every advanced defense platform |
+| Ticker | Company                    | Exchange | Domain                                                 | Status |
+|--------|----------------------------|----------|--------------------------------------------------------|---------------------------------------------------------------|
+| FLY    | Firefly Aerospace          | NASDAQ   | Responsive space launch & tactical transit             | IPO Aug 2025 — insufficient price history                     |
+| AADX   | Applied Aerospace & Defense| NYSE     | Solid rocket motors & missile propulsion subsystems    | IPO June 2026 — too new                                       |
+| BAH    | Booz Allen Hamilton        | NYSE     | Defense services & AI deployment integration           | Watchlist — consulting firm, weak picks-and-shovels fit       |
+| TDG    | TransDigm Group            | NYSE     | Highly engineered proprietary aerospace components     | Strong picks-and-shovels fit — research defense revenue mix   |
+| CW     | Curtiss-Wright Corporation | NYSE     | Defense electronics, naval systems, motion control     | Direct thesis fit — defense electronics and aerospace systems |
+| HXL    | Hexcel Corporation         | NYSE     | Advanced carbon fiber composites for aerospace/defense | Composites in virtually every advanced defense platform       |
 ---
 
 ## IPO Watch
@@ -118,10 +118,10 @@ to meet ALL of the following criteria:
 These private companies are expected to go public and should 
 be added to the universe immediately upon IPO:
 
-| Company | Est. Valuation | Domain | Trigger |
-|---------|---------------|--------|---------|
-| Anduril Industries | ~$61B | AI/Autonomy, autonomous weapons | SEC S-1 filing |
-| Shield AI | ~$12.7B | AI/Autonomy, Hivemind pilot software | SEC S-1 filing |
+| Company              | Est. Valuation| Domain                               | Trigger        |
+|----------------------|---------------|--------------------------------------|----------------|
+| Anduril Industries   | ~$61B         | AI/Autonomy, autonomous weapons      | SEC S-1 filing |
+| Shield AI----------- | ~$12.7B       | AI/Autonomy, Hivemind pilot software | SEC S-1 filing |
 
 ---
 
