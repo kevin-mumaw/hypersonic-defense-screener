@@ -11,12 +11,10 @@ POSITIONS = {
     "ATI" : {"shares": 0.250000, "avg_cost": 220.00},
     "KRMN": {"shares": 0.920979, "avg_cost": 54.29},
     "KTOS": {"shares": 0.828576, "avg_cost": 54.31},
-    "PLTR": {"shares": 0.256213, "avg_cost": 156.12},
-}
+    "PLTR": {"shares": 0.542643, "avg_cost": 165.60},
 
-CASH = 50.00
-
-LAST_UPDATED = "2026-08-06"
+CASH = 0.00
+LAST_UPDATED = "2026-08-26"
 
 
 if __name__ == "__main__":
