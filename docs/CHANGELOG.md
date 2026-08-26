@@ -6,6 +6,27 @@ Hypersonic Defense Screener. It is maintained as a
 living document updated with every meaningful change 
 to thesis, universe, screener logic, or methodology.
 ---
+## [1.9] — August 2026
+
+### Portfolio Updates
+- Added to PLTR position — 0.2864 shares @ $175.68
+- Total PLTR position: 0.5427 shares @ $165.60 blended avg cost
+- Portfolio fully deployed — $0 cash reserve
+- 9 active positions across all 4 technology domains
+
+### Dashboard Removed
+- Streamlit Cloud dashboard discontinued
+- Persistent yfinance rate limiting on cloud platforms made it 
+  unreliable — broken more than working
+- Replaced by GitHub Actions daily briefing (runs 9am ET weekdays)
+- Daily briefing readable on iPhone via GitHub mobile
+- Workflow: read briefing on bus → discuss here → execute via Robinhood Agentic
+
+### Infrastructure
+- Removed screener/dashboard.py
+- Removed Schwab API dependency — reverted to yfinance locally
+- Daily briefing GitHub Action remains operational
+
 ## [1.8] — August 2026
 
 ### Daily Briefing Automation
