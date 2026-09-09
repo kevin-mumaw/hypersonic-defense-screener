@@ -3,7 +3,7 @@
 # Updated after each trade execution via Claude + Robinhood MCP
 
 POSITIONS = {
-    "HWM" : {"shares": 0.405934, "avg_cost": 270.98},
+    "HWM" : {"shares": 0.835727, "avg_cost": 251.22},
     "HEI" : {"shares": 0.325174, "avg_cost": 338.40},
     "LOAR": {"shares": 1.304726, "avg_cost": 68.98},
     "AXON": {"shares": 0.300347, "avg_cost": 466.13},
@@ -12,9 +12,11 @@ POSITIONS = {
     "KRMN": {"shares": 0.920979, "avg_cost": 54.29},
     "KTOS": {"shares": 0.828576, "avg_cost": 54.31},
     "PLTR": {"shares": 0.542643, "avg_cost": 165.60},
+}
 
 CASH = 0.00
-LAST_UPDATED = "2026-08-26"
+
+LAST_UPDATED = "2026-09-09"
 
 
 if __name__ == "__main__":
