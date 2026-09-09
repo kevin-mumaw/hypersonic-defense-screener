@@ -14,7 +14,7 @@ POSITIONS = {
     "PLTR": {"shares": 0.542643, "avg_cost": 165.60},
 }
 
-CASH = 0.00
+CASH = 80.00
 
 LAST_UPDATED = "2026-09-09"
 
