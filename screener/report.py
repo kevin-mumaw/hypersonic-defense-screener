@@ -197,15 +197,10 @@ def generate_markdown(scores, signals):
     # Notes
     lines.append("## Notes")
     lines.append("")
-    lines.append(
-        "> **Phase 2 Update:** Fundamental scores now reflect real data "
-        "including revenue growth, gross margin, operating margin, "
-        "debt/equity, and earnings growth via yfinance. "
-        "Thesis scores are manually set per investment thesis alignment. "
-        "Phase 3 will incorporate contract wins, program milestones, "
-        "and defense revenue mix."
+        lines.append(
+        "> Scores reflect real fundamental data (revenue growth, margins, "
+        "debt/equity, earnings growth) and manually set thesis alignment scores."
     )
-    lines.append("")
     lines.append(
         "> This report is for personal research purposes only. "
         "Nothing here constitutes financial advice."
