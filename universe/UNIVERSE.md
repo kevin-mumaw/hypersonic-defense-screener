@@ -104,13 +104,15 @@ to meet ALL of the following criteria:
 ## Watchlist — Under Research
 
 | Ticker | Company                    | Exchange | Domain                                                 | Status |
-|--------|----------------------------|----------|--------------------------------------------------------|---------------------------------------------------------------|
-| FLY    | Firefly Aerospace          | NASDAQ   | Responsive space launch & tactical transit             | IPO Aug 2025 — insufficient price history                     |
-| AADX   | Applied Aerospace & Defense| NYSE     | Solid rocket motors & missile propulsion subsystems    | IPO June 2026 — too new                                       |
-| BAH    | Booz Allen Hamilton        | NYSE     | Defense services & AI deployment integration           | Watchlist — consulting firm, weak picks-and-shovels fit       |
-| TDG    | TransDigm Group            | NYSE     | Highly engineered proprietary aerospace components     | Strong picks-and-shovels fit — research defense revenue mix   |
-| CW     | Curtiss-Wright Corporation | NYSE     | Defense electronics, naval systems, motion control     | Direct thesis fit — defense electronics and aerospace systems |
-| HXL    | Hexcel Corporation         | NYSE     | Advanced carbon fiber composites for aerospace/defense | Composites in virtually every advanced defense platform       |
+|--------|----------------------------|----------|--------------------------------------------------------|--------------------------------------------------------------------|
+| FLY    | Firefly Aerospace          | NASDAQ   | Responsive space launch & tactical transit             | IPO Aug 2025 — insufficient price history                          |
+| AADX   | Applied Aerospace & Defense| NYSE     | Solid rocket motors & missile propulsion subsystems    | IPO June 2026 — too new                                            |
+| BAH    | Booz Allen Hamilton        | NYSE     | Defense services & AI deployment integration           | Watchlist — consulting firm, weak picks-and-shovels fit            |
+| TDG    | TransDigm Group            | NYSE     | Highly engineered proprietary aerospace components     | Strong picks-and-shovels fit — research defense revenue mix        |
+| CW     | Curtiss-Wright Corporation | NYSE     | Defense electronics, naval systems, motion control     | Direct thesis fit — defense electronics and aerospace systems      |
+| HXL    | Hexcel Corporation         | NYSE     | Advanced carbon fiber composites for aerospace/defense | Composites in virtually every advanced defense platform            |
+| VSEC   | VSE Corporation            | NMS      | Aviation and defense aftermarket services, MRO, supply chain management — new discovery, needs further research | Watchlist |
+
 ---
 
 ## IPO Watch

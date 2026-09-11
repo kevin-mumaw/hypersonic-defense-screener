@@ -11,37 +11,28 @@ from data import fetch_universe_data
 def calculate_rsi(series, period=14):
     """
     Calculate Relative Strength Index (RSI).
-    
-    Args:
-        series : pandas Series of closing prices
-        period : RSI lookback period (default 14)
-    
-    Returns:
-        pandas Series of RSI values
     """
-    delta = series.diff()
-    gain = delta.where(delta > 0, 0.0)
-    loss = -delta.where(delta < 0, 0.0)
+    delta    = series.diff()
+    gain     = delta.where(delta > 0, 0.0)
+    loss     = -delta.where(delta < 0, 0.0)
     avg_gain = gain.rolling(window=period).mean()
     avg_loss = loss.rolling(window=period).mean()
-    rs = avg_gain / avg_loss
-    rsi = 100 - (100 / (1 + rs))
+    rs       = avg_gain / avg_loss
+    rsi      = 100 - (100 / (1 + rs))
     return rsi
 
 
 def calculate_signals(ticker, df):
     """
     Calculate all technical signals for a single ticker.
-    
-    Args:
-        ticker : stock symbol
-        df     : OHLCV DataFrame from yfinance
-    
-    Returns:
-        dict of signal values and interpretations
     """
-    close = df["Close"].squeeze()
-    volume = df["Volume"].squeeze()
+    # Handle yfinance MultiIndex columns
+    if isinstance(df.columns, pd.MultiIndex):
+        close  = df[("Close",  ticker)]
+        volume = df[("Volume", ticker)]
+    else:
+        close  = df["Close"].squeeze()
+        volume = df["Volume"].squeeze()
 
     # Moving averages
     ma20  = close.rolling(window=20).mean()
@@ -55,20 +46,35 @@ def calculate_signals(ticker, df):
     vol_avg20 = volume.rolling(window=20).mean()
 
     # Latest values
-    latest_close   = close.iloc[-1]
-    latest_ma20    = ma20.iloc[-1]
-    latest_ma50    = ma50.iloc[-1]
-    latest_ma200   = ma200.iloc[-1]
-    latest_rsi     = rsi.iloc[-1]
-    latest_vol     = volume.iloc[-1]
-    latest_vol_avg = vol_avg20.iloc[-1]
+    latest_close   = float(close.iloc[-1])
+    latest_ma20    = float(ma20.iloc[-1])
+    latest_ma50    = float(ma50.iloc[-1])
+    latest_ma200   = float(ma200.iloc[-1])
+    latest_rsi     = float(rsi.iloc[-1])
+    latest_vol     = float(volume.iloc[-1])
+    latest_vol_avg = float(vol_avg20.iloc[-1])
 
     # Signal interpretations
-    above_ma20  = latest_close > latest_ma20
-    above_ma50  = latest_close > latest_ma50
-    above_ma200 = latest_close > latest_ma200 if not np.isnan(latest_ma200) else None
-    ma20_vs_ma50 = latest_ma20 > latest_ma50  # Golden/death cross indicator
+    above_ma20   = latest_close > latest_ma20
+    above_ma50   = latest_close > latest_ma50
+    above_ma200  = latest_close > latest_ma200 if not np.isnan(latest_ma200) else None
+    ma20_vs_ma50 = latest_ma20 > latest_ma50
     vol_confirmed = latest_vol > latest_vol_avg
+
+    # Day over day change
+    if len(close) >= 2:
+        prev_close = float(close.iloc[-2])
+        day_change = (latest_close - prev_close) / prev_close * 100
+    else:
+        day_change = 0.0
+
+    # Gap flag
+    if day_change >= 5.0:
+        gap_flag = f"GAP UP +{day_change:.1f}% — wait for pullback"
+    elif day_change <= -5.0:
+        gap_flag = f"GAP DOWN {day_change:.1f}% — monitor support"
+    else:
+        gap_flag = None
 
     # RSI interpretation
     if latest_rsi >= 70:
@@ -86,20 +92,6 @@ def calculate_signals(ticker, df):
     else:
         trend = "MIXED"
 
-    # Gap-up/Gap-down detection (day over day % change)
-    if len(close) >= 2:
-        prev_close  = close.iloc[-2]
-        day_change  = (latest_close - prev_close) / prev_close * 100
-    else:
-        day_change  = 0.0
-
-    # Flag extended moves
-    if day_change >= 5.0:
-        gap_flag = f"GAP UP +{day_change:.1f}% — wait for pullback"
-    elif day_change <= -5.0:
-        gap_flag = f"GAP DOWN {day_change:.1f}% — monitor support"
-    else:
-        gap_flag = None
     return {
         "ticker"       : ticker,
         "close"        : round(latest_close, 2),
@@ -122,12 +114,9 @@ def calculate_signals(ticker, df):
 def calculate_universe_signals(period="6mo"):
     """
     Calculate technical signals for all tickers in the universe.
-    
-    Returns:
-        dict of {ticker: signals_dict}
     """
     universe_data = fetch_universe_data(period=period)
-    
+
     print("\n--- Technical Signals ---\n")
     print(f"{'Ticker':<6} {'Close':>8} {'MA20':>8} "
           f"{'MA50':>8} {'RSI':>6} {'RSI Sig':<12} "
@@ -140,9 +129,6 @@ def calculate_universe_signals(period="6mo"):
         signals = calculate_signals(ticker, df)
         all_signals[ticker] = signals
 
-        ma200_str = (f"${signals['ma200']:>7.2f}" 
-                    if signals['ma200'] else "    N/A")
-        
         print(
             f"{signals['ticker']:<6} "
             f"${signals['close']:>7.2f} "
@@ -159,4 +145,3 @@ def calculate_universe_signals(period="6mo"):
 
 if __name__ == "__main__":
     signals = calculate_universe_signals(period="6mo")
-    
