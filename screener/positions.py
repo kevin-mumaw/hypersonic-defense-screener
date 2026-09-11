@@ -3,7 +3,7 @@
 # Updated after each trade execution via Claude + Robinhood MCP
 
 POSITIONS = {
-    "HWM" : {"shares": 0.835727, "avg_cost": 251.22},
+    "HWM" : {"shares": 1.184280, "avg_cost": 244.82},
     "HEI" : {"shares": 0.325174, "avg_cost": 338.40},
     "LOAR": {"shares": 1.304726, "avg_cost": 68.98},
     "AXON": {"shares": 0.300347, "avg_cost": 466.13},
@@ -14,7 +14,7 @@ POSITIONS = {
     "PLTR": {"shares": 0.542643, "avg_cost": 165.60},
 }
 
-CASH = 80.00
+CASH = 0.12
 
 LAST_UPDATED = "2026-09-09"
 
