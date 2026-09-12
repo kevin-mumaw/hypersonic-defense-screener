@@ -28,11 +28,11 @@ def calculate_signals(ticker, df):
     """
     # Handle yfinance MultiIndex columns
     if isinstance(df.columns, pd.MultiIndex):
-        close  = df[("Close",  ticker)]
-        volume = df[("Volume", ticker)]
+        close  = df[("Close",  ticker)].dropna()
+        volume = df[("Volume", ticker)].dropna()
     else:
-        close  = df["Close"].squeeze()
-        volume = df["Volume"].squeeze()
+        close  = df["Close"].squeeze().dropna()
+        volume = df["Volume"].squeeze().dropna()
 
     # Moving averages
     ma20  = close.rolling(window=20).mean()
