@@ -78,7 +78,7 @@ to meet ALL of the following criteria:
 
 | Ticker | Company | Exchange | Description | Tier |
 |--------|---------|----------|-------------|------|
-| KRMN | Karman Holdings | NYSE | Mission-critical payload protection & interstage structures for hypersonic and space launch vehicles. Purpose-built for this thesis. High debt/equity — monitor. | Disruptor |
+| KRMN | Karman Holdings | NYSE | Mission-critical payload protection & interstage structures. Purpose-built hypersonics thesis intact — $1.3B backlog, 58% YoY revenue growth, 25%+ organic growth guidance. **WATCH:** CFO departure August 2026 (succession to Chris Boynton), J Capital short-seller report citing acquisition governance concerns. Business fundamentals strong but governance uncertainty — do not add until stabilized. | Disruptor |
 | HWM | Howmet Aerospace | NYSE | Refractory alloys & extreme-temperature thermal protection. Builds ahead of demand for hypersonic programs. | Standard |
 | ATI | ATI Inc | NYSE | Titanium alloys & structural high-speed airframes. Critical materials for hypersonic vehicles. Currently overbought — extended. | Standard |
 
