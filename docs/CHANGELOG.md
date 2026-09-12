@@ -6,6 +6,27 @@ Hypersonic Defense Screener. It is maintained as a
 living document updated with every meaningful change 
 to thesis, universe, screener logic, or methodology.
 ---
+## [2.2] — September 2026
+
+### Phase 3 Progress
+- Added signal_history.py — daily score tracking, 30-day trend analysis
+- Wired signal history into GitHub Action — runs daily at midnight ET
+- Fixed yfinance MultiIndex NaN price bug in signals.py
+- Changed GitHub Action from 9am to midnight ET — eliminates merge conflicts
+- Removed Phase 2 references from daily briefing
+
+### Portfolio Updates
+- HWM — added $80 @ $229.52 on September 11 2026
+- HWM blended avg cost now $244.82 on 1.184 shares
+- PLTR — no change, monitoring
+- Cash: $0
+
+### Research
+- KRMN flagged for governance watch — CFO departure, J Capital short report
+- Thesis intact (backlog $1.3B, 58% YoY revenue) but do not add until stabilized
+- LOAR showing WEAK in screener — monitoring
+- CW down 20% from cost — thesis review pending
+
 ## [1.9] — August 2026
 
 ### Portfolio Updates
