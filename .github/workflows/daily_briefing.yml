@@ -2,7 +2,7 @@ name: Daily Briefing
 
 on:
   schedule:
-    - cron: '0 13 * * 1-5'  # 9am ET Monday-Friday
+    - cron: '0 5 * * 1-5'  # Midnight ET Monday-Friday
   workflow_dispatch:          # Manual trigger available
 
 jobs:

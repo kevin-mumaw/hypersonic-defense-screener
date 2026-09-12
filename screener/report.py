@@ -197,7 +197,7 @@ def generate_markdown(scores, signals):
     # Notes
     lines.append("## Notes")
     lines.append("")
-        lines.append(
+    lines.append(
         "> Scores reflect real fundamental data (revenue growth, margins, "
         "debt/equity, earnings growth) and manually set thesis alignment scores."
     )

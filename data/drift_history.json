@@ -1,0 +1,83 @@
+{
+  "HWM": [
+    {
+      "date": "2026-09-11",
+      "current_pct": 31.54,
+      "target_pct": 7.09,
+      "deviation": 24.45,
+      "in_drift": true
+    }
+  ],
+  "HEI": [
+    {
+      "date": "2026-09-11",
+      "current_pct": 11.92,
+      "target_pct": 7.09,
+      "deviation": 4.83,
+      "in_drift": true
+    }
+  ],
+  "LOAR": [
+    {
+      "date": "2026-09-11",
+      "current_pct": 10.07,
+      "target_pct": 5.67,
+      "deviation": 4.4,
+      "in_drift": true
+    }
+  ],
+  "AXON": [
+    {
+      "date": "2026-09-11",
+      "current_pct": 16.7,
+      "target_pct": 10.64,
+      "deviation": 6.06,
+      "in_drift": true
+    }
+  ],
+  "CW": [
+    {
+      "date": "2026-09-11",
+      "current_pct": 5.21,
+      "target_pct": 7.09,
+      "deviation": -1.88,
+      "in_drift": false
+    }
+  ],
+  "ATI": [
+    {
+      "date": "2026-09-11",
+      "current_pct": 5.76,
+      "target_pct": 7.09,
+      "deviation": -1.33,
+      "in_drift": false
+    }
+  ],
+  "KRMN": [
+    {
+      "date": "2026-09-11",
+      "current_pct": 3.77,
+      "target_pct": 10.64,
+      "deviation": -6.87,
+      "in_drift": true
+    }
+  ],
+  "KTOS": [
+    {
+      "date": "2026-09-11",
+      "current_pct": 4.49,
+      "target_pct": 10.64,
+      "deviation": -6.15,
+      "in_drift": true
+    }
+  ],
+  "PLTR": [
+    {
+      "date": "2026-09-11",
+      "current_pct": 10.53,
+      "target_pct": 10.64,
+      "deviation": -0.11,
+      "in_drift": false
+    }
+  ]
+}
