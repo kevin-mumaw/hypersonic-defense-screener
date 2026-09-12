@@ -6,6 +6,23 @@ Hypersonic Defense Screener. It is maintained as a
 living document updated with every meaningful change 
 to thesis, universe, screener logic, or methodology.
 ---
+## [2.3] — September 2026
+
+### Phase 3 — Modules 1 and 2 Complete
+- Module 1: signal_history.py — daily score tracking, 30-day trend analysis
+- Module 2: drift_history.py — 30-day drift buffer now enforced in code
+  - Shock triggers fire immediately (13.5%/6.5%)
+  - Drift conditions only queue after 30 consecutive days
+  - Recent drift shown for monitoring only
+- Fixed yfinance MultiIndex NaN price bug — added dropna() to signals.py
+- Both modules wired into GitHub Action at midnight ET
+
+### Current Drift Status (September 11 2026)
+- HWM SHOCK HIGH 31.5% — intentional contrarian position, hold
+- AXON SHOCK HIGH 16.7% — day 1 of tracking
+- KRMN SHOCK LOW 3.8% — market selloff, governance watch
+- KTOS SHOCK LOW 4.5% — market selloff
+
 ## [2.2] — September 2026
 
 ### Phase 3 Progress
