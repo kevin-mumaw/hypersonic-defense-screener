@@ -1,7 +1,7 @@
 # Hypersonic Defense Screener — Ticker Universe
 
 **Version:** 1.4  
-**Date:** July 2026  
+**Date:** September 2026  
 **Status:** Active  
 
 ---
@@ -84,13 +84,13 @@ to meet ALL of the following criteria:
 
 ### IoMT, Sensors & Digital Battlefield
 
-| Ticker | Company | Exchange | Description | Tier |
-|--------|---------|----------|-------------|------|
-| AXON | Axon Enterprise | NASDAQ | Connected tactical sensors, software nodes, and drone orchestration. Dual-domain: IoMT + AI/Autonomy. Defense secondary to law enforcement today but rapidly expanding. | Disruptor |
-| TDY | Teledyne Technologies | NYSE | Advanced defense electronics & harsh-environment imaging. Strong fundamentals, technically mixed. | Standard |
-| HEI | Heico Corporation | NYSE | Proprietary subcomponents & defense electronic technologies. Best fundamental profile in universe. Technical signals historically unreliable — size conservatively. | Standard |
-| LOAR | Loar Holdings | NYSE | High-margin precision aerospace subcomponents. Classic picks-and-shovels supply chain layer. | Standard |
-| CW   | Curtiss-Wright Corporation | NYSE   | Defense electronics, naval systems, motion control | Direct thesis fit — defense electronics and aerospace systems |
+| Ticker |           Company          | Exchange |                                                         Description                                                                                                    |   Tier   |
+|--------|----------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| AXON   | Axon Enterprise            |   NASDAQ | Connected tactical sensors, software nodes, and drone orchestration. Dual-domain: IoMT + AI/Autonomy. Defense secondary to law enforcement today but rapidly expanding.| Disruptor|
+| TDY    | Teledyne Technologies      |   NYSE   | Advanced defense electronics & harsh-environment imaging. Strong fundamentals, technically mixed.                                                                      | Standard |
+| HEI    | Heico Corporation          |   NYSE   | Proprietary subcomponents & defense electronic technologies. Best fundamental profile in universe. Technical signals historically unreliable — size conservatively.    | Standard |
+| LOAR   | Loar Holdings              |   NYSE   | High-margin precision aerospace subcomponents. Classic picks-and-shovels supply chain layer. Technical signals historically unreliable (backtest: 20% total return, low win rate).                                                     Hold for thesis only — never add or trim based on technical signals alone. Defense revenue +70% YoY, 40%+ EBITDA margins, guidance raised.                             | Standard |
+| CW     | Curtiss-Wright Corporation |   NYSE   | Defense electronics, naval systems, motion control.  Stock down 25% from entry due to broad September 2026 selloff, NOT company-specific issues. Q2 revenue $924M +5%, operating                                                       margin 19.4% +110bps, FCF +37%, guidance raised. Sole-source naval nuclear positions intact. Hold through selloff. | Direct thesis fit — defense electronics and aerospace systems |
 
 
 ### Industrial Supply Chain & Materials
@@ -109,7 +109,6 @@ to meet ALL of the following criteria:
 | AADX   | Applied Aerospace & Defense| NYSE     | Solid rocket motors & missile propulsion subsystems    | IPO June 2026 — too new                                            |
 | BAH    | Booz Allen Hamilton        | NYSE     | Defense services & AI deployment integration           | Watchlist — consulting firm, weak picks-and-shovels fit            |
 | TDG    | TransDigm Group            | NYSE     | Highly engineered proprietary aerospace components     | Strong picks-and-shovels fit — research defense revenue mix        |
-| CW     | Curtiss-Wright Corporation | NYSE     | Defense electronics, naval systems, motion control     | Direct thesis fit — defense electronics and aerospace systems      |
 | HXL    | Hexcel Corporation         | NYSE     | Advanced carbon fiber composites for aerospace/defense | Composites in virtually every advanced defense platform            |
 | VSEC   | VSE Corporation            | NMS      | Aviation and defense aftermarket services, MRO, supply chain management — new discovery, needs further research | Watchlist |
 
