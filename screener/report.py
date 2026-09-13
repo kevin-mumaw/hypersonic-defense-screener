@@ -6,6 +6,7 @@
 
 from datetime import date
 from score import score_universe
+from earnings import run_earnings_check, generate_earnings_report
 from signals import calculate_universe_signals
 import os
 
@@ -194,7 +195,20 @@ def generate_markdown(scores, signals):
         lines.append("")
         lines.append("---")
         lines.append("")
-    # Notes
+
+    # --- Earnings Calendar ---
+    try:
+        gap_flags = {ticker: signals[ticker].get("gap_flag") 
+                    for ticker in signals}
+        earnings_dates, alerts = run_earnings_check(gap_flags=gap_flags)
+        earnings_section = generate_earnings_report(earnings_dates, alerts)
+        lines.append(earnings_section)
+        lines.append("")
+        lines.append("---")
+        lines.append("")
+    except Exception as e:
+        pass
+# Notes
     lines.append("## Notes")
     lines.append("")
     lines.append(
