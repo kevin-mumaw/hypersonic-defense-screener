@@ -19,8 +19,9 @@ defense programs.
 The investment thesis didn't start with a research report. It started 
 with a hobby. In college in Indiana, I used to calculate when and where 
 Iridium satellites would be visible in the night sky — tracking the 
-constellation pass by pass. Years later I realized I could own a piece 
-of it. That's when the picks-and-shovels idea took hold.
+constellation pass by pass. The ladies loved it! (don't quote me on that).  
+Years later I realized I could own a piece of it. That's when the 
+picks-and-shovels idea took hold.
 
 If the people building the next generation of weapons systems need 
 titanium alloys, advanced composites, hypersonic test platforms, and 
@@ -41,7 +42,7 @@ The answer was a rules-based screener built from scratch. Not a
 copy of someone else's system. Not a black box. Every decision 
 documented, every signal explainable, every limitation honestly stated.
 
-We started with the thesis. Then the universe. Then the code.
+I started with the thesis. Then the universe. Then the code.
 In that order. Always in that order.
 
 ### Phase 1 — Foundation (June 2026)
