@@ -6,6 +6,21 @@ Hypersonic Defense Screener. It is maintained as a
 living document updated with every meaningful change 
 to thesis, universe, screener logic, or methodology.
 ---
+## [2.6] — September 2026
+
+### Phase 3 — Module 3 Complete
+- Added execute_rebalance.py — automated rebalancing execution
+- 30-day drift buffer enforced — shock triggers execute immediately,
+  drift trades only execute after 30 consecutive days
+- Manual Y/N confirmation required before any trade placed
+- Generates execution payload for Robinhood MCP via Claude
+- First run September 12 2026:
+  - 6 shock trigger trades identified (HWM, AXON shock high,
+    KRMN, KTOS, CW, ATI shock low)
+  - NOT executed — deliberate contrarian HWM position,
+    selloff is seasonal not thesis-driven
+  - HEI and LOAR deferred at day 2/30
+
 ## [2.5] — September 2026
 
 ### Phase 3 — Module 5 Complete
