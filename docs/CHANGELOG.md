@@ -6,6 +6,22 @@ Hypersonic Defense Screener. It is maintained as a
 living document updated with every meaningful change 
 to thesis, universe, screener logic, or methodology.
 ---
+## [2.4] — September 2026
+
+### Phase 3 — Modules 3 and 4 Complete
+- Module 4: earnings.py — earnings calendar integration
+  - Flags earnings within 7 days for held positions
+  - Warns when gap alert coincides with upcoming earnings
+  - Added to daily briefing report automatically
+- CW thesis review — HOLD decision
+  - Q2 revenue $924M +5%, margin 19.4% +110bps, FCF +37%
+  - Down 25% from entry due to broad selloff, NOT company issues
+  - Analyst targets $700-857, sole-source naval nuclear intact
+- LOAR thesis review — HOLD decision
+  - Technical signals historically unreliable — never trade on signals alone
+  - Defense revenue +70% YoY, 40%+ EBITDA margins, guidance raised
+  - Hold for thesis reasons only
+
 ## [2.3] — September 2026
 
 ### Phase 3 — Modules 1 and 2 Complete
