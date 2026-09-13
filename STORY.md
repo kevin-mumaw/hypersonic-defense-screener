@@ -18,10 +18,10 @@ at the Department of Defense. In September 2026 I transitioned to the
 Department of Justice.
 
 The investment thesis didn't start with a research report. It started 
-with a hobby. In college in Indiana, I used to calculate when and where 
-Iridium satellites would be visible in the night sky — tracking the 
-constellation pass by pass. Years later I realized I could own a piece 
-of it. That's when the picks-and-shovels idea took hold.
+with a hobby. As a college student back in Indiana, I used to calculate 
+when and where Iridium satellites would be visible in the night sky — 
+tracking the constellation pass by pass. Years later I realized I could 
+own a piece of it. That's when the picks-and-shovels idea took hold.
 
 If the people building the next generation of weapons systems need 
 titanium alloys, advanced composites, hypersonic test platforms, and 
