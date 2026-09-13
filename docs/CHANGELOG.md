@@ -6,6 +6,16 @@ Hypersonic Defense Screener. It is maintained as a
 living document updated with every meaningful change 
 to thesis, universe, screener logic, or methodology.
 ---
+## [2.5] — September 2026
+
+### Phase 3 — Module 5 Complete
+- Added social.py — social media post generator
+- Generates X posts (280 char limit enforced) and LinkedIn posts
+- Post types: weekly performance, new position, milestone, thesis validation
+- Negative returns include context: "broad market selloff — thesis intact"
+- All posts require manual review before publishing
+- @SecondLayerCap on X ready for first posts
+
 ## [2.4] — September 2026
 
 ### Phase 3 — Modules 3 and 4 Complete
