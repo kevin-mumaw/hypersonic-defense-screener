@@ -2,14 +2,15 @@
 
 ---
 
-## Daily (5 minutes — on the bus)
+## Daily (optional — run manually when needed)
 
-- [ ] Open GitHub on iPhone → `logs/` → read today's `briefing_YYYY-MM-DD.md`
-- [ ] Check Universe Posture
-- [ ] Check Gap Alerts — any names that surged or crashed overnight
+- [ ] Go to GitHub Actions tab → Daily Briefing → Run workflow
+- [ ] Open `logs/` → read today's `briefing_YYYY-MM-DD.md`
+- [ ] Check Universe Posture, Gap Alerts, Composite Scores
 - [ ] Note anything needing action — bring to Claude if so
 
-*The GitHub Action runs this automatically at midnight ET weekdays.*
+*Automated daily runs disabled to conserve Claude usage allocation.*
+*Run manually on demand or as part of weekly maintenance.*
 
 ---
 
