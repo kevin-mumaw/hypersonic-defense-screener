@@ -6,6 +6,20 @@
       "target_pct": 7.09,
       "deviation": 24.45,
       "in_drift": true
+    },
+    {
+      "date": "2026-09-12",
+      "current_pct": 31.54,
+      "target_pct": 6.9,
+      "deviation": 24.64,
+      "in_drift": true
+    },
+    {
+      "date": "2026-09-13",
+      "current_pct": 31.54,
+      "target_pct": 6.9,
+      "deviation": 24.64,
+      "in_drift": true
     }
   ],
   "HEI": [
@@ -14,6 +28,20 @@
       "current_pct": 11.92,
       "target_pct": 7.09,
       "deviation": 4.83,
+      "in_drift": true
+    },
+    {
+      "date": "2026-09-12",
+      "current_pct": 11.92,
+      "target_pct": 6.9,
+      "deviation": 5.02,
+      "in_drift": true
+    },
+    {
+      "date": "2026-09-13",
+      "current_pct": 11.92,
+      "target_pct": 6.9,
+      "deviation": 5.02,
       "in_drift": true
     }
   ],
@@ -24,6 +52,20 @@
       "target_pct": 5.67,
       "deviation": 4.4,
       "in_drift": true
+    },
+    {
+      "date": "2026-09-12",
+      "current_pct": 10.07,
+      "target_pct": 5.52,
+      "deviation": 4.55,
+      "in_drift": true
+    },
+    {
+      "date": "2026-09-13",
+      "current_pct": 10.07,
+      "target_pct": 5.52,
+      "deviation": 4.55,
+      "in_drift": true
     }
   ],
   "AXON": [
@@ -32,6 +74,20 @@
       "current_pct": 16.7,
       "target_pct": 10.64,
       "deviation": 6.06,
+      "in_drift": true
+    },
+    {
+      "date": "2026-09-12",
+      "current_pct": 16.7,
+      "target_pct": 10.34,
+      "deviation": 6.36,
+      "in_drift": true
+    },
+    {
+      "date": "2026-09-13",
+      "current_pct": 16.7,
+      "target_pct": 10.34,
+      "deviation": 6.36,
       "in_drift": true
     }
   ],
@@ -42,6 +98,20 @@
       "target_pct": 7.09,
       "deviation": -1.88,
       "in_drift": false
+    },
+    {
+      "date": "2026-09-12",
+      "current_pct": 5.21,
+      "target_pct": 6.9,
+      "deviation": -1.69,
+      "in_drift": false
+    },
+    {
+      "date": "2026-09-13",
+      "current_pct": 5.21,
+      "target_pct": 6.9,
+      "deviation": -1.69,
+      "in_drift": false
     }
   ],
   "ATI": [
@@ -50,6 +120,20 @@
       "current_pct": 5.76,
       "target_pct": 7.09,
       "deviation": -1.33,
+      "in_drift": false
+    },
+    {
+      "date": "2026-09-12",
+      "current_pct": 5.76,
+      "target_pct": 6.9,
+      "deviation": -1.14,
+      "in_drift": false
+    },
+    {
+      "date": "2026-09-13",
+      "current_pct": 5.76,
+      "target_pct": 6.9,
+      "deviation": -1.14,
       "in_drift": false
     }
   ],
@@ -60,6 +144,20 @@
       "target_pct": 10.64,
       "deviation": -6.87,
       "in_drift": true
+    },
+    {
+      "date": "2026-09-12",
+      "current_pct": 3.77,
+      "target_pct": 10.34,
+      "deviation": -6.57,
+      "in_drift": true
+    },
+    {
+      "date": "2026-09-13",
+      "current_pct": 3.77,
+      "target_pct": 10.34,
+      "deviation": -6.57,
+      "in_drift": true
     }
   ],
   "KTOS": [
@@ -69,6 +167,20 @@
       "target_pct": 10.64,
       "deviation": -6.15,
       "in_drift": true
+    },
+    {
+      "date": "2026-09-12",
+      "current_pct": 4.49,
+      "target_pct": 10.34,
+      "deviation": -5.85,
+      "in_drift": true
+    },
+    {
+      "date": "2026-09-13",
+      "current_pct": 4.49,
+      "target_pct": 10.34,
+      "deviation": -5.85,
+      "in_drift": true
     }
   ],
   "PLTR": [
@@ -77,6 +189,20 @@
       "current_pct": 10.53,
       "target_pct": 10.64,
       "deviation": -0.11,
+      "in_drift": false
+    },
+    {
+      "date": "2026-09-12",
+      "current_pct": 10.53,
+      "target_pct": 11.72,
+      "deviation": -1.19,
+      "in_drift": false
+    },
+    {
+      "date": "2026-09-13",
+      "current_pct": 10.53,
+      "target_pct": 11.72,
+      "deviation": -1.19,
       "in_drift": false
     }
   ]
