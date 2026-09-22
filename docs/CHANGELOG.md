@@ -6,6 +6,25 @@ Hypersonic Defense Screener. It is maintained as a
 living document updated with every meaningful change 
 to thesis, universe, screener logic, or methodology.
 ---
+
+## [2.7] — September 2026
+
+### Rebalancing Engine — Override System
+- Added OVERRIDES dict to positions.py
+- Rebalancing engine now respects deliberate position decisions
+- HWM flagged as DELIBERATE_OVERWEIGHT — contrarian thesis buy
+  at discount after SpaceX turbine blade noise
+- Override active until November 1 2026 — reassess then
+- Shock triggers bypass for overridden positions
+- Position shows in Drift Conditions with override notice instead
+- Tools no longer "moot" — engine distinguishes accidental drift
+  from deliberate thesis decisions
+
+### Portfolio Tracker Fix
+- Fixed portfolio.py — now fetches live prices for all positions
+- Fixed test data that was showing $0 prices and empty portfolio
+- Portfolio report now shows real P&L per position
+  
 ## [2.6] — September 2026
 
 ### Phase 3 — Module 3 Complete
