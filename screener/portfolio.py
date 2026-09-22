@@ -8,6 +8,7 @@ import os
 import sys
 import requests
 from datetime import date
+import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from universe import UNIVERSE
@@ -231,7 +232,7 @@ def save_portfolio_report(markdown):
 def run_portfolio(positions=None, cash=0):
     """
     Run portfolio analysis.
-    
+
     Args:
         positions : list of position dicts (from Robinhood)
         cash      : available cash in account
@@ -241,6 +242,22 @@ def run_portfolio(positions=None, cash=0):
 
     print("Running portfolio analysis...")
 
+    # Fetch current prices
+    import yfinance as yf
+    for pos in positions:
+        ticker = pos["ticker"]
+        try:
+            df = yf.download(ticker, period="2d", progress=False)
+            if not df.empty:
+                if isinstance(df.columns, pd.MultiIndex):
+                    pos["current_price"] = float(df[("Close", ticker)].dropna().iloc[-1])
+                else:
+                    pos["current_price"] = float(df["Close"].dropna().iloc[-1])
+            else:
+                pos["current_price"] = 0
+        except Exception:
+            pos["current_price"] = 0
+
     scores         = score_universe()
     portfolio_view = build_portfolio_view(positions, scores)
     gaps           = identify_gaps(positions, scores)
@@ -249,9 +266,11 @@ def run_portfolio(positions=None, cash=0):
     save_portfolio_report(markdown)
     print(markdown)
 
-    return portfolio_view, gaps
-
 
 if __name__ == "__main__":
-    # Test with empty portfolio
-    run_portfolio(positions=[], cash=1000)
+    from positions import POSITIONS, CASH
+    positions_list = [
+        {"ticker": k, "shares": v["shares"], "avg_cost": v["avg_cost"]}
+        for k, v in POSITIONS.items()
+    ]
+    run_portfolio(positions=positions_list, cash=CASH)
