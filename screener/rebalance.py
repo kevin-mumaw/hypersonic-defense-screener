@@ -133,19 +133,37 @@ def normalize_weights(scores):
 def identify_triggers(positions_with_value, total_value, target_weights):
     """
     Identify shock triggers and drift conditions.
-    
+    Respects manual overrides in positions.py OVERRIDES dict.
+
     Returns:
         shock_triggers: list of immediate action items
         drift_items: list of drift conditions
     """
+    from positions import OVERRIDES
+    from datetime import date
+
     shock_triggers = []
     drift_items    = []
 
     for ticker, data in positions_with_value.items():
         current_pct = data["current_pct"]
         target_pct  = target_weights.get(ticker, 0) / 100
+        deviation   = current_pct - target_pct
 
-        deviation = current_pct - target_pct
+        # Check for manual override
+        override = OVERRIDES.get(ticker)
+        if override:
+            reason, expiry = override
+            if date.today() <= date.fromisoformat(expiry):
+                # Still within override window — skip shock trigger
+                drift_items.append({
+                    "ticker"     : ticker,
+                    "current_pct": round(current_pct * 100, 1),
+                    "target_pct" : round(target_pct * 100, 1),
+                    "deviation"  : round(deviation * 100, 1),
+                    "action"     : f"OVERRIDE ACTIVE until {expiry} — {reason[:60]}...",
+                })
+                continue
 
         # Shock triggers — immediate
         if current_pct > SHOCK_HIGH:

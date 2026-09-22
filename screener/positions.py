@@ -16,6 +16,17 @@ POSITIONS = {
 
 CASH = 0.12
 
+# Manual overrides — bypass shock triggers for deliberate positions
+# Format: ticker: (reason, expiry_date)
+# Expiry date: when to reassess — engine flags again after this date
+OVERRIDES = {
+    "HWM": (
+        "DELIBERATE_OVERWEIGHT — contrarian thesis buy at discount "
+        "after SpaceX/turbine blade noise. Analyst targets $316-350. "
+        "Bypass shock trigger until recovery or thesis break.",
+        "2026-11-01"  # Reassess November 1
+    ),
+}
 LAST_UPDATED = "2026-09-09"
 
 
