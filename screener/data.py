@@ -74,5 +74,8 @@ if __name__ == "__main__":
 
     print("\n--- Latest Close Prices ---")
     for ticker, df in data.items():
-        latest_close = df["Close"].iloc[-1].item()
+        if isinstance(df.columns, pd.MultiIndex):
+            latest_close = float(df[("Close", ticker)].dropna().iloc[-1])
+        else:
+            latest_close = float(df["Close"].dropna().iloc[-1])
         print(f"  {ticker:<6} — ${latest_close:.2f}")
