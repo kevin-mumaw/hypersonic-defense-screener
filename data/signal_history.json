@@ -17,6 +17,24 @@
       "thesis": 85,
       "signal": "STRONG",
       "action": "Consider adding"
+    },
+    {
+      "date": "2026-09-24",
+      "composite": 87.0,
+      "technical": 75,
+      "fundamental": 100,
+      "thesis": 85,
+      "signal": "STRONG",
+      "action": "Consider adding"
+    },
+    {
+      "date": "2026-10-04",
+      "composite": 83.0,
+      "technical": 65,
+      "fundamental": 100,
+      "thesis": 85,
+      "signal": "STRONG",
+      "action": "Consider adding"
     }
   ],
   "HEI": [
@@ -33,6 +51,24 @@
       "date": "2026-09-13",
       "composite": 57.0,
       "technical": 10,
+      "fundamental": 100,
+      "thesis": 65,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-09-24",
+      "composite": 59.0,
+      "technical": 15,
+      "fundamental": 100,
+      "thesis": 65,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-04",
+      "composite": 69.0,
+      "technical": 40,
       "fundamental": 100,
       "thesis": 65,
       "signal": "NEUTRAL",
@@ -57,6 +93,24 @@
       "thesis": 70,
       "signal": "NEUTRAL",
       "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-09-24",
+      "composite": 52.8,
+      "technical": 10,
+      "fundamental": 87,
+      "thesis": 70,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-04",
+      "composite": 68.8,
+      "technical": 50,
+      "fundamental": 87,
+      "thesis": 70,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
     }
   ],
   "CW": [
@@ -73,6 +127,24 @@
       "date": "2026-09-13",
       "composite": 56.8,
       "technical": 10,
+      "fundamental": 92,
+      "thesis": 80,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-09-24",
+      "composite": 62.8,
+      "technical": 25,
+      "fundamental": 92,
+      "thesis": 80,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-04",
+      "composite": 64.8,
+      "technical": 30,
       "fundamental": 92,
       "thesis": 80,
       "signal": "NEUTRAL",
@@ -97,6 +169,24 @@
       "thesis": 80,
       "signal": "NEUTRAL",
       "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-09-24",
+      "composite": 58.4,
+      "technical": 25,
+      "fundamental": 81,
+      "thesis": 80,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-04",
+      "composite": 56.4,
+      "technical": 20,
+      "fundamental": 81,
+      "thesis": 80,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
     }
   ],
   "KRMN": [
@@ -113,6 +203,24 @@
       "date": "2026-09-13",
       "composite": 55.8,
       "technical": 20,
+      "fundamental": 77,
+      "thesis": 85,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-09-24",
+      "composite": 55.8,
+      "technical": 20,
+      "fundamental": 77,
+      "thesis": 85,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-04",
+      "composite": 59.8,
+      "technical": 30,
       "fundamental": 77,
       "thesis": 85,
       "signal": "NEUTRAL",
@@ -137,6 +245,24 @@
       "thesis": 75,
       "signal": "NEUTRAL",
       "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-09-24",
+      "composite": 57.8,
+      "technical": 25,
+      "fundamental": 82,
+      "thesis": 75,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-04",
+      "composite": 51.8,
+      "technical": 10,
+      "fundamental": 82,
+      "thesis": 75,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
     }
   ],
   "TDY": [
@@ -157,6 +283,24 @@
       "thesis": 75,
       "signal": "NEUTRAL",
       "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-09-24",
+      "composite": 71.8,
+      "technical": 60,
+      "fundamental": 82,
+      "thesis": 75,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-04",
+      "composite": 61.8,
+      "technical": 35,
+      "fundamental": 82,
+      "thesis": 75,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
     }
   ],
   "ATI": [
@@ -171,6 +315,24 @@
     },
     {
       "date": "2026-09-13",
+      "composite": 62.4,
+      "technical": 50,
+      "fundamental": 71,
+      "thesis": 70,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-09-24",
+      "composite": 48.4,
+      "technical": 15,
+      "fundamental": 71,
+      "thesis": 70,
+      "signal": "WEAK",
+      "action": "Consider trimming"
+    },
+    {
+      "date": "2026-10-04",
       "composite": 62.4,
       "technical": 50,
       "fundamental": 71,
@@ -197,6 +359,24 @@
       "thesis": 75,
       "signal": "NEUTRAL",
       "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-09-24",
+      "composite": 58.2,
+      "technical": 35,
+      "fundamental": 73,
+      "thesis": 75,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-04",
+      "composite": 50.2,
+      "technical": 15,
+      "fundamental": 73,
+      "thesis": 75,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
     }
   ],
   "LOAR": [
@@ -217,6 +397,24 @@
       "thesis": 65,
       "signal": "WEAK",
       "action": "Consider trimming"
+    },
+    {
+      "date": "2026-09-24",
+      "composite": 55.0,
+      "technical": 25,
+      "fundamental": 80,
+      "thesis": 65,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-04",
+      "composite": 51.0,
+      "technical": 15,
+      "fundamental": 80,
+      "thesis": 65,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
     }
   ],
   "MTRN": [
@@ -233,6 +431,24 @@
       "date": "2026-09-13",
       "composite": 60.6,
       "technical": 55,
+      "fundamental": 64,
+      "thesis": 65,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-09-24",
+      "composite": 60.6,
+      "technical": 55,
+      "fundamental": 64,
+      "thesis": 65,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-04",
+      "composite": 68.6,
+      "technical": 75,
       "fundamental": 64,
       "thesis": 65,
       "signal": "NEUTRAL",

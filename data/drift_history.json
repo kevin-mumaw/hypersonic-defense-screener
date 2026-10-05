@@ -20,6 +20,13 @@
       "target_pct": 6.9,
       "deviation": 24.64,
       "in_drift": true
+    },
+    {
+      "date": "2026-10-04",
+      "current_pct": 32.66,
+      "target_pct": 6.8,
+      "deviation": 25.86,
+      "in_drift": true
     }
   ],
   "HEI": [
@@ -42,6 +49,13 @@
       "current_pct": 11.92,
       "target_pct": 6.9,
       "deviation": 5.02,
+      "in_drift": true
+    },
+    {
+      "date": "2026-10-04",
+      "current_pct": 11.73,
+      "target_pct": 6.8,
+      "deviation": 4.93,
       "in_drift": true
     }
   ],
@@ -66,6 +80,13 @@
       "target_pct": 5.52,
       "deviation": 4.55,
       "in_drift": true
+    },
+    {
+      "date": "2026-10-04",
+      "current_pct": 9.6,
+      "target_pct": 6.8,
+      "deviation": 2.8,
+      "in_drift": true
     }
   ],
   "AXON": [
@@ -88,6 +109,13 @@
       "current_pct": 16.7,
       "target_pct": 10.34,
       "deviation": 6.36,
+      "in_drift": true
+    },
+    {
+      "date": "2026-10-04",
+      "current_pct": 14.81,
+      "target_pct": 10.2,
+      "deviation": 4.61,
       "in_drift": true
     }
   ],
@@ -112,6 +140,13 @@
       "target_pct": 6.9,
       "deviation": -1.69,
       "in_drift": false
+    },
+    {
+      "date": "2026-10-04",
+      "current_pct": 5.23,
+      "target_pct": 6.8,
+      "deviation": -1.57,
+      "in_drift": false
     }
   ],
   "ATI": [
@@ -134,6 +169,13 @@
       "current_pct": 5.76,
       "target_pct": 6.9,
       "deviation": -1.14,
+      "in_drift": false
+    },
+    {
+      "date": "2026-10-04",
+      "current_pct": 5.74,
+      "target_pct": 6.8,
+      "deviation": -1.06,
       "in_drift": false
     }
   ],
@@ -158,6 +200,13 @@
       "target_pct": 10.34,
       "deviation": -6.57,
       "in_drift": true
+    },
+    {
+      "date": "2026-10-04",
+      "current_pct": 3.75,
+      "target_pct": 10.2,
+      "deviation": -6.45,
+      "in_drift": true
     }
   ],
   "KTOS": [
@@ -181,6 +230,13 @@
       "target_pct": 10.34,
       "deviation": -5.85,
       "in_drift": true
+    },
+    {
+      "date": "2026-10-04",
+      "current_pct": 4.26,
+      "target_pct": 10.2,
+      "deviation": -5.94,
+      "in_drift": true
     }
   ],
   "PLTR": [
@@ -203,6 +259,13 @@
       "current_pct": 10.53,
       "target_pct": 11.72,
       "deviation": -1.19,
+      "in_drift": false
+    },
+    {
+      "date": "2026-10-04",
+      "current_pct": 12.21,
+      "target_pct": 11.56,
+      "deviation": 0.65,
       "in_drift": false
     }
   ]
