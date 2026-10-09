@@ -110,8 +110,9 @@ to meet ALL of the following criteria:
 | BAH    | Booz Allen Hamilton        | NYSE     | Defense services & AI deployment integration           | Watchlist — consulting firm, weak picks-and-shovels fit            |
 | TDG    | TransDigm Group            | NYSE     | Highly engineered proprietary aerospace components     | Strong picks-and-shovels fit — research defense revenue mix        |
 | HXL    | Hexcel Corporation         | NYSE     | Advanced carbon fiber composites for aerospace/defense | Composites in virtually every advanced defense platform            |
-| VSEC   | VSE Corporation            | NMS      | Aviation and defense aftermarket services, MRO, supply chain management — new discovery, needs further research | Watchlist |
-
+| VSEC   | VSE Corporation            | NMS      | Aviation and defense aftermarket services, MRO, supply chain management — new discovery, needs further research             | Watchlist |
+| HONA   | Honeywell Aerospace        | NMS      | Avionics, propulsion, thermal systems — pure-play aerospace/defense spinoff 2024                                            | Watchlist |
+| WWD    | Woodward Inc               | NMS      | Fuel systems, actuation, control systems for aerospace and defense                                                          | Watchlist |
 ---
 
 ## IPO Watch
