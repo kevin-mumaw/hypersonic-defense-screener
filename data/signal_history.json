@@ -35,6 +35,15 @@
       "thesis": 85,
       "signal": "STRONG",
       "action": "Consider adding"
+    },
+    {
+      "date": "2026-10-08",
+      "composite": 87.0,
+      "technical": 75,
+      "fundamental": 100,
+      "thesis": 85,
+      "signal": "STRONG",
+      "action": "Consider adding"
     }
   ],
   "HEI": [
@@ -67,6 +76,15 @@
     },
     {
       "date": "2026-10-04",
+      "composite": 69.0,
+      "technical": 40,
+      "fundamental": 100,
+      "thesis": 65,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-08",
       "composite": 69.0,
       "technical": 40,
       "fundamental": 100,
@@ -111,6 +129,15 @@
       "thesis": 70,
       "signal": "NEUTRAL",
       "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-08",
+      "composite": 60.8,
+      "technical": 30,
+      "fundamental": 87,
+      "thesis": 70,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
     }
   ],
   "CW": [
@@ -149,6 +176,15 @@
       "thesis": 80,
       "signal": "NEUTRAL",
       "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-08",
+      "composite": 60.8,
+      "technical": 20,
+      "fundamental": 92,
+      "thesis": 80,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
     }
   ],
   "KTOS": [
@@ -181,6 +217,15 @@
     },
     {
       "date": "2026-10-04",
+      "composite": 56.4,
+      "technical": 20,
+      "fundamental": 81,
+      "thesis": 80,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-08",
       "composite": 56.4,
       "technical": 20,
       "fundamental": 81,
@@ -225,6 +270,15 @@
       "thesis": 85,
       "signal": "NEUTRAL",
       "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-08",
+      "composite": 53.8,
+      "technical": 15,
+      "fundamental": 77,
+      "thesis": 85,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
     }
   ],
   "AXON": [
@@ -259,6 +313,15 @@
       "date": "2026-10-04",
       "composite": 51.8,
       "technical": 10,
+      "fundamental": 82,
+      "thesis": 75,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-08",
+      "composite": 57.8,
+      "technical": 25,
       "fundamental": 82,
       "thesis": 75,
       "signal": "NEUTRAL",
@@ -301,6 +364,15 @@
       "thesis": 75,
       "signal": "NEUTRAL",
       "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-08",
+      "composite": 63.8,
+      "technical": 40,
+      "fundamental": 82,
+      "thesis": 75,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
     }
   ],
   "ATI": [
@@ -335,6 +407,15 @@
       "date": "2026-10-04",
       "composite": 62.4,
       "technical": 50,
+      "fundamental": 71,
+      "thesis": 70,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-08",
+      "composite": 54.4,
+      "technical": 30,
       "fundamental": 71,
       "thesis": 70,
       "signal": "NEUTRAL",
@@ -377,6 +458,15 @@
       "thesis": 75,
       "signal": "NEUTRAL",
       "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-08",
+      "composite": 48.2,
+      "technical": 10,
+      "fundamental": 73,
+      "thesis": 75,
+      "signal": "WEAK",
+      "action": "Consider trimming"
     }
   ],
   "LOAR": [
@@ -415,6 +505,15 @@
       "thesis": 65,
       "signal": "NEUTRAL",
       "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-08",
+      "composite": 55.0,
+      "technical": 25,
+      "fundamental": 80,
+      "thesis": 65,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
     }
   ],
   "MTRN": [
@@ -447,6 +546,15 @@
     },
     {
       "date": "2026-10-04",
+      "composite": 68.6,
+      "technical": 75,
+      "fundamental": 64,
+      "thesis": 65,
+      "signal": "NEUTRAL",
+      "action": "Hold / monitor"
+    },
+    {
+      "date": "2026-10-08",
       "composite": 68.6,
       "technical": 75,
       "fundamental": 64,
