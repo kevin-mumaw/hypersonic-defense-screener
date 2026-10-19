@@ -106,7 +106,7 @@ The thesis remains intact. We own the picks-and-shovels layer of next-generation
 Current holdings span four technology domains:
 - AI & Autonomy: PLTR, AVAV, KTOS
 - Hypersonic, Space & Propulsion: KRMN, HWM, ATI
-- IoMT & Digital Battlefield: AXON, TDY, HEI, LOAR, CW
+- IoMT & Digital Battlefield: AXON, HEI, LOAR, CW
 - Industrial Supply Chain: MTRN
 
 The system is rules-based, thesis-driven, and fully documented. Every decision has a rationale. Every signal has a source.
@@ -225,12 +225,40 @@ def run_social(post_type="weekly", **kwargs):
 
 
 if __name__ == "__main__":
-    # Demo — weekly post
+    from positions import POSITIONS, CASH
+
+    # Current prices from Robinhood — update weekly
+    prices = {
+        "HWM" : 220.96,
+        "HEI" : 309.87,
+        "LOAR": 62.21,
+        "AXON": 390.29,
+        "CW"  : 502.32,
+        "ATI" : 185.59,
+        "KRMN": 34.68,
+        "KTOS": 40.42,
+        "PLTR": 186.03,
+    }
+
+    portfolio_value = sum(
+        POSITIONS[t]["shares"] * prices.get(t, 0) for t in POSITIONS
+    ) + CASH
+    cost_basis = sum(
+        POSITIONS[t]["shares"] * POSITIONS[t]["avg_cost"] for t in POSITIONS
+    )
+
+    performers = {
+        t: ((prices.get(t, 0) - POSITIONS[t]["avg_cost"]) / POSITIONS[t]["avg_cost"] * 100)
+        for t in POSITIONS
+    }
+    top_performer = max(performers, key=performers.get)
+    top_pct       = performers[top_performer]
+
     run_social(
         post_type       = "weekly",
-        portfolio_value = 704.00,
-        cost_basis      = 750.00,
+        portfolio_value = portfolio_value,
+        cost_basis      = cost_basis,
         posture         = "MIXED",
-        top_performer   = "MTRN",
-        top_pct         = 5.2,
+        top_performer   = top_performer,
+        top_pct         = top_pct,
     )
