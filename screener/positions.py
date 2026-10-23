@@ -4,7 +4,7 @@
 
 POSITIONS = {
     "HWM" : {"shares": 1.184280, "avg_cost": 244.82},
-    "HEI" : {"shares": 0.325174, "avg_cost": 338.40},
+    "HEI" : {"shares": 0.575850, "avg_cost": 321.77},
     "LOAR": {"shares": 1.304726, "avg_cost": 68.98},
     "AXON": {"shares": 0.300347, "avg_cost": 466.13},
     "CW"  : {"shares": 0.080375, "avg_cost": 746.50},
@@ -14,7 +14,8 @@ POSITIONS = {
     "PLTR": {"shares": 0.542643, "avg_cost": 165.60},
 }
 
-CASH = 0.12
+CASH = 100.23
+LAST_UPDATED = "2026-10-22"
 
 # Manual overrides — bypass shock triggers for deliberate positions
 # Format: ticker: (reason, expiry_date)
