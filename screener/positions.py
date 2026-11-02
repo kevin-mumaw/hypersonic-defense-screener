@@ -22,10 +22,11 @@ LAST_UPDATED = "2026-11-01"
 # Expiry date: when to reassess — engine flags again after this date
 OVERRIDES = {
     "HWM": (
-        "DELIBERATE_OVERWEIGHT — contrarian thesis buy at discount "
+       "DELIBERATE_OVERWEIGHT — contrarian thesis buy at discount "
         "after SpaceX/turbine blade noise. Analyst targets $316-350. "
-        "Bypass shock trigger until recovery or thesis break.",
-        "2026-11-01"  # Reassess November 1
+        "Renewed Nov 1. Trim sooner if thesis breaks: guidance cut or "
+        "close below $180.",
+        "2026-12-01"  # Reassess December 1
     ),
 }
 
