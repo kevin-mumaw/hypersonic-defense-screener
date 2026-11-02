@@ -73,26 +73,34 @@ def record_daily_weights(positions_with_value, target_weights):
 
 def get_consecutive_drift_days(ticker):
     """
-    Count how many consecutive days a ticker has been in drift.
+    Calendar days a ticker has been continuously in drift.
+
+    Counts from the first logged day of the current unbroken drift streak
+    to the most recent logged day. A logged day with in_drift False ends
+    the streak. Days with no log entry between two in-drift entries are
+    assumed to have stayed in drift.
 
     Returns:
-        int — number of consecutive days in drift (0 if not drifting)
+        int — calendar days in drift (0 if the latest entry is not in drift)
     """
     history = load_drift_history()
 
-    if ticker not in history:
+    if ticker not in history or not history[ticker]:
         return 0
 
     entries = sorted(history[ticker], key=lambda x: x["date"], reverse=True)
 
-    consecutive = 0
-    for entry in entries:
-        if entry["in_drift"]:
-            consecutive += 1
-        else:
-            break
+    if not entries[0]["in_drift"]:
+        return 0
 
-    return consecutive
+    latest = datetime.strptime(entries[0]["date"], "%Y-%m-%d").date()
+    start  = latest
+    for entry in entries:
+        if not entry["in_drift"]:
+            break
+        start = datetime.strptime(entry["date"], "%Y-%m-%d").date()
+
+    return (latest - start).days
 
 
 def get_drift_status(positions_with_value, target_weights):

@@ -13,6 +13,36 @@ from positions import POSITIONS, CASH, LAST_UPDATED
 from universe import UNIVERSE
 
 
+
+# --- Portfolio math (computed from positions.py, never hardcoded) ---
+
+def holdings_by_domain():
+    """Group held tickers by UNIVERSE sector, e.g. {'AI & Autonomy': ['PLTR','KTOS']}."""
+    groups = {}
+    for t in POSITIONS:
+        sector = UNIVERSE.get(t, {}).get("sector", "Other").split(" / ")[0]
+        groups.setdefault(sector, []).append(t)
+    return groups
+
+
+def compute_performance(prices):
+    """
+    Return of open positions vs their cost basis. Cash is excluded.
+    Raises if any held ticker has no price — never silently uses 0.
+    """
+    missing = [t for t in POSITIONS if not prices.get(t)]
+    if missing:
+        raise ValueError(f"No price for: {', '.join(missing)}")
+    invested   = sum(POSITIONS[t]["shares"] * prices[t] for t in POSITIONS)
+    cost_basis = sum(POSITIONS[t]["shares"] * POSITIONS[t]["avg_cost"]
+                     for t in POSITIONS)
+    performers = {
+        t: (prices[t] - POSITIONS[t]["avg_cost"]) / POSITIONS[t]["avg_cost"] * 100
+        for t in POSITIONS
+    }
+    top = max(performers, key=performers.get)
+    return invested, cost_basis, top, performers[top]
+
 # --- X Post Templates (280 char limit) ---
 
 def generate_weekly_performance_post(portfolio_value, cost_basis, 
@@ -23,13 +53,13 @@ def generate_weekly_performance_post(portfolio_value, cost_basis,
     total_return = ((portfolio_value - cost_basis) / cost_basis) * 100
     direction    = "+" if total_return >= 0 else ""
     
-    context = " (broad market selloff — thesis intact)" if total_return < 0 else ""
+    context = ""
     
     post = (
         f"🛡️ Second Layer Capital — Weekly Update\n\n"
-        f"Portfolio: {direction}{total_return:.1f}% since inception{context}\n"
-        f"Top performer: ${top_performer} (+{top_pct:.1f}%)\n\n"
-        f"9 positions. 4 domains. Picks-and-shovels defense thesis.\n\n"
+        f"Open positions vs cost basis: {direction}{total_return:.1f}%\n"
+        f"Best performer: ${top_performer} ({top_pct:+.1f}%)\n\n"
+        f"{len(POSITIONS)} positions. Picks-and-shovels defense thesis.\n\n"
         f"#SecondLayerCapital #DefenseTech #Hypersonics"
     )
         
@@ -93,21 +123,20 @@ def generate_linkedin_weekly(portfolio_value, cost_basis,
     total_return = ((portfolio_value - cost_basis) / cost_basis) * 100
     direction    = "+" if total_return >= 0 else ""
     today        = date.today().strftime("%B %d, %Y")
+    groups       = holdings_by_domain()
+    domain_lines = "\n".join(f"- {d}: {', '.join(t)}" for d, t in groups.items())
 
     post = f"""🛡️ Second Layer Capital — Weekly Portfolio Update
 {today}
 
-Portfolio performance since inception: {direction}{total_return:.1f}%{"  (broad market selloff — thesis intact)" if total_return < 0 else ""}
+Open positions vs cost basis: {direction}{total_return:.1f}%
 Universe posture: {posture}
 Active positions: {len(POSITIONS)}
 
 The thesis remains intact. We own the picks-and-shovels layer of next-generation defense technology — the specialized suppliers, component manufacturers, and software platforms that prime contractors depend on to build hypersonic weapons, autonomous systems, and directed energy platforms.
 
-Current holdings span four technology domains:
-- AI & Autonomy: PLTR, AVAV, KTOS
-- Hypersonic, Space & Propulsion: KRMN, HWM, ATI
-- IoMT & Digital Battlefield: AXON, HEI, LOAR, CW
-- Industrial Supply Chain: MTRN
+Current holdings span {len(groups)} technology domains:
+{domain_lines}
 
 The system is rules-based, thesis-driven, and fully documented. Every decision has a rationale. Every signal has a source.
 
@@ -225,38 +254,24 @@ def run_social(post_type="weekly", **kwargs):
 
 
 if __name__ == "__main__":
-    from positions import POSITIONS, CASH
+    from rebalance import get_current_prices
 
-    # Current prices from Robinhood — update weekly
-    prices = {
-        "HWM" : 220.96,
-        "HEI" : 309.87,
-        "LOAR": 62.21,
-        "AXON": 390.29,
-        "CW"  : 502.32,
-        "ATI" : 185.59,
-        "KRMN": 34.68,
-        "KTOS": 40.42,
-        "PLTR": 186.03,
-    }
+    prices = get_current_prices()
+    try:
+        invested, cost_basis, top_performer, top_pct = compute_performance(prices)
+    except ValueError as e:
+        print(f"ERROR: {e}. Not generating posts — numbers would be wrong.")
+        sys.exit(1)
 
-    portfolio_value = sum(
-        POSITIONS[t]["shares"] * prices.get(t, 0) for t in POSITIONS
-    ) + CASH
-    cost_basis = sum(
-        POSITIONS[t]["shares"] * POSITIONS[t]["avg_cost"] for t in POSITIONS
-    )
-
-    performers = {
-        t: ((prices.get(t, 0) - POSITIONS[t]["avg_cost"]) / POSITIONS[t]["avg_cost"] * 100)
-        for t in POSITIONS
-    }
-    top_performer = max(performers, key=performers.get)
-    top_pct       = performers[top_performer]
+    print(f"Invested (excl. cash): ${invested:,.2f} | "
+          f"Cost basis: ${cost_basis:,.2f} | "
+          f"Return: {(invested - cost_basis) / cost_basis * 100:+.1f}%")
+    print(f"positions.py last updated: {LAST_UPDATED} — "
+          f"confirm it matches Robinhood before posting.")
 
     run_social(
         post_type       = "weekly",
-        portfolio_value = portfolio_value,
+        portfolio_value = invested,
         cost_basis      = cost_basis,
         posture         = "MIXED",
         top_performer   = top_performer,
