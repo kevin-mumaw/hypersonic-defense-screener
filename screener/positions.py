@@ -11,17 +11,22 @@ POSITIONS = {
     "ATI" : {"shares": 0.250000, "avg_cost": 220.00},
     "KRMN": {"shares": 0.920979, "avg_cost": 54.29},
     "KTOS": {"shares": 2.631636, "avg_cost": 45.35},
-    "PLTR": {"shares": 1.136719, "avg_cost": 184.65},
+    "PLTR": {"shares": 1.732506, "avg_cost": 178.87},
 }
 
-CASH = 133.79
-LAST_UPDATED = "2026-11-02"
+CASH = 33.79
+LAST_UPDATED = "2026-11-03"
 
 # Manual overrides — bypass shock triggers for deliberate positions
 # Format: ticker: (reason, expiry_date)
 # Expiry date: when to reassess — engine flags again after this date
 OVERRIDES = {
-    "HWM": (
+       "PLTR": (
+       "DELIBERATE_ADD — bought $100 at $167.68 after market drop and earnings, Nov 3. "
+       "Review if guidance cut or close below $150.",
+       "2026-12-01"),
+       
+       "HWM": (
        "DELIBERATE_OVERWEIGHT — contrarian thesis buy at discount "
         "after SpaceX/turbine blade noise. Analyst targets $316-350. "
         "Renewed Nov 1. Trim sooner if thesis breaks: guidance cut or "
