@@ -22,7 +22,7 @@ LAST_UPDATED = "2026-11-03"
 # Expiry date: when to reassess — engine flags again after this date
 OVERRIDES = {
        "PLTR": (
-       "DELIBERATE_ADD — bought $100 at $167.68 after market drop and earnings, Nov 3. "
+       "DELIBERATE_ADD — bought $100 at $167.85 after market drop and earnings, Nov 3. "
        "Review if guidance cut or close below $150.",
        "2026-12-01"),
        
