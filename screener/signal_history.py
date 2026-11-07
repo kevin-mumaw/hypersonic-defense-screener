@@ -217,7 +217,7 @@ def generate_trend_report():
 if __name__ == "__main__":
     from score import score_universe
     print("Recording today's scores to signal history...")
-    scores  = score_universe()
+    scores, _missing, _signals = score_universe()
     history = record_daily_scores(scores)
     print(f"History now contains {len(history)} tickers")
     print()

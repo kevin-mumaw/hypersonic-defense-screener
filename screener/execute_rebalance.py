@@ -80,7 +80,15 @@ def filter_executable_trades(trades, shock_triggers, drift_items,
     shock_tickers = {t["ticker"] for t in shock_triggers}
     drift_tickers = {d["ticker"] for d in drift_items}
 
-    score_lookup = {s["ticker"]: s["composite"] for s in (scores or [])}
+    if scores is None:
+        # The score gate is the only score-based buy control; a caller
+        # that forgets the scores silently disables it. Fail loudly
+        # instead of treating None as "no gate".
+        raise ValueError(
+            "filter_executable_trades requires scores (got None) — "
+            "the MIN_BUY_SCORE gate cannot run without them")
+
+    score_lookup = {s["ticker"]: s["composite"] for s in scores}
     candidates = []
     deferred   = []
 
@@ -93,7 +101,6 @@ def filter_executable_trades(trades, shock_triggers, drift_items,
             trade["reason"] = f"BUY BLOCKED — WATCH: {WATCH[ticker]}"
             deferred.append(trade)
         elif (trade["action"] == "BUY" and ticker in shock_tickers
-              and scores is not None
               and score_lookup.get(ticker, 0) < MIN_BUY_SCORE):
             trade["reason"] = (f"BUY BLOCKED — score "
                                f"{score_lookup.get(ticker, 0)} < {MIN_BUY_SCORE}")
@@ -286,7 +293,7 @@ def run_execute_rebalance(auto_confirm=False):
 
     # Run screener
     print("Running screener...")
-    scores         = score_universe()
+    scores, _missing, _signals = score_universe()
     target_weights = normalize_weights(scores)
 
     # Build positions

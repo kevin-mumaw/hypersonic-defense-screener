@@ -240,7 +240,7 @@ if __name__ == "__main__":
     prices           = get_current_prices()
     portfolio_value  = calculate_portfolio_value(prices)
     deployed, _      = calculate_deployed_capital(portfolio_value)
-    scores           = score_universe()
+    scores, _missing, _signals = score_universe()
     target_weights   = normalize_weights(scores)
 
     positions_with_value = {}

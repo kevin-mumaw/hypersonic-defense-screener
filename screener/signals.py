@@ -1,16 +1,26 @@
 # signals.py
 # Calculates technical signals for all tickers in the universe
-# Signals: MA20, MA50, MA200, RSI(14), Volume vs 20-day average
+# Signals: MA20, MA50, RSI(14), Volume vs 20-day average
 # These form the technical component (40%) of the composite score
+# MA200 was removed 2026-11-07: it can never compute on the 6-month
+# fetch window (~128 rows < 200), nothing consumed it, and the spec
+# listed it as part of the trend signal although the code never
+# scored it (see docs/CHANGELOG.md [2.10]).
 
 import pandas as pd
-import numpy as np
 from data import fetch_universe_data
 
 
 def calculate_rsi(series, period=14):
     """
     Calculate Relative Strength Index (RSI).
+
+    Simple-moving-average variant: gains/losses averaged with a
+    14-day rolling mean — NOT Wilder's smoothed RSI, so values can
+    differ from TradingView/Yahoo, especially after sharp moves
+    (audit 2026-11-07: simple 15.2 vs Wilder's 30.6 on the same
+    closes, a 2.0-composite-point difference). Kept deliberately:
+    switching to Wilder's would change live scores — Kevin's call.
     """
     delta    = series.diff()
     gain     = delta.where(delta > 0, 0.0)
@@ -37,7 +47,6 @@ def calculate_signals(ticker, df):
     # Moving averages
     ma20  = close.rolling(window=20).mean()
     ma50  = close.rolling(window=50).mean()
-    ma200 = close.rolling(window=200).mean()
 
     # RSI
     rsi = calculate_rsi(close)
@@ -49,7 +58,6 @@ def calculate_signals(ticker, df):
     latest_close   = float(close.iloc[-1])
     latest_ma20    = float(ma20.iloc[-1])
     latest_ma50    = float(ma50.iloc[-1])
-    latest_ma200   = float(ma200.iloc[-1])
     latest_rsi     = float(rsi.iloc[-1])
     latest_vol     = float(volume.iloc[-1])
     latest_vol_avg = float(vol_avg20.iloc[-1])
@@ -57,9 +65,15 @@ def calculate_signals(ticker, df):
     # Signal interpretations
     above_ma20   = latest_close > latest_ma20
     above_ma50   = latest_close > latest_ma50
-    above_ma200  = latest_close > latest_ma200 if not np.isnan(latest_ma200) else None
     ma20_vs_ma50 = latest_ma20 > latest_ma50
     vol_confirmed = latest_vol > latest_vol_avg
+
+    # A series too short for MA50 (50 rows) cannot compute the full
+    # component set — every input goes NaN and the technical score
+    # collapses to 0, which reads as a terrible setup instead of
+    # "not enough data". score_universe() excludes these tickers
+    # from the ranking and counts them as missing.
+    insufficient_data = len(close) < 50
 
     # Day over day change
     if len(close) >= 2:
@@ -97,17 +111,17 @@ def calculate_signals(ticker, df):
         "close"        : round(latest_close, 2),
         "ma20"         : round(latest_ma20, 2),
         "ma50"         : round(latest_ma50, 2),
-        "ma200"        : round(latest_ma200, 2) if not np.isnan(latest_ma200) else None,
         "rsi"          : round(latest_rsi, 1),
         "rsi_signal"   : rsi_signal,
         "above_ma20"   : above_ma20,
         "above_ma50"   : above_ma50,
-        "above_ma200"  : above_ma200,
         "ma20_vs_ma50" : ma20_vs_ma50,
         "vol_confirmed": vol_confirmed,
         "trend"        : trend,
         "day_change"   : round(day_change, 1),
         "gap_flag"     : gap_flag,
+        "rows"         : len(close),
+        "insufficient_data": insufficient_data,
     }
 
 
@@ -139,6 +153,10 @@ def calculate_universe_signals(period="6mo"):
             f"{signals['trend']:<8} "
             f"{'YES' if signals['vol_confirmed'] else 'NO'}"
         )
+
+    print("\nNote: RSI is the simple-moving-average variant (14-day "
+          "rolling mean), not Wilder's smoothed RSI — values may differ "
+          "from TradingView/Yahoo, especially after sharp moves.")
 
     return all_signals
 

@@ -13,19 +13,27 @@ from fundamentals import fetch_universe_fundamentals, score_fundamentals
 
 def run_cache():
     print("Fetching fundamentals and caching to JSON...")
-    
-    raw_data = fetch_universe_fundamentals()
-    
-    # Build cache with scores
+
+    # Fetch live, ignoring the existing cache file: the old code called
+    # the cache-first fetch, so a local "refresh" re-saved stale data
+    # with a fresh date. The old cache file is left in place until
+    # the live fetch succeeds — a failed fetch never destroys it.
+    raw_data = fetch_universe_fundamentals(use_cache=False)
+
+    # Build cache with data only. The per-ticker "score" field is
+    # dropped: score.py never reads it (it recomputes via
+    # score_fundamentals), so it was a second source of truth.
     cache = {}
     for ticker, fund in raw_data.items():
         scored = score_fundamentals(fund)
         cache[ticker] = {
             "data" : fund,
-            "score": scored["fundamental_score"],
-            "notes": scored["notes"],
+            "notes": scored["notes"] if scored is not None
+                     else ["No fundamental data"],
         }
-        print(f"  {ticker:<6} — score: {scored['fundamental_score']}")
+        score_str = (f"{scored['fundamental_score']}"
+                     if scored is not None else "N/A")
+        print(f"  {ticker:<6} — score: {score_str}")
     
     # Add metadata
     cache["_meta"] = {

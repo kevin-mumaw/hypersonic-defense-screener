@@ -63,11 +63,10 @@ All tickers defined in UNIVERSE.md at time of run.
 
 | Signal | Indicator | Rationale |
 |--------|-----------|-----------|
-| Trend | Price vs MA50, MA200 | Is the stock in an uptrend or downtrend? |
-| Momentum | RSI (14-day) | Overbought or oversold conditions |
+| Trend | Price vs MA20, MA50 | Is the stock in an uptrend or downtrend? |
+| Momentum | RSI (14-day, simple moving-average variant — not Wilder's smoothed RSI) | Overbought or oversold conditions |
 | Volume | Volume vs 20-day avg | Confirms price moves with conviction |
 | Moving Average Cross | MA20 vs MA50 | Short-term momentum shift detection |
-| Relative Strength | Price vs universe average | Which names are leading vs lagging? |
 
 ### 4.2 Fundamental Signals
 

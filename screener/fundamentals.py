@@ -7,7 +7,47 @@ import yfinance as yf
 import pandas as pd
 import os
 import json
+from datetime import date
 from universe import UNIVERSE
+
+
+# Fundamentals are refreshed weekly (Sunday workflow). A cache older
+# than this is stale — fetch_universe_fundamentals warns loudly.
+CACHE_MAX_AGE_DAYS = 7
+
+
+def _cache_path():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    repo_root  = os.path.dirname(script_dir)
+    return os.path.join(repo_root, "data", "fundamentals_cache.json")
+
+
+def get_fundamentals_cache_info():
+    """
+    Describe the fundamentals cache without loading the data.
+
+    Returns {"cached_date", "age_days", "stale", "source"} where
+    source is "cache" when the file exists and "live" when there is
+    no cache file (the next fetch goes to yfinance directly).
+    """
+    path = _cache_path()
+    if not os.path.exists(path):
+        return {"cached_date": None, "age_days": None,
+                "stale": False, "source": "live"}
+    try:
+        with open(path, "r") as f:
+            cache = json.load(f)
+        cached_date = cache.get("_meta", {}).get("cached_date")
+        if not cached_date:
+            return {"cached_date": None, "age_days": None,
+                    "stale": True, "source": "cache"}
+        age_days = (date.today()
+                    - date.fromisoformat(cached_date)).days
+        return {"cached_date": cached_date, "age_days": age_days,
+                "stale": age_days > CACHE_MAX_AGE_DAYS, "source": "cache"}
+    except Exception:
+        return {"cached_date": None, "age_days": None,
+                "stale": True, "source": "cache"}
 
 
 def fetch_fundamentals(ticker):
@@ -38,27 +78,37 @@ def fetch_fundamentals(ticker):
         return None
 
 
-def fetch_universe_fundamentals():
+def fetch_universe_fundamentals(use_cache=True):
     """
     Fetch fundamental data for all tickers in the universe.
     Uses cache file on cloud platforms to avoid yfinance rate limiting.
     Falls back to live yfinance fetch if cache not available.
 
+    Args:
+        use_cache: if False, skip the cache file and fetch live.
+            cache_fundamentals.py passes False — the old code called
+            this cache-first, so a local "refresh" re-saved stale
+            data with a fresh date.
+
     Returns:
         dict of {ticker: fundamentals_dict}
     """
     # Try cache first — works on cloud platforms
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    repo_root  = os.path.dirname(script_dir)
-    cache_path = os.path.join(repo_root, "data", "fundamentals_cache.json")
+    cache_path = _cache_path()
 
-    if os.path.exists(cache_path):
+    if use_cache and os.path.exists(cache_path):
         with open(cache_path, "r") as f:
             cache = json.load(f)
         results = {k: v["data"] for k, v in cache.items()
                   if k != "_meta"}
-        cached_date = cache.get("_meta", {}).get("cached_date", "unknown")
+        info = get_fundamentals_cache_info()
+        cached_date = info["cached_date"] or "unknown"
         print(f"Fundamentals loaded from cache (cached: {cached_date})")
+        if info["stale"]:
+            print(f"  ⚠️  WARNING: fundamentals cache is "
+                  f"{info['age_days']} days old (cached: {cached_date}) "
+                  f"— older than the {CACHE_MAX_AGE_DAYS}-day refresh "
+                  f"cadence. Fundamental scores may be stale.")
         return results
 
     # Fall back to live fetch
@@ -85,7 +135,21 @@ def fetch_universe_fundamentals():
 def score_fundamentals(fund):
     """
     Score fundamental data 0-100.
+
+    Returns None when there is no data at all (all five scored fields
+    None) — callers must treat that as "no measurement", not as a
+    number. Before this fix the all-None case scored 49 (half credit
+    on every field) while a fetch failure scored 50, and the 1-point
+    difference flipped the NEUTRAL/WEAK band. Partial data still
+    scores with the per-field half-credit ladder — that ladder is a
+    judgment call Kevin has not yet ruled on (see CHANGELOG [2.10]).
     """
+    scored_fields = ["revenue_growth", "gross_margin",
+                     "operating_margin", "debt_to_equity",
+                     "earnings_growth"]
+    if all(fund.get(f) is None for f in scored_fields):
+        return None
+
     score = 0
     notes = []
 
@@ -197,6 +261,7 @@ def display_fundamentals(results):
     scored = {}
     for ticker, fund in results.items():
         fs = score_fundamentals(fund)
+        fscore = f"{fs['fundamental_score']:>8.1f}" if fs is not None else "     N/A"
 
         rg  = f"{fund['revenue_growth']:.1%}"   if fund['revenue_growth']   is not None else "N/A"
         gm  = f"{fund['gross_margin']:.1%}"     if fund['gross_margin']     is not None else "N/A"
@@ -207,7 +272,7 @@ def display_fundamentals(results):
         print(
             f"{ticker:<6} {rg:>8} {gm:>8} "
             f"{om:>8} {de:>8} {eg:>8} "
-            f"{fs['fundamental_score']:>8.1f}"
+            f"{fscore}"
         )
         scored[ticker] = fs
 

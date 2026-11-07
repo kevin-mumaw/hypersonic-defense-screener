@@ -16,6 +16,7 @@ load_dotenv()
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from universe import UNIVERSE
+from thesis import THESIS_OVERRIDES
 
 # --- Configuration ---
 
@@ -292,12 +293,6 @@ def scrape_sec_ipo_watchlist():
 
 def get_current_thesis_score(ticker):
     """Get current thesis score override for a ticker."""
-    THESIS_OVERRIDES = {
-        "KRMN": 85, "KTOS": 80, "AVAV": 75, "TDY": 75,
-        "HWM": 70,  "ATI": 70,  "LOAR": 65, "HEI": 65,
-        "MTRN": 65, "SXI": 45,  "VELO": 40, "PLTR": 85,
-        "AXON": 75,
-    }
     return THESIS_OVERRIDES.get(ticker, "N/A")
 
 
@@ -315,7 +310,7 @@ def generate_intelligence_report(all_alerts):
     lines.append("")
     lines.append("> **Manual review required for all alerts.**")
     lines.append("> Nothing changes automatically.")
-    lines.append("> Update thesis score overrides in `score.py` manually.")
+    lines.append("> Update thesis score overrides in `thesis.py` manually.")
     lines.append("")
     lines.append("---")
     lines.append("")
