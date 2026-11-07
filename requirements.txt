@@ -1,4 +1,9 @@
-yfinance==0.2.51
+# yfinance is intentionally unpinned: earnings.py handles both the dict
+# calendar shape (yfinance >= 1.x) and the DataFrame shape (<= 0.2.x),
+# so the module works with whatever version is installed. The old
+# ==0.2.51 pin is what let the earnings fetch break silently when the
+# workflow installed latest unpinned.
+yfinance
 pandas
 numpy
 matplotlib
