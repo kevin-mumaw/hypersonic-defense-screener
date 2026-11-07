@@ -27,8 +27,19 @@ def fetch_price_data(ticker, period="6mo", interval="1d"):
             data = yf.download(ticker, period=period,
                               interval=interval, progress=False)
             if data.empty:
-                print(f"  WARNING: No data returned for {ticker}")
-                return None
+                # An empty result is a retryable failure (usually
+                # yfinance throttling), not a final answer — the old
+                # code returned None on the first attempt, so the
+                # retry below never fired for the failure mode that
+                # actually happens (audit 2026-11-07: 2/12 one run,
+                # 12/12 twenty minutes later).
+                if attempt == max_retries - 1:
+                    print(f"  WARNING: No data returned for {ticker} "
+                          f"after {max_retries} attempts")
+                    return None
+                print(f"  WARNING: No data returned for {ticker} "
+                      f"(attempt {attempt + 1}/{max_retries}) — retrying")
+                continue
             return data
 
         except Exception as e:

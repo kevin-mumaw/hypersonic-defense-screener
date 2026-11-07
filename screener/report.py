@@ -7,7 +7,6 @@
 from datetime import date
 from score import score_universe
 from earnings import run_earnings_check, generate_earnings_report
-from signals import calculate_universe_signals
 import os
 
 
@@ -15,21 +14,35 @@ def get_universe_posture(scores):
     """
     Determine overall universe posture based on
     distribution of composite scores.
+
+    Returns (posture, counts) where counts separates WEAK and
+    CRITICAL — the old code lumped them (both counted as "weak"),
+    so a universe sliding into CRITICAL read the same as one sliding
+    into WEAK. The bearish thresholds still count WEAK + CRITICAL
+    together (a CRITICAL ticker is weak-or-worse); the split is
+    visible in the counts.
     """
-    strong  = sum(1 for s in scores if s["composite"] >= 75)
-    weak    = sum(1 for s in scores if s["composite"] < 50)
-    total   = len(scores)
+    strong   = sum(1 for s in scores if s["composite"] >= 75)
+    neutral  = sum(1 for s in scores if 50 <= s["composite"] < 75)
+    weak     = sum(1 for s in scores if 25 <= s["composite"] < 50)
+    critical = sum(1 for s in scores if s["composite"] < 25)
+    weak_or_worse = weak + critical
+    total    = len(scores)
 
     if strong >= total * 0.5:
-        return "BULLISH"
-    elif weak >= total * 0.5:
-        return "BEARISH"
+        posture = "BULLISH"
+    elif weak_or_worse >= total * 0.5:
+        posture = "BEARISH"
     elif strong >= total * 0.3:
-        return "CAUTIOUSLY BULLISH"
-    elif weak >= total * 0.3:
-        return "CAUTIOUSLY BEARISH"
+        posture = "CAUTIOUSLY BULLISH"
+    elif weak_or_worse >= total * 0.3:
+        posture = "CAUTIOUSLY BEARISH"
     else:
-        return "MIXED"
+        posture = "MIXED"
+
+    counts = {"strong": strong, "neutral": neutral, "weak": weak,
+              "critical": critical, "total": total}
+    return posture, counts
 
 
 def generate_signal_groups(signals):
@@ -66,11 +79,18 @@ def generate_signal_groups(signals):
     return groups
 
 
-def generate_markdown(scores, signals):
+def generate_markdown(scores, signals, missing=None):
     """
     Generate markdown formatted narrative report.
+
+    Args:
+        scores: ranked list of score dicts from score_universe()
+        signals: technical signals dict from score_universe()
+        missing: [{ticker, reason}] tickers excluded from the ranking
+            (fetch failed / insufficient data) — printed as a warning
+            instead of presenting a partial ranking as complete
     """
-    posture = get_universe_posture(scores)
+    posture, counts = get_universe_posture(scores)
     groups  = generate_signal_groups(signals)
     today   = date.today().strftime("%B %d, %Y")
 
@@ -85,6 +105,9 @@ def generate_markdown(scores, signals):
 
     # Universe posture
     lines.append(f"## Universe Posture: {posture}")
+    lines.append(f"Strong {counts['strong']} · Neutral {counts['neutral']} · "
+                 f"Weak {counts['weak']} · Critical {counts['critical']} "
+                 f"(of {counts['total']} scored)")
     lines.append("")
 
     # Narrative
@@ -156,24 +179,36 @@ def generate_markdown(scores, signals):
         )
 
     lines.append("")
+    lines.append("> RSI is the simple-moving-average variant (14-day rolling "
+                 "mean), not Wilder's smoothed RSI — it may differ from the "
+                 "RSI shown on TradingView/Yahoo, especially after sharp moves.")
+    lines.append("")
     lines.append("---")
     lines.append("")
 
     # Scores table
     lines.append("## Composite Scores")
     lines.append("")
-    lines.append("| Rank | Ticker | Technical | Fundamental | Thesis | Score | Signal | Action |")
-    lines.append("|------|--------|----------:|------------:|-------:|------:|--------|--------|")
+    if missing:
+        names = ", ".join(f"{m['ticker']} ({m['reason']})" for m in missing)
+        lines.append(f"> ⚠️ **Partial ranking:** {len(missing)} ticker(s) "
+                     f"missing — {names}. The table below is incomplete.")
+        lines.append("")
+    lines.append("| Rank | Ticker | Technical | Fundamental | Thesis | Score | Signal | Gate | Action |")
+    lines.append("|------|--------|----------:|------------:|-------:|------:|--------|------|--------|")
 
     for i, s in enumerate(scores, 1):
+        fund = (f"{s['fundamental']:.1f}"
+                if s.get("fundamental_available", True) else "N/A")
         lines.append(
             f"| {i} "
             f"| {s['ticker']} "
             f"| {s['technical']:.1f} "
-            f"| {s['fundamental']:.1f} "
+            f"| {fund} "
             f"| {s['thesis']:.1f} "
             f"| {s['composite']:.1f} "
             f"| {s['signal']} "
+            f"| {s.get('buy_gate', '—')} "
             f"| {s['action']} |"
         )
 
@@ -265,9 +300,12 @@ def run_report():
     """
     Run full screener and generate markdown report.
     """
-    scores   = score_universe()
-    signals  = calculate_universe_signals(period="6mo")
-    markdown = generate_markdown(scores, signals)
+    # score_universe() already fetches the signals — reuse them
+    # instead of fetching the universe a second time (the old code
+    # called calculate_universe_signals() again here, doubling the
+    # yfinance load and the flakiness surface for no reason).
+    scores, missing, signals = score_universe()
+    markdown = generate_markdown(scores, signals, missing=missing)
 
     save_report(markdown)
 

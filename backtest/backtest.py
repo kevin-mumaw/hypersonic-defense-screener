@@ -20,23 +20,17 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'screener'))
 
 from data import fetch_price_data
 from universe import UNIVERSE
-
-
-def calculate_rsi(series, period=14):
-    """Calculate RSI for a price series."""
-    delta    = series.diff()
-    gain     = delta.where(delta > 0, 0.0)
-    loss     = -delta.where(delta < 0, 0.0)
-    avg_gain = gain.rolling(window=period).mean()
-    avg_loss = loss.rolling(window=period).mean()
-    rs       = avg_gain / avg_loss
-    return 100 - (100 / (1 + rs))
+from signals import calculate_rsi
+from score import score_technical
 
 
 def calculate_technical_score(close, volume, idx):
     """
     Calculate technical score at a specific index position.
-    Mirrors logic in signals.py and score.py.
+    Uses the single shared implementation: calculate_rsi from
+    signals.py and score_technical from score.py. (Before 2026-11-07
+    this file kept its own copy of both — change the bands in one
+    place and the backtest silently tested different rules.)
     """
     if idx < 50:
         return None  # Not enough data for MA50
@@ -65,30 +59,12 @@ def calculate_technical_score(close, volume, idx):
     else:
         trend = "MIXED"
 
-    # Score (mirrors score.py)
-    score = 0
-
-    if trend == "BULLISH":
-        score += 40
-    elif trend == "MIXED":
-        score += 20
-
-    if 40 <= rsi <= 60:
-        score += 30
-    elif 30 <= rsi < 40 or 60 < rsi <= 70:
-        score += 15
-    elif rsi > 70:
-        score += 5
-    elif rsi < 30:
-        score += 10
-
-    if ma20_vs_ma50:
-        score += 20
-
-    if vol_confirmed:
-        score += 10
-
-    return min(score, 100)
+    return score_technical({
+        "trend": trend,
+        "rsi": rsi,
+        "ma20_vs_ma50": ma20_vs_ma50,
+        "vol_confirmed": vol_confirmed,
+    })
 
 
 def backtest_ticker(ticker, period="2y", buy_threshold=60, sell_threshold=45):

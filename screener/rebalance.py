@@ -659,12 +659,11 @@ def run_rebalance(execute=False):
 
     # Get scores
     print("Running screener...")
-    scores = score_universe()
+    scores, missing, _signals = score_universe()
 
-    missing_scores = [t for t in UNIVERSE
-                      if t not in {s["ticker"] for s in scores}]
-    if missing_scores:
-        print(f"WARNING: no score for {', '.join(missing_scores)} — "
+    if missing:
+        names = ", ".join(f"{m['ticker']} ({m['reason']})" for m in missing)
+        print(f"WARNING: no score for {names} — "
               f"targets provisional (missing tickers default to 60).")
 
     # Calculate target weights

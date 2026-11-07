@@ -258,7 +258,7 @@ def run_portfolio(positions=None, cash=0):
         except Exception:
             pos["current_price"] = 0
 
-    scores         = score_universe()
+    scores, _missing, _signals = score_universe()
     portfolio_view = build_portfolio_view(positions, scores)
     gaps           = identify_gaps(positions, scores)
     markdown       = generate_portfolio_report(portfolio_view, gaps, cash)

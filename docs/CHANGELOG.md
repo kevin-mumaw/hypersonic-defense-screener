@@ -43,6 +43,93 @@ to thesis, universe, screener logic, or methodology.
   PLTR 2027-02-01 in the table, no alerts within 7 days, section
   prints once in the briefing).
 
+## [2.10] — November 2026
+
+### Scoring — Partial Runs Visible, One Missing-Data Answer, Thesis Dedup
+- `score_universe()` now returns (scores, missing, signals): a ticker
+  that fails to fetch, or whose series is too short to compute the
+  components (< 50 rows for MA50), is excluded from the ranking and
+  listed in the missing list with its reason — and the ranked table
+  header prints a WARNING naming the missing tickers instead of
+  presenting a partial ranking as complete. Before this fix a run
+  that fetched 11/12 (PLTR missing, 2026-11-07) printed a ranked
+  table numbered 1–11 with no warning. The briefing still runs on a
+  partial fetch; it says so.
+- `data.py` treats an empty yfinance result as a retryable failure
+  (same backoff as an exception), returning None only after 3
+  attempts. The old code returned None on the first empty result,
+  so the retry never fired for the failure mode that actually
+  happens. Live verification: the 2026-11-07 run that dropped PLTR
+  before the fix fetched all 12 after it.
+- "No fundamental data" now has one answer everywhere:
+  `score_fundamentals` returns None when all five scored fields are
+  None, and `score.py`'s flat-50 fallback applies uniformly — and
+  the component prints N/A in the ranked table and the briefing
+  instead of 50 as if it were a measurement. The old code gave 49
+  for empty fields vs 50 for a fetch failure, and the 1 point
+  flipped the NEUTRAL/WEAK band.
+- Thesis scores are a single source of truth: new `screener/thesis.py`
+  holds THESIS_OVERRIDES, imported by both score.py and
+  intelligence.py (2026-11-07 — the two copies disagreed: CW 80 vs
+  "N/A", VELO 60 vs 40, SXI 45 in both though it left the universe
+  in July 2026). SXI and VELO are deleted. Every universe ticker
+  must have an explicit entry — `get_thesis_score` raises instead
+  of silently defaulting to 60. All 12 universe tickers already had
+  explicit entries, so no score changed. Record thesis changes here
+  with date and reason.
+- Fundamentals cache: `fetch_universe_fundamentals` warns loudly
+  when the cache is older than the 7-day refresh cadence (and the
+  ranked table header says so), via `get_fundamentals_cache_info()`.
+  `cache_fundamentals.py` now fetches live (`use_cache=False`) —
+  the old code called the cache-first fetch, so a local "refresh"
+  re-saved stale data with a fresh date (reproduced 2026-11-07:
+  a 2020-dated cache with a poisoned value re-stamped itself
+  current). The unused cached "score" field is no longer written;
+  score.py never read it. The committed cache file itself was not
+  regenerated or modified by this change.
+- MA200 and the unimplemented Relative Strength row are removed
+  from SCREENER-SPEC.md §4 so the spec matches the code (trend is
+  price vs MA20/MA50). The MA200 computation is removed from
+  signals.py — nothing consumed it, and it could never compute on
+  the 6-month window (~128 rows < 200). The fetch window was NOT
+  extended to make MA200 compute: that would change live technical
+  scores and is Kevin's call.
+- RSI: NOT switched to Wilder's smoothing — that changes live
+  scores and is Kevin's call. The SMA variant is now documented
+  where the RSI is displayed (signals table, briefing, spec §4.1):
+  audit numbers are simple 15.2 vs Wilder's 30.6 on the same
+  synthetic closes, a 2.0-composite-point difference. The RSI
+  function and the technical-score bands are deduped out of
+  backtest.py (it now imports `calculate_rsi` from signals.py and
+  `score_technical` from score.py); verified identical outputs on
+  a seeded synthetic series.
+- Short data: a ticker with < 50 rows is excluded from the ranking
+  with an "insufficient data" note and counted as missing — not
+  silently scored technical 0.
+- Buy gate: MIN_BUY_SCORE stays at 55 (moving it to 50 or 75 would
+  change which buys are gated — Kevin's call). The ranked table now
+  prints the gate result (PASS/BLOCK) per ticker, so the label and
+  the gate agree visibly — ATI at 54.4 is NEUTRAL but BLOCK.
+  `filter_executable_trades` now raises if scores is None instead
+  of treating None as "no gate". `get_universe_posture` counts WEAK
+  and CRITICAL separately (the bearish thresholds still count them
+  together; the split is printed in the briefing). `run_report` no
+  longer fetches the universe twice — it reuses the signals
+  `score_universe` already fetched.
+- Fixes from the 2026-11-07 score.py audit (122 synthetic + live
+  cases, all passing). Live verification: all 12 composites
+  UNCHANGED after the fix — HEI 83.0, KRMN 81.8, TDY 79.8,
+  PLTR 69.0, CW 68.8, LOAR 63.0, HWM 60.8, AVAV 60.2, KTOS 58.4,
+  AXON 57.8, ATI 54.4, MTRN 48.6.
+- Judgment calls left for Kevin (flagged, not decided here):
+  (1) the per-field half-credit ladder is unchanged for genuinely
+  partial data — AVAV and KRMN each carry 7 unearned points today
+  from a None earnings_growth, and "we know nothing" still scores
+  49 while "we know it's terrible" scores 0; (2) Wilder's RSI vs
+  the SMA variant (above); (3) MIN_BUY_SCORE 55 sits inside the
+  NEUTRAL band (50–74); (4) MA200 — extend the fetch window or
+  leave the trend as MA20/MA50.
+
 ## [2.8] — November 2026
 
 ### Rebalancing Engine — One Authoritative (Filtered) Path
