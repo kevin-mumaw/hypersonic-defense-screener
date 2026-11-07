@@ -7,6 +7,43 @@ living document updated with every meaningful change
 to thesis, universe, screener logic, or methodology.
 ---
 
+## [2.8] — November 2026
+
+### Rebalancing Engine — One Authoritative (Filtered) Path
+- Rebalance report trade table now generated from
+  execute_rebalance.filter_executable_trades — the one authoritative
+  path. Executable trades are printed as orders; deferred trades are
+  listed with their reasons. The unfiltered target-minus-current table
+  is no longer printed as orders.
+- Fixes from the 2026-11-06/07 rebalance.py audit (125 synthetic cases,
+  all passing; live run verified):
+  - Trade table no longer sells positions under active overrides
+    (PLTR/HWM) or buys WATCH-listed tickers (KRMN) or sub-55-score
+    shock-low buys (ATI)
+  - Prices fetched for all 12 universe tickers (was held tickers only);
+    a missing price for a held ticker aborts the run instead of valuing
+    the holding at $0 (verified live: a failed PLTR fetch aborted the
+    run cleanly instead of corrupting the report)
+  - Funding line printed: buys vs cash on hand plus sale proceeds,
+    stating buys depend on the sells executing
+  - 30-day drift gate applied in the report (days shown per drift item)
+  - Off-universe holdings get an explicit SELL-to-zero trade, never a
+    silent omission
+  - Reserve position printed: cash vs 10% reserve, shortfall, and the
+    cash-raise share of net selling
+  - Score input guarded: partial score sets warn and are labelled
+    provisional
+  - Report dated in America/New_York; weights renormalized to sum to
+    exactly 100.00; execute prompt reworded to what actually happens
+    (prints a payload — nothing is placed by this module)
+- Note: the 30-day drift gate cannot qualify a drift trade until drift
+  logging resumes — data/drift_history.json last entry 2026-10-04
+  (stale). The gate is implemented; its input is not yet live.
+- execute_rebalance.py filter/funding math unchanged (verified
+  synthetically in the audit); rebalance.py now imports and uses it.
+  Live run on the survey's numbers: no trades executable, all 12
+  deferred with reasons — matching the filtered path exactly.
+
 ## [2.7] — September 2026
 
 ### Rebalancing Engine — Override System
