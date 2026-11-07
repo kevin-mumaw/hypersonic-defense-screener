@@ -7,6 +7,42 @@ living document updated with every meaningful change
 to thesis, universe, screener logic, or methodology.
 ---
 
+## [2.9] — November 2026
+
+### Earnings Calendar — Dict Parse, Failure Distinction, ET Dating
+- `get_earnings_dates` parses both yfinance calendar shapes: the
+  dict (yfinance >= 1.x, "Earnings Date" list, element [0]) and the
+  DataFrame (yfinance <= 0.2.x, original path kept). Every value is
+  normalized to a plain `date` at the fetch boundary.
+- The module had never returned a date: with yfinance 1.8.0 the
+  dict has no `.empty`, so every ticker raised AttributeError and
+  the bare except recorded None. The briefing printed "No upcoming
+  earnings dates available" while the data was there. On 2026-11-04
+  a working parser would have alerted on five held names (AXON, CW,
+  LOAR, KRMN, KTOS); AXON reported 11-05 and gapped -18.2% on 11-06.
+- Fetch failures are now recorded separately from "no date
+  scheduled" (`fetch_earnings_calendar` returns (earnings,
+  failures)); the report warns "earnings data unavailable for N
+  tickers" and louder when ALL tickers fail, instead of printing
+  "no upcoming earnings" as a fact.
+- report.py's bare `except: pass` around the earnings section is
+  replaced with a visible "Earnings data unavailable (reason)"
+  placeholder — the section can no longer vanish silently.
+- Alert window and report are dated in America/New_York
+  (`eastern_today()`, mirroring rebalance.py's `eastern_now()`),
+  so `days_until` matches Kevin's calendar. `run_earnings_check`
+  no longer prints the section itself (it printed twice in a full
+  briefing run); it returns (earnings, alerts, failures) and the
+  caller prints.
+- requirements.txt: the `yfinance==0.2.51` pin is dropped
+  (intentionally unpinned). The pin is what let this break
+  silently — the workflows already install latest unpinned, and
+  the module now accepts both calendar shapes.
+- Fixes from the 2026-11-06/07 earnings.py audit (27 synthetic +
+  live cases, all passing; live runs verified: HEI 2026-12-17 and
+  PLTR 2027-02-01 in the table, no alerts within 7 days, section
+  prints once in the briefing).
+
 ## [2.8] — November 2026
 
 ### Rebalancing Engine — One Authoritative (Filtered) Path

@@ -200,14 +200,27 @@ def generate_markdown(scores, signals):
     try:
         gap_flags = {ticker: signals[ticker].get("gap_flag") 
                     for ticker in signals}
-        earnings_dates, alerts = run_earnings_check(gap_flags=gap_flags)
-        earnings_section = generate_earnings_report(earnings_dates, alerts)
+        earnings_dates, alerts, failures = run_earnings_check(
+            gap_flags=gap_flags)
+        earnings_section = generate_earnings_report(
+            earnings_dates, alerts, failures)
         lines.append(earnings_section)
         lines.append("")
         lines.append("---")
         lines.append("")
     except Exception as e:
-        pass
+        # Never silently drop the earnings section: a failed check is
+        # not the same as no upcoming earnings.
+        lines.append("## 📅 Earnings Calendar")
+        lines.append("")
+        lines.append(
+            f"> ⚠️ Earnings data unavailable "
+            f"({type(e).__name__}: {e}). The earnings check failed — "
+            f"this is not the same as no upcoming earnings."
+        )
+        lines.append("")
+        lines.append("---")
+        lines.append("")
 # Notes
     lines.append("## Notes")
     lines.append("")
