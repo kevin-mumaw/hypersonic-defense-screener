@@ -2,257 +2,245 @@
   "PLTR": {
     "data": {
       "ticker": "PLTR",
-      "revenue_growth": 0.847,
-      "gross_margin": 0.84073997,
-      "operating_margin": 0.46183997,
-      "profit_margin": 0.43673,
-      "debt_to_equity": 2.477,
-      "total_revenue": 5224174080,
-      "earnings_growth": 3.25,
-      "roe": 0.32587
+      "revenue_growth": 0.959,
+      "gross_margin": 0.84744,
+      "operating_margin": 0.46894002,
+      "profit_margin": 0.50343,
+      "debt_to_equity": 1.986,
+      "total_revenue": 7288260096,
+      "earnings_growth": 1.444,
+      "roe": 0.40907001
     },
-    "score": 100,
     "notes": [
-      "Revenue growth: strong (84.7%)",
-      "Gross margin: strong (84.1%)",
-      "Operating margin: strong (46.2%)",
-      "Debt/equity: low (2.5)",
-      "Earnings growth: strong (325.0%)"
+      "Revenue growth: strong (95.9%)",
+      "Gross margin: strong (84.7%)",
+      "Operating margin: strong (46.9%)",
+      "Debt/equity: low (2.0)",
+      "Earnings growth: strong (144.4%)"
     ]
   },
   "AVAV": {
     "data": {
       "ticker": "AVAV",
-      "revenue_growth": 1.333,
-      "gross_margin": 0.25325,
-      "operating_margin": 0.02812,
-      "profit_margin": -0.13411,
-      "debt_to_equity": 18.971,
-      "total_revenue": 1976845056,
+      "revenue_growth": 0.057,
+      "gross_margin": 0.26471,
+      "operating_margin": -0.02269,
+      "profit_margin": -0.10127,
+      "debt_to_equity": 19.354,
+      "total_revenue": 2002658944,
       "earnings_growth": null,
-      "roe": -0.10029
+      "roe": -0.04597
     },
-    "score": 73,
     "notes": [
-      "Revenue growth: strong (133.3%)",
-      "Gross margin: moderate (25.3%)",
-      "Operating margin: thin (2.8%)",
-      "Debt/equity: low (19.0)",
+      "Revenue growth: low (5.7%)",
+      "Gross margin: moderate (26.5%)",
+      "Operating margin: negative (-2.3%)",
+      "Debt/equity: low (19.4)",
       "Earnings growth: no data"
     ]
   },
   "KTOS": {
     "data": {
       "ticker": "KTOS",
-      "revenue_growth": 0.226,
-      "gross_margin": 0.22886999,
-      "operating_margin": 0.01779,
-      "profit_margin": 0.020769998,
-      "debt_to_equity": 5.437,
-      "total_revenue": 1415200000,
-      "earnings_growth": 1.306,
-      "roe": 0.012259999
+      "revenue_growth": 0.357,
+      "gross_margin": 0.23021999,
+      "operating_margin": -0.00848,
+      "profit_margin": 0.013359999,
+      "debt_to_equity": 7.128,
+      "total_revenue": 1646700032,
+      "earnings_growth": null,
+      "roe": 0.0081
     },
-    "score": 81,
     "notes": [
-      "Revenue growth: strong (22.6%)",
-      "Gross margin: moderate (22.9%)",
-      "Operating margin: thin (1.8%)",
-      "Debt/equity: low (5.4)",
-      "Earnings growth: strong (130.6%)"
+      "Revenue growth: strong (35.7%)",
+      "Gross margin: moderate (23.0%)",
+      "Operating margin: negative (-0.8%)",
+      "Debt/equity: low (7.1)",
+      "Earnings growth: no data"
     ]
   },
   "KRMN": {
     "data": {
       "ticker": "KRMN",
-      "revenue_growth": 0.51,
-      "gross_margin": 0.41034,
-      "operating_margin": 0.1551,
-      "profit_margin": 0.057329997,
-      "debt_to_equity": 213.707,
-      "total_revenue": 522585984,
-      "earnings_growth": null,
-      "roe": 0.0794
+      "revenue_growth": 0.656,
+      "gross_margin": 0.42109,
+      "operating_margin": 0.15749,
+      "profit_margin": 0.07536,
+      "debt_to_equity": 228.415,
+      "total_revenue": 669388032,
+      "earnings_growth": 1.731,
+      "roe": 0.12443
     },
-    "score": 77,
     "notes": [
-      "Revenue growth: strong (51.0%)",
-      "Gross margin: strong (41.0%)",
-      "Operating margin: strong (15.5%)",
-      "Debt/equity: high (213.7)",
-      "Earnings growth: no data"
+      "Revenue growth: strong (65.6%)",
+      "Gross margin: strong (42.1%)",
+      "Operating margin: strong (15.7%)",
+      "Debt/equity: high (228.4)",
+      "Earnings growth: strong (173.1%)"
     ]
   },
   "HWM": {
     "data": {
       "ticker": "HWM",
-      "revenue_growth": 0.191,
-      "gross_margin": 0.35046002,
-      "operating_margin": 0.28188,
-      "profit_margin": 0.20225,
-      "debt_to_equity": 87.794,
-      "total_revenue": 8622999552,
-      "earnings_growth": 0.714,
-      "roe": 0.33818
+      "revenue_growth": 0.294,
+      "gross_margin": 0.36625,
+      "operating_margin": 0.28783,
+      "profit_margin": 0.21098,
+      "debt_to_equity": 80.198,
+      "total_revenue": 9731000320,
+      "earnings_growth": 0.495,
+      "roe": 0.37652
     },
-    "score": 87,
     "notes": [
-      "Revenue growth: moderate (19.1%)",
-      "Gross margin: strong (35.0%)",
-      "Operating margin: strong (28.2%)",
-      "Debt/equity: moderate (87.8)",
-      "Earnings growth: strong (71.4%)"
+      "Revenue growth: strong (29.4%)",
+      "Gross margin: strong (36.6%)",
+      "Operating margin: strong (28.8%)",
+      "Debt/equity: moderate (80.2)",
+      "Earnings growth: strong (49.5%)"
     ]
   },
   "ATI": {
     "data": {
       "ticker": "ATI",
-      "revenue_growth": 0.006,
-      "gross_margin": 0.23199,
-      "operating_margin": 0.16143999,
-      "profit_margin": 0.092609994,
-      "debt_to_equity": 96.904,
-      "total_revenue": 4594500096,
-      "earnings_growth": 0.269,
-      "roe": 0.22674999
+      "revenue_growth": 0.265,
+      "gross_margin": 0.25077,
+      "operating_margin": 0.19857,
+      "profit_margin": 0.110819995,
+      "debt_to_equity": 87.129,
+      "total_revenue": 5013400064,
+      "earnings_growth": 0.756,
+      "roe": 0.28734
     },
-    "score": 71,
     "notes": [
-      "Revenue growth: low (0.6%)",
-      "Gross margin: moderate (23.2%)",
-      "Operating margin: strong (16.1%)",
-      "Debt/equity: moderate (96.9)",
-      "Earnings growth: strong (26.9%)"
+      "Revenue growth: strong (26.5%)",
+      "Gross margin: moderate (25.1%)",
+      "Operating margin: strong (19.9%)",
+      "Debt/equity: moderate (87.1)",
+      "Earnings growth: strong (75.6%)"
     ]
   },
   "AXON": {
     "data": {
       "ticker": "AXON",
-      "revenue_growth": 0.337,
-      "gross_margin": 0.59463,
-      "operating_margin": 0.03748,
-      "profit_margin": 0.06905,
-      "debt_to_equity": 52.074,
-      "total_revenue": 2983247872,
-      "earnings_growth": 0.898,
-      "roe": 0.06765
+      "revenue_growth": 0.279,
+      "gross_margin": 0.58642,
+      "operating_margin": 0.04632,
+      "profit_margin": 0.07565,
+      "debt_to_equity": 79.409,
+      "total_revenue": 3417011968,
+      "earnings_growth": null,
+      "roe": 0.07613
     },
-    "score": 82,
     "notes": [
-      "Revenue growth: strong (33.7%)",
-      "Gross margin: strong (59.5%)",
-      "Operating margin: thin (3.7%)",
-      "Debt/equity: moderate (52.1)",
-      "Earnings growth: strong (89.8%)"
+      "Revenue growth: strong (27.9%)",
+      "Gross margin: strong (58.6%)",
+      "Operating margin: thin (4.6%)",
+      "Debt/equity: moderate (79.4)",
+      "Earnings growth: no data"
     ]
   },
   "TDY": {
     "data": {
       "ticker": "TDY",
-      "revenue_growth": 0.076,
-      "gross_margin": 0.42873,
-      "operating_margin": 0.19031,
-      "profit_margin": 0.14987001,
-      "debt_to_equity": 23.133,
-      "total_revenue": 6225600000,
-      "earnings_growth": 0.216,
-      "roe": 0.09049
+      "revenue_growth": 0.094,
+      "gross_margin": 0.43598,
+      "operating_margin": 0.20761,
+      "profit_margin": 0.1575,
+      "debt_to_equity": 18.21,
+      "total_revenue": 6519799808,
+      "earnings_growth": 0.252,
+      "roe": 0.09466
     },
-    "score": 82,
     "notes": [
-      "Revenue growth: low (7.6%)",
-      "Gross margin: strong (42.9%)",
-      "Operating margin: strong (19.0%)",
-      "Debt/equity: low (23.1)",
-      "Earnings growth: strong (21.6%)"
+      "Revenue growth: low (9.4%)",
+      "Gross margin: strong (43.6%)",
+      "Operating margin: strong (20.8%)",
+      "Debt/equity: low (18.2)",
+      "Earnings growth: strong (25.2%)"
     ]
   },
   "HEI": {
     "data": {
       "ticker": "HEI",
-      "revenue_growth": 0.253,
-      "gross_margin": 0.40060002,
-      "operating_margin": 0.25473,
-      "profit_margin": 0.16078,
-      "debt_to_equity": 47.988,
-      "total_revenue": 4911297024,
-      "earnings_growth": 0.482,
-      "roe": 0.17206
+      "revenue_growth": 0.231,
+      "gross_margin": 0.40398,
+      "operating_margin": 0.25136998,
+      "profit_margin": 0.16375999,
+      "debt_to_equity": 45.034,
+      "total_revenue": 5176756224,
+      "earnings_growth": 0.325,
+      "roe": 0.17728001
     },
-    "score": 100,
     "notes": [
-      "Revenue growth: strong (25.3%)",
-      "Gross margin: strong (40.1%)",
-      "Operating margin: strong (25.5%)",
-      "Debt/equity: low (48.0)",
-      "Earnings growth: strong (48.2%)"
+      "Revenue growth: strong (23.1%)",
+      "Gross margin: strong (40.4%)",
+      "Operating margin: strong (25.1%)",
+      "Debt/equity: low (45.0)",
+      "Earnings growth: strong (32.5%)"
     ]
   },
   "LOAR": {
     "data": {
       "ticker": "LOAR",
-      "revenue_growth": 0.361,
-      "gross_margin": 0.53749,
-      "operating_margin": 0.25553,
-      "profit_margin": 0.12641,
-      "debt_to_equity": 81.386,
-      "total_revenue": 537712000,
-      "earnings_growth": -0.256,
-      "roe": 0.05945
+      "revenue_growth": 0.39,
+      "gross_margin": 0.53609,
+      "operating_margin": 0.27053,
+      "profit_margin": 0.09437,
+      "debt_to_equity": 78.905,
+      "total_revenue": 635587008,
+      "earnings_growth": -0.31,
+      "roe": 0.05037
     },
-    "score": 80,
     "notes": [
-      "Revenue growth: strong (36.1%)",
-      "Gross margin: strong (53.7%)",
-      "Operating margin: strong (25.6%)",
-      "Debt/equity: moderate (81.4)",
-      "Earnings growth: negative (-25.6%)"
+      "Revenue growth: strong (39.0%)",
+      "Gross margin: strong (53.6%)",
+      "Operating margin: strong (27.1%)",
+      "Debt/equity: moderate (78.9)",
+      "Earnings growth: negative (-31.0%)"
     ]
   },
   "MTRN": {
     "data": {
       "ticker": "MTRN",
-      "revenue_growth": 0.308,
-      "gross_margin": 0.16403,
-      "operating_margin": 0.0572,
-      "profit_margin": 0.039920002,
-      "debt_to_equity": 58.783,
-      "total_revenue": 1916044032,
-      "earnings_growth": 0.082,
-      "roe": 0.08293
+      "revenue_growth": 0.275,
+      "gross_margin": 0.1592,
+      "operating_margin": 0.090150006,
+      "profit_margin": 0.0464,
+      "debt_to_equity": 45.782,
+      "total_revenue": 2220774912,
+      "earnings_growth": 0.484,
+      "roe": 0.10493
     },
-    "score": 64,
     "notes": [
-      "Revenue growth: strong (30.8%)",
-      "Gross margin: thin (16.4%)",
-      "Operating margin: thin (5.7%)",
-      "Debt/equity: moderate (58.8)",
-      "Earnings growth: moderate (8.2%)"
+      "Revenue growth: strong (27.5%)",
+      "Gross margin: thin (15.9%)",
+      "Operating margin: moderate (9.0%)",
+      "Debt/equity: low (45.8)",
+      "Earnings growth: strong (48.4%)"
     ]
   },
   "CW": {
     "data": {
       "ticker": "CW",
-      "revenue_growth": 0.134,
-      "gross_margin": 0.37171,
-      "operating_margin": 0.17557,
-      "profit_margin": 0.14171,
-      "debt_to_equity": 43.634,
-      "total_revenue": 3606414080,
-      "earnings_growth": 0.291,
-      "roe": 0.19691
+      "revenue_growth": 0.096,
+      "gross_margin": 0.38067,
+      "operating_margin": 0.19871001,
+      "profit_margin": 0.14857,
+      "debt_to_equity": 44.707,
+      "total_revenue": 3737265920,
+      "earnings_growth": 0.139,
+      "roe": 0.21821
     },
-    "score": 92,
     "notes": [
-      "Revenue growth: moderate (13.4%)",
-      "Gross margin: strong (37.2%)",
-      "Operating margin: strong (17.6%)",
-      "Debt/equity: low (43.6)",
-      "Earnings growth: strong (29.1%)"
+      "Revenue growth: low (9.6%)",
+      "Gross margin: strong (38.1%)",
+      "Operating margin: strong (19.9%)",
+      "Debt/equity: low (44.7)",
+      "Earnings growth: moderate (13.9%)"
     ]
   },
   "_meta": {
-    "cached_date": "2026-11-01",
+    "cached_date": "2026-11-08",
     "ticker_count": 12
   }
 }
