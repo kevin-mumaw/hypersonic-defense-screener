@@ -4,7 +4,7 @@
       "ticker": "PLTR",
       "revenue_growth": 0.959,
       "gross_margin": 0.84744,
-      "operating_margin": 0.46894002,
+      "operating_margin": 0.45638,
       "profit_margin": 0.50343,
       "debt_to_equity": 1.986,
       "total_revenue": 7288260096,
@@ -14,7 +14,7 @@
     "notes": [
       "Revenue growth: strong (95.9%)",
       "Gross margin: strong (84.7%)",
-      "Operating margin: strong (46.9%)",
+      "Operating margin: strong (45.6%)",
       "Debt/equity: low (2.0)",
       "Earnings growth: strong (144.4%)"
     ]
@@ -24,7 +24,7 @@
       "ticker": "AVAV",
       "revenue_growth": 0.057,
       "gross_margin": 0.26471,
-      "operating_margin": -0.02269,
+      "operating_margin": -0.00599,
       "profit_margin": -0.10127,
       "debt_to_equity": 19.354,
       "total_revenue": 2002658944,
@@ -34,7 +34,7 @@
     "notes": [
       "Revenue growth: low (5.7%)",
       "Gross margin: moderate (26.5%)",
-      "Operating margin: negative (-2.3%)",
+      "Operating margin: negative (-0.6%)",
       "Debt/equity: low (19.4)",
       "Earnings growth: no data"
     ]
@@ -44,7 +44,7 @@
       "ticker": "KTOS",
       "revenue_growth": 0.357,
       "gross_margin": 0.23021999,
-      "operating_margin": -0.00848,
+      "operating_margin": 0.00789,
       "profit_margin": 0.013359999,
       "debt_to_equity": 7.128,
       "total_revenue": 1646700032,
@@ -54,7 +54,7 @@
     "notes": [
       "Revenue growth: strong (35.7%)",
       "Gross margin: moderate (23.0%)",
-      "Operating margin: negative (-0.8%)",
+      "Operating margin: thin (0.8%)",
       "Debt/equity: low (7.1)",
       "Earnings growth: no data"
     ]
@@ -64,7 +64,7 @@
       "ticker": "KRMN",
       "revenue_growth": 0.656,
       "gross_margin": 0.42109,
-      "operating_margin": 0.15749,
+      "operating_margin": 0.16567,
       "profit_margin": 0.07536,
       "debt_to_equity": 228.415,
       "total_revenue": 669388032,
@@ -74,7 +74,7 @@
     "notes": [
       "Revenue growth: strong (65.6%)",
       "Gross margin: strong (42.1%)",
-      "Operating margin: strong (15.7%)",
+      "Operating margin: strong (16.6%)",
       "Debt/equity: high (228.4)",
       "Earnings growth: strong (173.1%)"
     ]
@@ -84,7 +84,7 @@
       "ticker": "HWM",
       "revenue_growth": 0.294,
       "gross_margin": 0.36625,
-      "operating_margin": 0.28783,
+      "operating_margin": 0.28085,
       "profit_margin": 0.21098,
       "debt_to_equity": 80.198,
       "total_revenue": 9731000320,
@@ -94,7 +94,7 @@
     "notes": [
       "Revenue growth: strong (29.4%)",
       "Gross margin: strong (36.6%)",
-      "Operating margin: strong (28.8%)",
+      "Operating margin: strong (28.1%)",
       "Debt/equity: moderate (80.2)",
       "Earnings growth: strong (49.5%)"
     ]
@@ -104,7 +104,7 @@
       "ticker": "ATI",
       "revenue_growth": 0.265,
       "gross_margin": 0.25077,
-      "operating_margin": 0.19857,
+      "operating_margin": 0.17555,
       "profit_margin": 0.110819995,
       "debt_to_equity": 87.129,
       "total_revenue": 5013400064,
@@ -114,7 +114,7 @@
     "notes": [
       "Revenue growth: strong (26.5%)",
       "Gross margin: moderate (25.1%)",
-      "Operating margin: strong (19.9%)",
+      "Operating margin: strong (17.6%)",
       "Debt/equity: moderate (87.1)",
       "Earnings growth: strong (75.6%)"
     ]
@@ -123,8 +123,8 @@
     "data": {
       "ticker": "AXON",
       "revenue_growth": 0.279,
-      "gross_margin": 0.58642,
-      "operating_margin": 0.04632,
+      "gross_margin": 0.57255,
+      "operating_margin": 0.01538,
       "profit_margin": 0.07565,
       "debt_to_equity": 79.409,
       "total_revenue": 3417011968,
@@ -133,8 +133,8 @@
     },
     "notes": [
       "Revenue growth: strong (27.9%)",
-      "Gross margin: strong (58.6%)",
-      "Operating margin: thin (4.6%)",
+      "Gross margin: strong (57.3%)",
+      "Operating margin: thin (1.5%)",
       "Debt/equity: moderate (79.4)",
       "Earnings growth: no data"
     ]
@@ -144,7 +144,7 @@
       "ticker": "TDY",
       "revenue_growth": 0.094,
       "gross_margin": 0.43598,
-      "operating_margin": 0.20761,
+      "operating_margin": 0.20165001,
       "profit_margin": 0.1575,
       "debt_to_equity": 18.21,
       "total_revenue": 6519799808,
@@ -154,7 +154,7 @@
     "notes": [
       "Revenue growth: low (9.4%)",
       "Gross margin: strong (43.6%)",
-      "Operating margin: strong (20.8%)",
+      "Operating margin: strong (20.2%)",
       "Debt/equity: low (18.2)",
       "Earnings growth: strong (25.2%)"
     ]
@@ -164,7 +164,7 @@
       "ticker": "HEI",
       "revenue_growth": 0.231,
       "gross_margin": 0.40398,
-      "operating_margin": 0.25136998,
+      "operating_margin": 0.24271,
       "profit_margin": 0.16375999,
       "debt_to_equity": 45.034,
       "total_revenue": 5176756224,
@@ -174,7 +174,7 @@
     "notes": [
       "Revenue growth: strong (23.1%)",
       "Gross margin: strong (40.4%)",
-      "Operating margin: strong (25.1%)",
+      "Operating margin: strong (24.3%)",
       "Debt/equity: low (45.0)",
       "Earnings growth: strong (32.5%)"
     ]
@@ -184,7 +184,7 @@
       "ticker": "LOAR",
       "revenue_growth": 0.39,
       "gross_margin": 0.53609,
-      "operating_margin": 0.27053,
+      "operating_margin": 0.25948998,
       "profit_margin": 0.09437,
       "debt_to_equity": 78.905,
       "total_revenue": 635587008,
@@ -194,7 +194,7 @@
     "notes": [
       "Revenue growth: strong (39.0%)",
       "Gross margin: strong (53.6%)",
-      "Operating margin: strong (27.1%)",
+      "Operating margin: strong (25.9%)",
       "Debt/equity: moderate (78.9)",
       "Earnings growth: negative (-31.0%)"
     ]
@@ -204,7 +204,7 @@
       "ticker": "MTRN",
       "revenue_growth": 0.275,
       "gross_margin": 0.1592,
-      "operating_margin": 0.090150006,
+      "operating_margin": 0.06652,
       "profit_margin": 0.0464,
       "debt_to_equity": 45.782,
       "total_revenue": 2220774912,
@@ -214,7 +214,7 @@
     "notes": [
       "Revenue growth: strong (27.5%)",
       "Gross margin: thin (15.9%)",
-      "Operating margin: moderate (9.0%)",
+      "Operating margin: thin (6.7%)",
       "Debt/equity: low (45.8)",
       "Earnings growth: strong (48.4%)"
     ]
@@ -224,7 +224,7 @@
       "ticker": "CW",
       "revenue_growth": 0.096,
       "gross_margin": 0.38067,
-      "operating_margin": 0.19871001,
+      "operating_margin": 0.19958,
       "profit_margin": 0.14857,
       "debt_to_equity": 44.707,
       "total_revenue": 3737265920,
@@ -234,13 +234,13 @@
     "notes": [
       "Revenue growth: low (9.6%)",
       "Gross margin: strong (38.1%)",
-      "Operating margin: strong (19.9%)",
+      "Operating margin: strong (20.0%)",
       "Debt/equity: low (44.7)",
       "Earnings growth: moderate (13.9%)"
     ]
   },
   "_meta": {
-    "cached_date": "2026-11-08",
+    "cached_date": "2026-11-15",
     "ticker_count": 12
   }
 }
