@@ -2,28 +2,28 @@
 
 ![Second Layer Capital](assets/logo.png)
 
-A rules-based stock screening and portfolio management system 
-targeting the picks-and-shovels supply chain of next-generation 
-defense technology — hypersonic weapons, directed energy, 
+A rules-based stock screening and portfolio management system
+targeting the picks-and-shovels supply chain of next-generation
+defense technology — hypersonic weapons, directed energy,
 autonomous systems, and advanced propulsion.
 
-Built by a 21-year U.S. Army veteran (Signal Corps, Infantry, 
-Civil Affairs) with a background in cybersecurity and critical 
+Built by a 21-year U.S. Army veteran (Signal Corps, Infantry,
+Civil Affairs) with a background in cybersecurity and critical
 program protection.
 
 ---
 
 ## Thesis
 
-The United States and its allies are entering a sustained period 
-of next-generation weapons development driven by peer competitor 
-threats from China and Russia. The supply chain beneath these 
-programs — propulsion manufacturers, advanced materials suppliers, 
-guidance systems makers, thermal protection specialists, and systems 
-integrators — will see durable, multi-decade government contract 
+The United States and its allies are entering a sustained period
+of next-generation weapons development driven by peer competitor
+threats from China and Russia. The supply chain beneath these
+programs — propulsion manufacturers, advanced materials suppliers,
+guidance systems makers, thermal protection specialists, and systems
+integrators — will see durable, multi-decade government contract
 flow regardless of which specific platforms win.
 
-This screener targets that picks-and-shovels layer, not the prime 
+This screener targets that picks-and-shovels layer, not the prime
 contractors.
 
 ---
@@ -36,6 +36,8 @@ contractors.
 - **Hypersonic, Space & Propulsion** — KRMN, HWM, ATI
 - **IoMT & Digital Battlefield** — AXON, TDY, HEI, LOAR, CW
 - **Industrial Supply Chain** — MTRN
+
+Watchlist (screened, not held): FLY, AADX, BAH.
 
 ---
 
@@ -60,41 +62,53 @@ Signal thresholds: STRONG ≥75 | NEUTRAL 50-74 | WEAK 25-49 | CRITICAL <25
 - **Cash reserve:** 10% mandatory — never deployed by engine
 - **Tier weights:** Disruptor 15% | Standard 10% | Anchor 5% (normalized)
 
+Drift logging is currently paused (last entry Oct 4, 2026), so the 30-day drift gate cannot fire until logging resumes.
+
 ---
 
 ## Active Portfolio
 
-Live portfolio managed via Robinhood Agentic account (••••5038).
+Live portfolio managed via Robinhood Agentic account (••••5038). Costs below are from `screener/positions.py`, verified against the account.
 
 | Ticker | Tier | Avg Cost |
 |--------|------|---------|
-| HWM | Standard | $244.82 |
-| HEI | Standard | $338.40 |
+| HWM | Standard | $244.88 |
+| HEI | Standard | $316.23 |
 | LOAR | Standard | $68.98 |
 | AXON | Disruptor | $466.13 |
 | CW | Standard | $746.50 |
 | ATI | Standard | $220.00 |
 | KRMN | Disruptor | $54.29 |
-| KTOS | Disruptor | $54.31 |
-| PLTR | Disruptor | $165.60 |
+| KTOS | Disruptor | $45.35 |
+| PLTR | Disruptor | $178.87 |
 
-**Inception:** June 16, 2026 | **Current return:** -6.1% (September 2026 market selloff)
+**Inception:** June 16, 2026
+
+No return figure is listed here — it goes stale within days. Check the account for current value.
 
 ---
 
 ## Daily Briefing
 
-The screener runs automatically every weekday at midnight ET via 
-GitHub Actions. Daily briefings are saved to `logs/` and readable 
-on iPhone via GitHub mobile.
+The daily briefing is currently manual-only. The automatic weekday schedule in `.github/workflows/daily_briefing.yml` is disabled, and the workflow's install step is broken, so no briefing has run automatically since October 2026 (signal history last logged Oct 18, 2026). An automated-workflow fix exists but is parked.
 
-No Streamlit dashboard — we tried, it broke repeatedly, the GitHub 
-Actions briefing is more reliable.
+To run a briefing by hand:
+
+```
+cd screener
+python report.py
+python signal_history.py
+python drift_history.py
+```
+
+Briefings are saved to `logs/` and readable on iPhone via GitHub mobile.
+
+No dashboard — the briefing is the interface.
 
 ---
 
 ## Status
-🟢 Active — Phase 3 complete, live trading initiated June 2026
+🟢 Active — Phase 3 complete, screening live since June 2026. Execution is manual: the engine prints a copy-paste order payload; no code places a trade.
 
 ---
 
